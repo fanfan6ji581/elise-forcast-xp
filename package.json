@@ -1,6 +1,6 @@
 {
-  "homepage": "https://unsw-balloon-xp.web.app",
-  "name": "balloon-experiment",
+  "homepage": "https://unsw-forcast-xp.web.app",
+  "name": "forcast-experiment",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
