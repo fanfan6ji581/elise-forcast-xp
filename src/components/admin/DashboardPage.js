@@ -138,6 +138,7 @@ const DashboardPage = () => {
             numberOfTrials: 400,
             percentageEarning: 50,
             trainingSessionSeconds: 120,
+            historySessionSeconds: 120,
             enablePlaying: false,
             treatment: 1,
         };
@@ -160,7 +161,7 @@ const DashboardPage = () => {
         <Container maxWidth="lg">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h4'>Dashboard</Typography >
+                    <Typography variant='h4'>Dashboard</Typography>
                 </Grid>
                 <Grid item xs={9}>
                     <DataGrid autoHeight rows={xps} columns={columns}

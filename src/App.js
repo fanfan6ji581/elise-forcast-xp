@@ -14,6 +14,7 @@ import AttendantLayout from "./components/attendant/Layout";
 import LoginPage from "./components/attendant/LoginPage";
 import TrialPage from "./components/attendant/trial/TrialPage";
 import TrialTrainingPage from "./components/attendant/trial/TrialTrainingPage";
+import TrialHistoryPage from "./components/attendant/trial/TrialHistoryPage";
 import PaymentPage from "./components/attendant/PaymentPage";
 import InstructionPage from "./components/attendant/instruction/InstructionPage";
 import Instruction1Page from "./components/attendant/instruction/Instruction1Page";
@@ -57,6 +58,7 @@ function App() {
                                 <Route path="xp/:alias/quiz" element={<QuizPage />} />
                                 <Route path="xp/:alias/strategy" element={<StrategyPage />} />
                                 <Route path="xp/:alias/start-game" element={<StartGamePage />} />
+                                <Route path="xp/:alias/trial-history" element={<TrialHistoryPage />} />
                                 <Route path="xp/:alias/pretask" element={<PretaskPage />} />
                                 <Route path="xp/:alias/pretask/training" element={<PretaskTrainingPage />} />
                                 <Route path="xp/:alias/pretask/payment" element={<PretaskPaymentPage />} />

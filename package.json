@@ -20,6 +20,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "chart.js": "^4.2.0",
+    "chartjs-plugin-zoom": "^2.0.1",
     "file-saver": "^2.0.5",
     "firebase": "9.16.0",
     "firebase-admin": "^11.5.0",

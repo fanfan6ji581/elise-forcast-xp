@@ -1,6 +1,7 @@
 import TrainingTimer from './TrainingTimer';
 import BalloonTrial from './BalloonTrial';
 import { loginAttendant } from "../../../slices/attendantSlice";
+import { xpConfigS } from "../../../slices/gameSlice";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -11,7 +12,8 @@ const BalloonTrialTrainingPage = () => {
     const { alias } = useParams();
     const navigate = useNavigate();
     const loginAttendantS = useSelector(loginAttendant);
-    const { trainingSessionSeconds } = loginAttendantS.xpConfig;
+    const xpConfig = useSelector(xpConfigS);
+    const { trainingSessionSeconds } = xpConfig;
 
     const onKeyDown = (e) => {
         if (e.key === ' ') {

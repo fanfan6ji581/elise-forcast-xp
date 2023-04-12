@@ -76,6 +76,10 @@ const schema = {
             "type": "integer",
             "title": "Seconds of how long the training session last (default is 120 seconds, 2 min)",
         },
+        "historySessionSeconds": {
+            "type": "integer",
+            "title": "Seconds of how long the display history page last (default is 120 seconds, 2 min)",
+        },
     }
 };
 
