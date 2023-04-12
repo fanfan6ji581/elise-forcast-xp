@@ -7,10 +7,10 @@ const initialState = {
     progressStartTime: 0,
     showMoneyOutcome: false,
     showAfterClickDelay: false,
+    xpConfig: {},
 
     // internal data
     xpData: {},
-    xpConfig: {},
     choiceHistory: [],
     outcomeHistory: [],
     missHistory: [],
@@ -22,21 +22,32 @@ const gameSlice = createSlice({
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
-        recordMulResp: (state, action) => {
+        recordChoice: (state, action) => {
             const { xpData, xpConfig, trialIndex } = state;
-            const { mul, missed } = action.payload;
+            const { choice, missed } = action.payload;
 
             // keep mul history
-            state.choiceHistory[trialIndex] = mul;
+            state.choiceHistory[trialIndex] = choice || "";
             state.missHistory[trialIndex] = missed;
-            let money = xpData.balloonValues[trialIndex + 1] * mul;
-            // if different with previous one, add up a switch cost
-            if (trialIndex > 0) {
-                money -= state.choiceHistory[trialIndex - 1] * mul < 0 ? xpConfig.costToSwitch : 0;
-            }
+            const isShift = xpData.shift[trialIndex + 1];
+            let money = 0
             if (missed) {
                 money = -xpConfig.afkTimeoutCost;
+            } else {
+                switch (choice) {
+                    case "shift":
+                        money = isShift ? 3 : -1;
+                        break;
+                    case "no shift":
+                        money = !isShift ? 1 : -3;
+                        break;
+                    case "skip":
+                    default:
+                        money = 0;
+                        break;
+                }
             }
+
             state.outcomeHistory[trialIndex] = money;
 
             if (!missed) {
@@ -44,7 +55,7 @@ const gameSlice = createSlice({
             }
 
             // should show outcome
-            if (missed || mul !== 0) {
+            if (missed || choice !== 'skip') {
                 state.showAfterClickDelay = true;
             } else {
                 // when click pass
@@ -70,6 +81,7 @@ const gameSlice = createSlice({
         },
         onLoginTraining: (state, action) => {
             const { xpConfig } = action.payload
+            // const xpConfig = state.xpConfig
             // random generated xpData
             const { xpData } = generateBalloonData(xpConfig);
             state.xpData = xpData;
@@ -115,12 +127,15 @@ const gameSlice = createSlice({
             state.showAfterClickDelay = false;
             state.showMoneyOutcome = false;
         },
+        setXpConfig: (state, action) => {
+            state.xpConfig = action.payload
+        }
     },
 });
 
-export const { recordMulResp, setProgressStartTime,
+export const { recordChoice, setProgressStartTime,
     setTimerProgress, nextTrial, onLogin, onLoginTraining,
-    setShowMoneyOutcome, reset } = gameSlice.actions;
+    setShowMoneyOutcome, reset, setXpConfig } = gameSlice.actions;
 
 export const trialIndex = (state) => state.game.trialIndex;
 export const showAfterClickDelay = (state) => state.game.showAfterClickDelay;

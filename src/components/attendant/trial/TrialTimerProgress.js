@@ -2,7 +2,7 @@ import { LinearProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   timerProgress,
-  recordMulResp,
+  recordChoice,
   showMoneyOutcome,
   showAfterClickDelay,
   setProgressStartTime,
@@ -48,7 +48,7 @@ export default function TrialTimer() {
   useEffect(() => {
     if (timerProgressS >= 100) {
       clearInterval(timerInterval.current);
-      dispatch(recordMulResp({ mul: 0, missed: true }));
+      dispatch(recordChoice({ missed: true }));
     }
     if (timerProgressS === 0) {
       restartGameTimer();

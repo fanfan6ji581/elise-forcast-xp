@@ -16,7 +16,7 @@ import {
 import { login } from "../../../slices/attendantSlice";
 import { useDispatch, useSelector } from "react-redux";
 import TrialTimerProgress from "./TrialTimerProgress";
-import PickBalloon from "./PickBalloon";
+import Choice from "./Choice";
 import MoneyOutcome from "./MoneyOutcome";
 import ValueChart from "./ValueChart";
 import { doc, updateDoc } from "firebase/firestore";
@@ -109,12 +109,11 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
             </Grid>
           </Grid>
           <Grid container alignItems="center">
-            <Grid item xs={5}>
-              <PickBalloon xpData={xpData} xpConfig={xpConfig} />
-            </Grid>
-
-            <Grid item xs={7}>
+            <Grid item xs={12}>
               <ValueChart xpData={xpData} />
+            </Grid>
+            <Grid item xs={12}>
+              <Choice xpData={xpData} xpConfig={xpConfig} />
             </Grid>
           </Grid>
         </Grid>

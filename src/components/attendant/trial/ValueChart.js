@@ -13,6 +13,7 @@ import { Line } from 'react-chartjs-2';
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { trialIndex, showMoneyOutcome } from "../../../slices/gameSlice";
+import questionMarkImg from "../../../assets/question-mark.png";
 
 ChartJS.register(
     CategoryScale,
@@ -29,32 +30,41 @@ export default function ValueChart({ xpData }) {
     const trialIndexS = useSelector(trialIndex);
     const { balloonValues, balloonSpeed } = xpData;
 
-    let labels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 1) }, (_, i) => i + 1);
+    let labels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 2) }, (_, i) => i + 1);
     let lengthLimit = 50;
-    if (showMoneyOutcomeS) {
-        lengthLimit++;
-    }
+    // if (showMoneyOutcomeS) {
+    //     lengthLimit++;
+    // }
     if (labels.length > lengthLimit) {
         labels = labels.slice(-lengthLimit);
+    }
+
+    const dataValues1 = balloonValues && _.slice(balloonValues, labels[0], labels.length + labels[0]);
+    if (!showMoneyOutcomeS && dataValues1) {
+        dataValues1.pop();
     }
     const data = {
         labels: labels,
         datasets: [
             {
                 label: 'Value history',
-                data: balloonValues && _.slice(balloonValues, labels[0], labels.length + labels[0]),
+                data: dataValues1,
                 backgroundColor: 'rgb(14,133,255)',
                 borderColor: 'rgba(99,104,255,0.2)',
             },
         ],
     };
 
+    const dataValues2 = balloonSpeed && _.slice(balloonSpeed, labels[0], labels.length + labels[0]);
+    if (!showMoneyOutcomeS && dataValues2) {
+        dataValues2.pop();
+    }
     const data2 = {
         labels: labels,
         datasets: [
             {
                 label: 'Speed history',
-                data: balloonSpeed && _.slice(balloonSpeed, labels[0], labels.length + labels[0]),
+                data: dataValues2,
                 backgroundColor: 'rgb(141,168,181)',
                 borderColor: 'rgba(99,104,255,0.2)',
             },
@@ -62,7 +72,7 @@ export default function ValueChart({ xpData }) {
     };
 
     const options = {
-        aspectRatio: 3.5,
+        aspectRatio: 4,
         animation: {
             duration: 0
         },
@@ -87,8 +97,9 @@ export default function ValueChart({ xpData }) {
             },
             x: {
                 ticks: {
+                    autoSkip: false,
                     font: {
-                        size: 16,
+                        size: 12,
                     },
                 },
             }
@@ -109,7 +120,7 @@ export default function ValueChart({ xpData }) {
     };
 
     const options2 = {
-        aspectRatio: 3.5,
+        aspectRatio: 4,
         animation: {
             duration: 0
         },
@@ -119,15 +130,16 @@ export default function ValueChart({ xpData }) {
                 ticks: {
                     beginAtZero: true,
                     font: {
-                        size: 16,
+                        size: 14,
                     },
                 },
                 suggestedMax: 20
             },
             x: {
                 ticks: {
+                    autoSkip: false,
                     font: {
-                        size: 16,
+                        size: 12,
                     },
                 },
             }
@@ -147,13 +159,24 @@ export default function ValueChart({ xpData }) {
         }
     };
     return (
-        <>
+        <Box style={{
+            position: "relative"
+        }}>
+            {!showMoneyOutcomeS &&
+                <img id="questionMarkImg" src={questionMarkImg} alt="question" style={{
+                    height: 80,
+                    position: "absolute",
+                    right: -30,
+                    top: 100,
+                }} />
+            }
+
             <Box>
                 <Line data={data} options={options} />
             </Box>
             <Box sx={{ mt: 12 }}>
                 <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
             </Box>
-        </>
+        </Box>
     );
 }

@@ -4,7 +4,7 @@ import { updateDoc, doc } from "firebase/firestore";
 import db from "../../database/firebase";
 
 const schema = {
-    "title": "Configure balloon XP",
+    "title": "Configure forcast XP",
     "description": "",
     "type": "object",
     "required": [

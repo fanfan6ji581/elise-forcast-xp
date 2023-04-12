@@ -14,7 +14,7 @@ const columns = [
   { field: "aberration", headerName: "Aberration", width: 80 },
   { field: "shift", headerName: "shift", width: 60 },
   { field: "reaction", headerName: "Reaction ms", width: 95 },
-  { field: "choice", headerName: "choice", width: 60 },
+  { field: "choice", headerName: "choice", width: 120 },
   {
     field: "outcome",
     headerName: "Outcome$",
