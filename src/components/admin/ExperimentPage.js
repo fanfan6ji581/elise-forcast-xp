@@ -1,13 +1,14 @@
 import {
     Container, Grid, Alert, Typography, Box, Tab,
-    FormGroup, FormControlLabel, Switch, Button
+    FormGroup, FormControlLabel, Switch, Button, FormControl, InputLabel, Select, MenuItem
 } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import db from "../../database/firebase";
 import { updatePretask } from "../../database/pretask";
+import { updateXp } from "../../database/xp";
 import { getPretask } from "../../database/pretask"
 import BalloonXPConfig from './BalloonXPConfig';
 import PretaskConfig from './PretaskConfig';
@@ -19,6 +20,7 @@ const Experiment = () => {
     const [xp, setXp] = useState(null);
     const [pretask, setPretask] = useState(null);
     const [enablePlaying, setEnablePlaying] = useState(false);
+    const [treatment, setTreatment] = useState(1);
     const [enablePretaskPlaying, setEnablePretaskPlaying] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const { alias } = useParams()
@@ -33,6 +35,9 @@ const Experiment = () => {
         if (xps.length === 1) {
             setXp(xps[0]);
             setEnablePlaying(xps[0].enablePlaying);
+            if (xps[0].treatment) {
+                setTreatment(xps[0].treatment);
+            }
         } else {
             setErrorMsg(`Cannot find such XP with alias "${alias}"`)
         }
@@ -49,8 +54,7 @@ const Experiment = () => {
     }
 
     const onSwitchEnablePlaying = async (e, val) => {
-        const xpRef = doc(db, "xp", xp.id);
-        await updateDoc(xpRef, { enablePlaying: val });
+        await updateXp(xp.id, { enablePlaying: val });
         setEnablePlaying(val);
         if (val) {
             window.alert('Game play has been enabled');
@@ -67,6 +71,12 @@ const Experiment = () => {
         } else {
             window.alert('Pretask play has been disabled');
         }
+    }
+
+    const onSwitchTreatment = async (event) => {
+        await updateXp(xp.id, { treatment: event.target.value });
+        setTreatment(event.target.value);
+        window.alert('treatment has been updated');
     }
 
     useEffect(() => {
@@ -91,6 +101,18 @@ const Experiment = () => {
                     <FormGroup>
                         <FormControlLabel control={<Switch checked={enablePretaskPlaying} onChange={onSwitchEnablePretaskPlaying} />} label="Enable pretask play" />
                     </FormGroup>
+                    <FormControl fullWidth>
+                        <InputLabel>Treatment</InputLabel>
+                        <Select label="Treatment"
+                            value={treatment}
+                            onChange={onSwitchTreatment}
+                        >
+                            <MenuItem value={1}>Treatment 1</MenuItem>
+                            <MenuItem value={2}>Treatment 2</MenuItem>
+                            <MenuItem value={3}>Treatment 3</MenuItem>
+                        </Select>
+                    </FormControl>
+
                 </Grid>
             </Grid>
             <Grid container>

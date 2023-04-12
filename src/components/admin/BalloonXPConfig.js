@@ -4,7 +4,7 @@ import { updateDoc, doc } from "firebase/firestore";
 import db from "../../database/firebase";
 
 const schema = {
-    "title": "Configure forcast XP",
+    "title": "Configure Forcast XP",
     "description": "",
     "type": "object",
     "required": [
@@ -33,11 +33,11 @@ const schema = {
             "title": "∆ change_speed",
             // "default": 100
         },
-        "costToSwitch": {
-            "type": "integer",
-            "title": "Cost to switch the other screen",
-            // "default": 6
-        },
+        // "costToSwitch": {
+        //     "type": "integer",
+        //     "title": "Cost to switch the other screen",
+        //     // "default": 6
+        // },
         "afkTimeout": {
             "type": "integer",
             "title": "Decision stage, milliseconds that allow attendant to do decision, e.g. 2000 ms = 2 sec",

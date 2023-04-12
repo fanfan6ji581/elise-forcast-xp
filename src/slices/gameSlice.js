@@ -81,11 +81,12 @@ const gameSlice = createSlice({
         },
         onLoginTraining: (state, action) => {
             const { xpConfig } = action.payload
+            debugger
             // const xpConfig = state.xpConfig
             // random generated xpData
             const { xpData } = generateBalloonData(xpConfig);
             state.xpData = xpData;
-            state.xpConfig = xpConfig;
+            // state.xpConfig = xpConfig;
 
             // reset
             state.choiceHistory = [];
@@ -122,12 +123,13 @@ const gameSlice = createSlice({
             state.missHistory = missHistory;
             state.reactionHistory = reactionHistory;
             state.xpData = xpData;
-            state.xpConfig = xpConfig;
+            // state.xpConfig = xpConfig;
             state.timerProgress = 0;
             state.showAfterClickDelay = false;
             state.showMoneyOutcome = false;
         },
         setXpConfig: (state, action) => {
+            debugger
             state.xpConfig = action.payload
         }
     },

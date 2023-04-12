@@ -129,7 +129,7 @@ const DashboardPage = () => {
             lambda: "1/3",
             aberrationChance: "1/12",
             delta: 100,
-            costToSwitch: 1,
+            // costToSwitch: 1,
             choiceDelay: 0,
             outcomeShowTime: 2000,
             afkTimeout: 4000,
@@ -138,6 +138,7 @@ const DashboardPage = () => {
             percentageEarning: 50,
             trainingSessionSeconds: 120,
             enablePlaying: false,
+            treatment: 1,
         };
 
         const resp = await addDoc(collection(db, "xp"), xp);

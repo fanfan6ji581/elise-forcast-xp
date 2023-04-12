@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { loginAttendant } from "../../slices/attendantSlice";
 import { setXpConfig } from "../../slices/gameSlice";
-import { getPretask } from "../../database/pretask";
+import { getXp } from "../../database/xp";
 import { useEffect } from "react";
 import { CssBaseline } from '@mui/material';
 import { useSelector, useDispatch } from "react-redux";
@@ -18,8 +18,8 @@ const Layout = () => {
   const location = useLocation();
   const loginAttendantS = useSelector(loginAttendant);
 
-  const fetchPretask = async () => {
-    const xpConfig = await getPretask(alias)
+  const fetchXP = async () => {
+    const xpConfig = await getXp(alias)
     dispatch(setXpConfig(xpConfig));
   }
 
@@ -31,7 +31,7 @@ const Layout = () => {
     ) {
       return navigate(`/xp/${alias}/signup`);
     }
-    await fetchPretask();
+    await fetchXP();
   };
 
   useEffect(() => {
