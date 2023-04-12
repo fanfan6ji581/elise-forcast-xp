@@ -13,7 +13,7 @@ const SkipTraining = () => {
             (e.ctrlKey && e.key === 'm') ||
             (e.key === ' ')
         ) {
-            navigate(`/xp/${alias}/instruction4`);
+            navigate(`/xp/${alias}/instruction-ready`);
         }
     }
 
