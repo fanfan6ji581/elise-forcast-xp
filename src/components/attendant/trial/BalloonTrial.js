@@ -21,9 +21,12 @@ import MoneyOutcome from "./MoneyOutcome";
 import ValueChart from "./ValueChart";
 import { doc, updateDoc } from "firebase/firestore";
 import db from "../../../database/firebase";
+import { useNavigate, useParams } from "react-router-dom"
 
 const BalloonTrial = ({ isTrainingMode, onFinish }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { alias } = useParams()
   const loginAttendantS = useSelector(loginAttendant);
   const trialIndexS = useSelector(trialIndex);
   const choiceHistoryS = useSelector(choiceHistory);
@@ -76,6 +79,15 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
     ) {
       if (!isTrainingMode) {
         storeToDB();
+      }
+
+      if (missHistoryS &&
+        missHistoryS.filter(x => x).length >= xpConfig.missLimit) {
+        if (isTrainingMode) {
+          navigate(`/xp/${alias}/quiz`);
+        } else {
+          navigate(`/xp/${alias}/payment`);
+        }
       }
     }
 

@@ -15,10 +15,12 @@ import LoginPage from "./components/attendant/LoginPage";
 import TrialPage from "./components/attendant/trial/TrialPage";
 import TrialTrainingPage from "./components/attendant/trial/TrialTrainingPage";
 import PaymentPage from "./components/attendant/PaymentPage";
+import InstructionPage from "./components/attendant/instruction/InstructionPage";
 import Instruction1Page from "./components/attendant/instruction/Instruction1Page";
 import Instruction2Page from "./components/attendant/instruction/Instruction2Page";
 import Instruction3Page from "./components/attendant/instruction/Instruction3Page";
-import Instruction4Page from "./components/attendant/instruction/Instruction4Page";
+import InstructionPaymentPage from "./components/attendant/instruction/InstructionPaymentPage";
+import InstructionReadyPage from "./components/attendant/instruction/InstructionReadyPage";
 import SkipTrainingPage from "./components/attendant/instruction/SkipTrainingPage";
 import QuizPage from "./components/attendant/QuizPage";
 import StrategyPage from "./components/attendant/StrategyPage";
@@ -45,10 +47,12 @@ function App() {
                                 <Route path="xp/:alias/trial" element={<TrialPage />} />
                                 <Route path="xp/:alias/training" element={<TrialTrainingPage />} />
                                 <Route path="xp/:alias/payment" element={<PaymentPage />} />
+                                <Route path="xp/:alias/instruction" element={<InstructionPage />} />
                                 <Route path="xp/:alias/instruction1" element={<Instruction1Page />} />
                                 <Route path="xp/:alias/instruction2" element={<Instruction2Page />} />
                                 <Route path="xp/:alias/instruction3" element={<Instruction3Page />} />
-                                <Route path="xp/:alias/instruction4" element={<Instruction4Page />} />
+                                <Route path="xp/:alias/instruction-payment" element={<InstructionPaymentPage />} />
+                                <Route path="xp/:alias/instruction-ready" element={<InstructionReadyPage />} />
                                 <Route path="xp/:alias/skip-training" element={<SkipTrainingPage />} />
                                 <Route path="xp/:alias/quiz" element={<QuizPage />} />
                                 <Route path="xp/:alias/strategy" element={<StrategyPage />} />

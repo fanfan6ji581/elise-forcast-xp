@@ -5,6 +5,7 @@ import {
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useNavigate, useParams } from "react-router-dom"
 import { loginAttendant } from "../../slices/attendantSlice";
+import { xpConfigS } from "../../slices/gameSlice";
 import { useSelector } from "react-redux";
 import { Fragment, useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -15,7 +16,7 @@ const QuizPage = () => {
     const { alias } = useParams();
     const navigate = useNavigate();
     const loginAttendantS = useSelector(loginAttendant);
-    const { xpConfig } = loginAttendantS;
+    const xpConfig = useSelector(xpConfigS);
     const [mcq1, setMcq1] = useState(0);
     const [mcq2, setMcq2] = useState(0);
     const [mcq3, setMcq3] = useState(0);
@@ -454,7 +455,7 @@ const QuizPage = () => {
                 <Box textAlign="center" sx={{ py: 3 }}>
                     {!disableForm &&
                         <>
-                            <Button component={Link} to={`/xp/${alias}/instruction1`} sx={{ mx: 3 }} variant="outlined" size="large">Back to Instruction</Button>
+                            <Button component={Link} to={`/xp/${alias}/instruction`} sx={{ mx: 3 }} variant="outlined" size="large">Back to Instruction</Button>
                             <Button disabled={disableForm} type="submit" variant="contained" size="large">Submit</Button>
                         </>
                     }

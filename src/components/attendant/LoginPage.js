@@ -65,7 +65,7 @@ const LoginPage = () => {
         const attendants = snapshot.docs.map(d => (Object.assign({ id: d.id }, d.data())));
         if (attendants.length === 1) {
             dispatch(login(attendants[0]));
-            navigate(`/xp/${alias}/instruction1`)
+            navigate(`/xp/${alias}/instruction`)
         } else {
             setErrorMsg("Invalid login")
         }

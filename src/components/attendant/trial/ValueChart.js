@@ -47,7 +47,7 @@ export default function ValueChart({ xpData }) {
         labels: labels,
         datasets: [
             {
-                label: 'Value history',
+                label: 'Asset history',
                 data: dataValues1,
                 backgroundColor: 'rgb(14,133,255)',
                 borderColor: 'rgba(99,104,255,0.2)',
@@ -63,7 +63,7 @@ export default function ValueChart({ xpData }) {
         labels: labels,
         datasets: [
             {
-                label: 'Speed history',
+                label: 'Volume history',
                 data: dataValues2,
                 backgroundColor: 'rgb(141,168,181)',
                 borderColor: 'rgba(99,104,255,0.2)',
@@ -85,7 +85,11 @@ export default function ValueChart({ xpData }) {
                     beginAtZero: true,
                     major: true,
                     callback: function (value, index, values) {
-                        if (value === 2 || value === -2) return '$' + value
+                        if (value === 2) {
+                            return 'High';
+                        } else if (value === -2) {
+                            return 'Low';
+                        }
                         return '';
                     },
                     font: {

@@ -69,7 +69,7 @@ const gameSlice = createSlice({
             state.showAfterClickDelay = false;
         },
         setTimerProgress: (state, action) => {
-            state.timerProgress = Math.min(100, action.payload);
+            state.timerProgress = Math.min(100, action.payload || 0);
         },
         setProgressStartTime: (state, action) => {
             state.progressStartTime = action.payload;
@@ -81,7 +81,6 @@ const gameSlice = createSlice({
         },
         onLoginTraining: (state, action) => {
             const { xpConfig } = action.payload
-            debugger
             // const xpConfig = state.xpConfig
             // random generated xpData
             const { xpData } = generateBalloonData(xpConfig);
@@ -109,7 +108,7 @@ const gameSlice = createSlice({
             state.timerProgress = 0;
         },
         onLogin: (state, action) => {
-            const { xpData, xpRecord, xpConfig } = action.payload
+            const { xpData, xpRecord } = action.payload
             const {
                 trialIndex,
                 choiceHistory,
@@ -123,13 +122,11 @@ const gameSlice = createSlice({
             state.missHistory = missHistory;
             state.reactionHistory = reactionHistory;
             state.xpData = xpData;
-            // state.xpConfig = xpConfig;
             state.timerProgress = 0;
             state.showAfterClickDelay = false;
             state.showMoneyOutcome = false;
         },
         setXpConfig: (state, action) => {
-            debugger
             state.xpConfig = action.payload
         }
     },

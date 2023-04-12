@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { loginAttendant } from "../../slices/attendantSlice";
+import { xpConfigS } from "../../slices/gameSlice";
 import { Container, Grid, Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -11,7 +12,7 @@ const shuffle = (array) => {
 
 export default function PaymentPage() {
     const loginAttendantS = useSelector(loginAttendant);
-    const { xpConfig } = loginAttendantS;
+    const xpConfig = useSelector(xpConfigS);
     const [earning, setEarning] = useState("...");
     const [loadingOpen, setLoadingOpen] = useState(true);
 
@@ -23,8 +24,8 @@ export default function PaymentPage() {
         }
 
         const attendant = docSnap.data();
-        let { xpRecord, pickedOutcomeIndexes } = attendant;
-        const { outcomeHistory } = xpRecord;
+        let { xpRecord, pickedOutcomeIndexes,  } = attendant;
+        const { outcomeHistory, missHistory } = xpRecord;
 
         // check if pickedOutcomeIndexes is calculated already
         const isCalculated = pickedOutcomeIndexes && pickedOutcomeIndexes.length !== 0;
@@ -35,6 +36,13 @@ export default function PaymentPage() {
             const pickedIndex = shuffledIndex.slice(0, length);
             pickedOutcomeIndexes = pickedIndex.sort((a, b) => a - b);
             await updateDoc(attendantRef, { pickedOutcomeIndexes });
+        }
+
+        // when miss too much, ignore result
+        if (missHistory.filter(x => x).length >= xpConfig.missLimit) {
+            setEarning(0);
+            setLoadingOpen(false);
+            return;
         }
 
         const sumEarning = pickedOutcomeIndexes.reduce((a, b) => a + outcomeHistory[b], 0);

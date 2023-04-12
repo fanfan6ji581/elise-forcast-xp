@@ -10,7 +10,6 @@ const schema = {
     "required": [
         "dangerZoneChance",
         "aberrationChance",
-        "costToSwitch"
     ],
     "properties": {
         "dangerZoneChance": {
@@ -32,6 +31,11 @@ const schema = {
             "type": "integer",
             "title": "∆ change_speed",
             // "default": 100
+        },
+        "missLimit": {
+            "type": "integer",
+            "title": "when missed this many times, terminate the xp",
+            "default": 5
         },
         // "costToSwitch": {
         //     "type": "integer",
