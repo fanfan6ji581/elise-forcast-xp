@@ -45,7 +45,7 @@ const PretaskInstruction1Page = () => {
               </Typography>
 
               <Typography variant="h6" sx={{ mt: 10, mb: 3 }}>
-                Thanks for agreeing to participate in the "Balloon Experiment"! Before you perform the
+                Thanks for agreeing to participate in the "Financial Forecasting Experiment"! Before you perform the
                 main experimental task, we ask you to complete the following task.
               </Typography>
 
@@ -71,7 +71,7 @@ const PretaskInstruction1Page = () => {
                         <Typography component="span" variant="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}> winning bet </Typography>
                         will give you <b>${pretask.ballAWin}</b>,
                         a
-                        <Typography component="span" variant="span" sx={{ fontWeight: 'bold', color: 'success.main' }}> losing bet</Typography>,
+                        <Typography component="span" variant="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}> losing bet</Typography>,
                         a loss of  <b>${-pretask.ballALose}</b>
                       </Typography>
                     </li>
@@ -80,7 +80,7 @@ const PretaskInstruction1Page = () => {
                         Bet that the ball is green: a 
                         <Typography component="span" variant="span" sx={{ fontWeight: 'bold', color: 'success.main' }}> winning bet </Typography>
                         will give you <b>${pretask.ballBWin}</b>, a 
-                        <Typography component="span" variant="span" sx={{ fontWeight: 'bold', color: 'primary.main' }}> losing bet</Typography>, a loss of  <b>${-pretask.ballBLose}</b>
+                        <Typography component="span" variant="span" sx={{ fontWeight: 'bold', color: 'success.main' }}> losing bet</Typography>, a loss of  <b>${-pretask.ballBLose}</b>
                       </Typography>
                     </li>
                     <li>

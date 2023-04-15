@@ -32,7 +32,7 @@ const Instruction1Page = () => {
           <Grid container alignItems="center" sx={{ my: 5 }}>
             <Grid item xs={12}>
               <Typography variant="h6" sx={{ my: 5 }}>
-                If you play well you can earn a lot of money in this game (up to $150), so please read the
+                If you play well you can earn a lot of money in this game (up to $110), so please read the
                 following instructions very carefully and ask any clarifying questions to the experimenter.
               </Typography>
               <Typography variant="h6" sx={{ my: 5 }}>
@@ -45,7 +45,7 @@ const Instruction1Page = () => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                Some of the switches are "<b>regime shifts</b>": they last for several days, as shown in the picture. Others are <b>"aberrations"</b>: the value switches back immediately (see for example, trial 18).
+                Some of the switches are "<b>regime shifts</b>": they usually last for several days, as shown in the picture. Others are <b>"aberrations"</b>: the value switches back immediately (see for example, trial 18).
               </Typography>
             </Grid>
 
@@ -55,19 +55,34 @@ const Instruction1Page = () => {
           <Grid container alignItems="center" sx={{ my: 10 }}>
             <Grid item xs={6} sx={{ textAlign: "center" }}>
               <Box component="img" alt="" src={image3} sx={{ width: '100%' }} />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="h6" sx={{ ml: 5 }}>
+                At the beginning of the game, you'll see what's happened with the asset in the last 100 days.
+              </Typography>
+            </Grid>
+
+            <Grid item xs={6} sx={{ textAlign: "center" }}>
               <Box component="img" alt="" src={image2} sx={{ width: '100%' }} />
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                At the beginning of the game, you'll see what's happened with the asset in the last 100 days.
-                You will also be shown the history for a volume indicator over the same period.
+              <Typography variant="h6" sx={{ ml: 5 }}>
+                You will also be shown the history for a volume indicator over the same period.<br />
               </Typography>
-              <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                We are showing you this because your job is to forecast in real time on each of&nbsp;
-                {xpConfig.numberOfTrials} trials whether a regime shift is going to occur over the next day, and
-                there is a pattern linking the volume indicator to the regime shifts. What that means is that you
-                may be able to track the value of the volume indicator to forecast the shifts, as explained next!
-              </Typography>
+            </Grid>
+
+            <Grid item xs={12} alignItems="center">
+              <Box sx={{ mt: 3, border: 1, p: 2, boxShadow: 3 }}>
+                <Typography variant="h5" >
+                  We are showing you this because your job is to <b>forecast</b> in real time on each of {xpConfig.numberOfTrials} trials
+                  whether a regime shift is going to occur over the next day, and <b>there is a pattern linking the volume indicator to the regime shifts.</b>
+
+                  <br />
+                  <br />
+                  What that means is that if you manage to identify what the pattern is, you may be able to track the value
+                  of the volume indicator to forecast the shifts (more on this below 😊):
+                </Typography>
+              </Box>
             </Grid>
           </Grid>
 
@@ -102,7 +117,7 @@ const Instruction1Page = () => {
 
           <Divider />
 
-          <Grid container alignItems="center" sx={{ my: 10 }}>
+          <Grid container alignItems="center" sx={{ mt: 10, mb: 5 }}>
             <Typography variant="h4">
               The Pattern
             </Typography>
@@ -113,27 +128,31 @@ const Instruction1Page = () => {
             </Typography>
           </Grid>
 
-          <Grid container alignItems="center" sx={{ my: 5 }}>
+          <Grid container alignItems="" sx={{ my: 5 }}>
             <Grid item xs={6} sx={{ textAlign: "center" }}>
               <Box component="img" alt="" src={image6} sx={{ boxShadow: 0, width: '100%' }} />
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
                 In this example, you can see that the volume variable departs from its baseline value at Trial 6:
-                this is the first trial in the dangerous zone. You can see the shift occurs at Trial 10: the value shifts to +2, and the volume indicator reverts to its baseline value.
-
+                this is the first trial in the dangerous zone.
               </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                The volume indicator thus allows you to tell when a switch is an aberration vs. a regime shift.
+                You can see the shift occurs at Trial 10: the value shifts to +2, and the volume indicator reverts to its baseline value.
               </Typography>
             </Grid>
           </Grid>
+
+          <Divider />
 
           <Grid container alignItems="center" sx={{ my: 5 }}>
             <Grid item xs={6} sx={{ textAlign: "center" }}>
               <Box component="img" alt="" src={image7} sx={{ boxShadow: 0, width: '100%' }} />
             </Grid>
             <Grid item xs={6}>
+              <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
+                The volume indicator thus allows you to tell when a switch is an aberration vs. a regime shift.
+              </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
                 For example here, at Trial 18, the value has switched but the volume indicator is at its baseline value.
                 This is an aberration and the value immediately switches back to its current value (here, -2) at Trial 19.

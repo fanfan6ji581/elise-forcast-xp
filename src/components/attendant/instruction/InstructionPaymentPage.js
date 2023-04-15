@@ -30,7 +30,7 @@ const Instruction3Page = () => {
                 </Typography>
 
                 <Typography variant="h6" sx={{ my: 5 }}>
-                    You can earn up to $150 if you play well, but this requires a lot of focus and efforts throughout the task.
+                    You can earn up to $110 if you play well, but this requires a lot of focus and efforts throughout the task.
                     To start with, please double-check that you understand the rules of the game:
                     if anything of the above is unclear, please seek clarification!
                 </Typography>

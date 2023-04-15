@@ -46,7 +46,7 @@ export default function PaymentPage() {
         }
 
         const sumEarning = pickedOutcomeIndexes.reduce((a, b) => a + outcomeHistory[b], 0);
-        const earning = Math.max(0, Math.min(150, sumEarning));
+        const earning = Math.max(0, Math.min(110, sumEarning));
         setEarning(earning);
         setLoadingOpen(false);
     }

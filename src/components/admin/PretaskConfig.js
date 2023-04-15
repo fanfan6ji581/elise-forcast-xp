@@ -75,6 +75,10 @@ const schema = {
             "title": "Delay in milliseconds after clicking a balloon, 1000 ms = 1 sec",
             "default": 20
         },
+        "trainingSessionSeconds": {
+            "type": "integer",
+            "title": "Seconds of how long the training session last (default is 120 seconds, 2 min)",
+        },
     }
 };
 
