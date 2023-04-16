@@ -56,7 +56,7 @@ const StartPretaskPage = () => {
                         </Typography>
 
                         <Box textAlign="center" sx={{ py: 15 }}>
-                            <Button component={Link} variant="contained" size="large"
+                            <Button variant="contained" size="large"
                                 onClick={onStartGame}
                                 disabled={!pretask || !pretask.enablePretaskPlaying}
                                 sx={{ m: 3, width: 300 }}
