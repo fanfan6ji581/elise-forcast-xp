@@ -84,7 +84,8 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
       if (missHistoryS &&
         missHistoryS.filter(x => x).length >= xpConfig.missLimit) {
         if (isTrainingMode) {
-          navigate(`/xp/${alias}/quiz`);
+          // dont do anything for training
+          // navigate(`/xp/${alias}/quiz`);
         } else {
           navigate(`/xp/${alias}/payment`);
         }

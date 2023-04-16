@@ -26,7 +26,7 @@ const Instruction3Page = () => {
                 <Typography variant="h6" sx={{ my: 5 }}>
                     You have {xpConfig.afkTimeout / 1000} seconds to make your decision on each trial.
                     If you fail to reply within the imparted time, this is a missed trial and after {xpConfig.missLimit} missed trials,
-                    the game would stop automatically, and you would not receive any payment, so please keep the pace ☺
+                    the game would stop automatically, and you would not receive any payment, so please keep the pace 😊
                 </Typography>
 
                 <Typography variant="h6" sx={{ my: 5 }}>

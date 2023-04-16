@@ -44,7 +44,7 @@ const StrategyPage = () => {
       const attendantRef = doc(db, "attendant", loginAttendantS.id);
       await updateDoc(attendantRef, { strategy });
     }
-    navigate(`/xp/${alias}/trial`);
+    navigate(`/xp/${alias}/count-down`);
   };
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const StrategyPage = () => {
               control={
                 <Radio
                   value="1"
-                  disabled={strategy > 0}
+                  disabled={attendant && attendant.strategy > 0}
                   checked={strategy === 1}
                   onChange={() => setStrategy(1)}
                 />
@@ -87,7 +87,7 @@ const StrategyPage = () => {
                 <Radio
                   value="2"
                   checked={strategy === 2}
-                  disabled={strategy > 0}
+                  disabled={attendant && attendant.strategy > 0}
                   onChange={() => setStrategy(2)}
                 />
                 <Typography varient="body2">
@@ -100,7 +100,7 @@ const StrategyPage = () => {
                 <Radio
                   value="3"
                   checked={strategy === 3}
-                  disabled={strategy > 0}
+                  disabled={attendant && attendant.strategy > 0}
                   onChange={() => setStrategy(3)}
                 />
                 <Typography varient="body2">
@@ -113,7 +113,7 @@ const StrategyPage = () => {
                 <Radio
                   value="4"
                   checked={strategy === 4}
-                  disabled={strategy > 0}
+                  disabled={attendant && attendant.strategy > 0}
                   onChange={() => setStrategy(4)}
                 />
                 <Typography varient="body2">

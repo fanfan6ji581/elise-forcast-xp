@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   trialIndex,
   ballAQty,
+  missHistory,
 } from "../../../slices/pretaskSlice";
 import { useSelector } from "react-redux";
 
@@ -14,8 +15,10 @@ export default function Jar() {
 
   const trialIndexS = useSelector(trialIndex);
   const ballAQtyS = useSelector(ballAQty);
+  const missHistoryS = useSelector(missHistory);
   const ballA = ballAQtyS[trialIndexS];
   const totalQty = 100;
+  const [data, setData] = useState([]);
 
   const getData = () => _.shuffle([
     ...Array.from({ length: ballA }).fill({
@@ -28,12 +31,18 @@ export default function Jar() {
     }),
   ]);
 
-  const [data, setData] = useState(getData());
 
   useEffect(() => {
-    setData(getData());
+    if (trialIndexS === 0 || data.length === 0) {
+      setData(getData());
+    }
+    else if (trialIndexS === missHistoryS.length) {
+      if (!missHistoryS[missHistoryS.length - 1]) {
+        setData(getData());
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ballAQtyS])
+  }, [ballAQtyS, trialIndexS, missHistoryS])
 
   return (
     <>

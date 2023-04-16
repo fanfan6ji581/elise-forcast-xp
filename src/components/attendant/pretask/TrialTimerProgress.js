@@ -49,6 +49,7 @@ export default function TrialTimer({ pretask }) {
 
   useEffect(() => {
     if (showAfterClickDelayS) {
+      clearInterval(timerInterval.current);
       delayLoadingInterval.current = setTimeout(() => {
         dispatch(setShowMoneyOutcome(true));
       }, pretask.choiceDelay)

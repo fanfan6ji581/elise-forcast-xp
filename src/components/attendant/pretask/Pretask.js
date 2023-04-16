@@ -8,7 +8,7 @@ import {
   ballAQty,
   reset,
   resetTraining,
-  removeData,
+  // removeData,
   recordBet,
   bets,
   resetHistory,
@@ -87,9 +87,12 @@ const Pretask = ({ isTraining }) => {
     if (isTraining) {
       return;
     }
+    if (!loginAttendantS) {
+      return;
+    }
 
     const pretaskRecord = {
-      trialIndex: trialIndexS,
+      trialIndex: betResultHistoryS.length,
       ballAQty: ballAQtyS,
       resetHistory: resetHistoryS,
       betResultHistory: betResultHistoryS,
@@ -99,9 +102,8 @@ const Pretask = ({ isTraining }) => {
       missHistory: missHistoryS,
       reactionHistory: reactionHistoryS,
     };
-    if (loginAttendantS) {
-      await updatePretaskRecord(loginAttendantS.id, pretaskRecord);
-    }
+    await updatePretaskRecord(loginAttendantS.id, pretaskRecord);
+
   };
 
   const onSubmit = async () => {
@@ -124,8 +126,9 @@ const Pretask = ({ isTraining }) => {
     if (pretask && missHistoryS &&
       missHistoryS.filter(x => x).length >= pretask.missLimit) {
       if (isTraining) {
-        dispatch(removeData(pretask));
-        navigate(`/xp/${alias}/pretask/start`);
+        // dont do anything for training
+        //   dispatch(removeData(pretask));
+        //   navigate(`/xp/${alias}/pretask/start`);
       } else {
         navigate(`/xp/${alias}/pretask/payment`);
       }
@@ -134,8 +137,9 @@ const Pretask = ({ isTraining }) => {
     if (pretask && resetHistoryS &&
       resetHistoryS.length >= pretask.repeatLimit) {
       if (isTraining) {
-        dispatch(removeData(pretask));
-        navigate(`/xp/${alias}/pretask/start`);
+        // do nothing for training
+        // dispatch(removeData(pretask));
+        // navigate(`/xp/${alias}/pretask/start`);
       } else {
         navigate(`/xp/${alias}/pretask/payment`);
       }

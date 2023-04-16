@@ -26,6 +26,10 @@ const PretaskPage = () => {
 
   useEffect(() => {
     fetchPretask();
+
+    return () => {
+      dispatch(removeData());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -9,6 +9,13 @@ function isLastBet(betHistory, expected) {
     return isBet(betHistory[betHistory.length - 1], expected)
 }
 
+function filterOutMissed(betHistory) {
+    return _.filter(
+        _.filter(betHistory, bet => bet.length > 0),
+        bet => !(bet.length === 1 && bet[0] === '')
+    );
+}
+
 // #1 case
 function isAllSkip(betHistory) {
     for (let bets of betHistory) {
@@ -67,11 +74,11 @@ function isCase6(betHistory) {
         isAllSkip(_.slice(betHistory, 1))
 }
 
-function setNextBallAQty(state, val) {
+function setNextBallAQty(state, val, isMissed) {
     let nextVal = Math.max(0,
         Math.min(state.pretask.totalQty,
             state.ballAQty[state.trialIndex - 1] + val));
-    if (nextVal === 0 || nextVal === state.pretask.totalQty) {
+    if (!isMissed && (nextVal === 0 || nextVal === state.pretask.totalQty)) {
         return triggerReset(state);
     }
     state.ballAQty.push(nextVal);
@@ -114,7 +121,7 @@ const pretaskSlice = createSlice({
         recordBet: (state, action) => {
             const { bets, missed } = action.payload
             state.betHistory.push(bets);
-            state.reactionHistory.push(Date.now() - state.progressStartTime);
+            state.reactionHistory.push(missed ? null : Date.now() - state.progressStartTime);
             state.missHistory.push(missed);
             const randomNum = Math.round(Math.random() * 100)
             const betResult = randomNum < state.ballAQty[state.trialIndex] ?
@@ -176,13 +183,14 @@ const pretaskSlice = createSlice({
             // calculate next value based on the tree
             const lastResetIndex = current(state.resetHistory).length > 0 ?
                 _.last(current(state.resetHistory)) : 0;
-            const partialBetHistory = current(state.betHistory).slice(lastResetIndex);
+            let partialBetHistory = current(state.betHistory).slice(lastResetIndex);
+            partialBetHistory = filterOutMissed(partialBetHistory);
 
             const x = state.pretask.x
             if (current(state.missHistory)[state.trialIndex - 1]) {
                 // if last bet missed, then do nothing
                 // console.log('case missed')
-                setNextBallAQty(state, 0)
+                setNextBallAQty(state, 0, true)
             } else if (isAllSkip(partialBetHistory)) {
                 // console.log('case 1')
                 setNextBallAQty(state, x)
@@ -218,6 +226,11 @@ const pretaskSlice = createSlice({
             state.moneyOutcomeHistory = [];
             state.missHistory = [];
             state.reactionHistory = [];
+            state.bets = [];
+            state.betA = false;
+            state.betB = false;
+            state.betSkip = false;
+            
             state.ballAQty = [pretask.ballAQty];
         },
         removeData: (state, action) => {
@@ -231,6 +244,11 @@ const pretaskSlice = createSlice({
             state.missHistory = [];
             state.reactionHistory = [];
             state.ballAQty = [];
+            state.bets = [];
+            state.betA = false;
+            state.betB = false;
+            state.betSkip = false;
+            state.timerProgress = 0;
         },
         reset: (state, action) => {
             let { pretask, pretaskRecord } = action.payload;
@@ -248,6 +266,7 @@ const pretaskSlice = createSlice({
             state.moneyOutcomeHistory = pretaskRecord.moneyOutcomeHistory || [];
             state.missHistory = pretaskRecord.missHistory || [];
             state.reactionHistory = pretaskRecord.reactionHistory || [];
+            state.bets = [];
 
             if (state.ballAQty.length === 0) {
                 state.ballAQty = [pretask.ballAQty];
