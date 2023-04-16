@@ -29,6 +29,7 @@ const gameSlice = createSlice({
             // keep mul history
             state.choiceHistory[trialIndex] = choice || "";
             state.missHistory[trialIndex] = missed;
+            console.log(`recordChoice has trialIndex: ${trialIndex}, xpData.shift[${trialIndex + 2}]: ${xpData.shift[trialIndex + 2]}`)
             const isShift = xpData.shift[trialIndex + 1];
             let money = 0
             if (missed) {

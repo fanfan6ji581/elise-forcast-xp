@@ -39,7 +39,7 @@ export default function ValueChart({ xpData }) {
         labels = labels.slice(-lengthLimit);
     }
 
-    const dataValues1 = balloonValues && _.slice(balloonValues, labels[0], labels.length + labels[0]);
+    const dataValues1 = balloonValues && _.slice(balloonValues, labels[0] - 1, labels.length + labels[0] - 1);
     if (!showMoneyOutcomeS && dataValues1) {
         dataValues1.pop();
     }
@@ -55,7 +55,7 @@ export default function ValueChart({ xpData }) {
         ],
     };
 
-    const dataValues2 = balloonSpeed && _.slice(balloonSpeed, labels[0], labels.length + labels[0]);
+    const dataValues2 = balloonSpeed && _.slice(balloonSpeed, labels[0] - 1, labels.length + labels[0] - 1);
     if (!showMoneyOutcomeS && dataValues2) {
         dataValues2.pop();
     }
