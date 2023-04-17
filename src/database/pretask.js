@@ -7,11 +7,13 @@ const createPretask = (alias) => ({
     alias,
     created: Date.now(),
     totalQty: 100,
-    ballAQty: 50,
-    ballAWin: 4,
-    ballALose: -4,
-    ballBWin: 3,
-    ballBLose: -5,
+    ballALowerLimit: 10,
+    ballAUpperLimit: 60,
+    ballAQty: 25,
+    ballAWin: 3,
+    ballALose: -1,
+    ballBWin: 1,
+    ballBLose: -3,
     skip: 0,
     missLose: -1,
     x: 1,
@@ -21,6 +23,7 @@ const createPretask = (alias) => ({
     choiceDelay: 0,
     percentageEarning: 50,
     enablePretaskPlaying: false,
+    trainingSessionSeconds: 120,
 })
 
 const getPretask = async (alias) => {

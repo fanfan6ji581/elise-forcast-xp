@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 function extractPretaskData(attendant) {
     let { pretaskRecord, pickedPretaskOutcomeIndexes } = attendant;
     pickedPretaskOutcomeIndexes = pickedPretaskOutcomeIndexes || [];
@@ -15,6 +17,14 @@ function extractPretaskData(attendant) {
         return null;
     });
 
+    const resetIdxHistory = _.map(pretaskRecord.resetHistory, 'idx');
+    const resetStatusMap = {}
+    if (pretaskRecord.resetHistory.length) {
+        for (let { idx, status } of pretaskRecord.resetHistory) {
+            resetStatusMap[idx] = status
+        }
+    }
+
     for (let i = 0; i < pretaskRecord.ballAQty.length; i++) {
         rows.push(Object.assign(
             {
@@ -23,7 +33,8 @@ function extractPretaskData(attendant) {
                 bet: i < pretaskRecord.betHistory.length ? pretaskRecord.betHistory[i] : '-',
                 betResult: i < pretaskRecord.betResultHistory.length ? pretaskRecord.betResultHistory[i] : '-',
                 betChosen: i < pretaskRecord.betChosenHistory.length ? pretaskRecord.betChosenHistory[i] : '-',
-                reset: pretaskRecord.resetHistory.includes(i),
+                reset: resetIdxHistory.includes(i),
+                resetStatus: resetStatusMap[i],
                 moneyOutcome: i < pretaskRecord.moneyOutcomeHistory.length ? pretaskRecord.moneyOutcomeHistory[i] : null,
                 pickedOutcome: pickedPretaskOutcomeIndexes.includes(i) ? pretaskRecord.moneyOutcomeHistory[i] : null,
                 accumulateOutcome: i < accumulateOutcomeHistory.length ? accumulateOutcomeHistory[i] : null,

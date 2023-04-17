@@ -20,6 +20,16 @@ const schema = {
             "title": "Total number of ball A. e.g. n = 50",
             "default": "50"
         },
+        "ballALowerLimit": {
+            "type": "number",
+            "title": "Lower limit for ball A. e.g. n = 10",
+            "default": "10"
+        },
+        "ballAUpperLimit": {
+            "type": "number",
+            "title": "Upper limit of ball A. e.g. n = 60",
+            "default": "60"
+        },
         "repeatLimit": {
             "type": "integer",
             "title": "N, how many reset to terminate the trails",

@@ -9,6 +9,15 @@ function isLastBet(betHistory, expected) {
     return isBet(betHistory[betHistory.length - 1], expected)
 }
 
+function isLastBetEither(betHistory, expectedValues) {
+    for (let expected of expectedValues) {
+        if (isLastBet(betHistory, expected)) {
+            return true
+        }
+    }
+    return false;
+}
+
 function filterOutMissed(betHistory) {
     return _.filter(
         _.filter(betHistory, bet => bet.length > 0),
@@ -16,7 +25,6 @@ function filterOutMissed(betHistory) {
     );
 }
 
-// #1 case
 function isAllSkip(betHistory) {
     for (let bets of betHistory) {
         if (!isBet(bets, ["skip"])) {
@@ -26,66 +34,240 @@ function isAllSkip(betHistory) {
     return true;
 }
 
-// #2 case
-function isPrevAllSkipLastBlueOrIndiffBlue(betHistory) {
-    if (betHistory.length < 2) {
-        return false;
-    }
-    const prev = _.slice(betHistory, 0, betHistory.length - 1);
-    return isAllSkip(prev) &&
-        (isLastBet(betHistory, "a") || isLastBet(betHistory, ["a", "skip"]))
-}
-
-// #3 case
-function isCase2ThenAllSkip(betHistory) {
-    if (betHistory.length < 3) {
-        return false;
-    }
-
-    const allOthers = _.filter(betHistory, bet => !isBet(bet, ["skip"]));
-    const allSkips = _.filter(betHistory, bet => isBet(bet, ["skip"]));
-    return allOthers.length === 1 &&
-        allSkips.length === betHistory.length - 1 &&
-        isBet(betHistory[0], ["skip"]) &&
-        isLastBet(betHistory, ["skip"]) &&
-        (isLastBet(allOthers, "a") || isLastBet(allOthers, ["a", "skip"]))
-        ;
-}
-
-// #4 case
-function isAllBlue(betHistory) {
+function isAllG(betHistory) {
     for (let bets of betHistory) {
-        if (!isBet(bets, ["a"])) {
+        if (!isBet(bets, ["b"])) {
             return false;
         }
     }
     return true;
 }
 
-// #5 case only 1 line, ignore her
 
-// #6 case
-function isCase6(betHistory) {
-    if (betHistory.length < 2) {
-        return false;
+const isLastBorBS = betHistory => isLastBetEither(betHistory, [["a"], ["a", "skip"]])
+const isLastGorGS = betHistory => isLastBetEither(betHistory, [["b"], ["b", "skip"]])
+const isLastSorGS = betHistory => isLastBetEither(betHistory, [["skip"], ["b", "skip"]])
+const isLastBG = betHistory => isLastBet(betHistory, ["b", "a"])
+const isLastGS = betHistory => isLastBet(betHistory, ["b", "skip"])
+const isLastB = betHistory => isLastBet(betHistory, ["a"])
+const isLastG = betHistory => isLastBet(betHistory, ["b"])
+
+const is_AllS_BorBS = betHistory => betHistory.length >= 2 &&
+    isLastBorBS(betHistory) &&
+    isAllSkip(_.slice(betHistory, 0, betHistory.length - 1));
+
+const is_AllS_BorBS_B = betHistory => betHistory.length >= 3 &&
+    isLastBet(betHistory, ["a"]) &&
+    is_AllS_BorBS(_.slice(betHistory, 0, betHistory.length - 1));
+
+const is_OptionalAllS_hasB = betHistory => isLastBetEither(betHistory, [["a"], ["a", "b"], ["a", "skip"]]) &&
+    (betHistory.length === 1 ||
+        isAllSkip(_.slice(betHistory, 0, betHistory.length - 1)));
+
+const is_OptionalAllS_hasB_B = betHistory =>
+    isLastBetEither(betHistory, [["a"]]) &&
+    is_OptionalAllS_hasB(_.slice(betHistory, betHistory.length - 1));
+
+
+const is_AllS_GorGS = betHistory => betHistory.length >= 2 &&
+    isLastGorGS(betHistory) &&
+    isAllSkip(_.slice(betHistory, 0, betHistory.length - 1));
+
+const is_AllS_GorGS_G = betHistory => betHistory.length >= 3 &&
+    isLastBet(betHistory, ["b"]) &&
+    is_AllS_GorGS(_.slice(betHistory, 0, betHistory.length - 1));
+
+const is_GS_G = betHistory => betHistory.length === 2 &&
+    isLastBet(betHistory, ["b"]) &&
+    isLastGS(_.slice(betHistory, 0, betHistory.length - 1))
+
+const is_G_AllG = betHistory => betHistory.length >= 2 && isAllG(betHistory);
+const is_G_AllG_hasB = betHistory => betHistory.length >= 3 &&
+    isLastBetEither(betHistory, [["a"], ["a", "b"], ["a", "skip"]]) &&
+    is_G_AllG(_.slice(betHistory, 0, betHistory.length - 1));
+const is_G_AllG_hasB_B = betHistory => betHistory.length >= 4 &&
+    isLastB(betHistory) &&
+    is_G_AllG_hasB(_.slice(betHistory, 0, betHistory.length - 1));
+
+const is_G_AllG_GSorS = betHistory => betHistory.length >= 3 &&
+    isLastSorGS(betHistory) &&
+    is_G_AllG(_.slice(betHistory, 0, betHistory.length - 1));
+
+
+// #1 case first half
+function isCase1FirstHalf(betHistory, state) {
+    if (isAllSkip(betHistory)) {
+        return { result: true, diff: state.pretask.x }
     }
 
-    return isBet(betHistory[0], ["a", "skip"]) &&
-        isAllSkip(_.slice(betHistory, 1))
+    if (is_AllS_BorBS(betHistory)) {
+        return { result: true, diff: state.pretask.x }
+    }
+
+    if (is_AllS_BorBS_B(betHistory)) {
+        return { result: true, val: state.pretask.ballAQty - state.pretask.x }
+    }
+
+    return { result: false };
+}
+
+function findIdxFor_is_AllS_hasB_B(fullBetHistory) {
+    for (let i = 2; i < fullBetHistory.length; i++) {
+        let betHistory = _.slice(fullBetHistory, 0, i);
+        if (is_AllS_BorBS_B(betHistory)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// #1 case 2nd half
+function isCase1SecondHalf(betHistory, state) {
+    // check if it cantains #1 case first half
+    const idx = findIdxFor_is_AllS_hasB_B(betHistory);
+    if (idx === -1) {
+        return { result: false }
+    }
+    const restBetHistory = _.slice(betHistory, idx);
+    if (isAllSkip(restBetHistory)) {
+        return { result: true, diff: -state.pretask.x }
+    }
+
+    if (restBetHistory.length === 1 && isLastGorGS(restBetHistory)) {
+        return { result: true, diff: -state.pretask.x }
+    }
+
+    if (is_AllS_GorGS(restBetHistory)) {
+        return { result: true, diff: -state.pretask.x }
+    }
+
+    if (is_AllS_GorGS_G(restBetHistory)) {
+        return { result: true, finish: true }
+    }
+
+    return { result: false }
+}
+
+// #2 case
+function isCase2First(betHistory, state) {
+    if (betHistory.length === 1 && isLastBG(betHistory)) {
+        return { result: true, diff: -state.pretask.x }
+    }
+
+    if (betHistory.length === 2 &&
+        isLastBet(betHistory, ["b"]) &&
+        isLastBG(_.slice(betHistory, 0, betHistory.length - 1))
+    ) {
+        return { result: true, val: state.pretask.ballAQty + state.pretask.x }
+    }
+
+    if (betHistory.length === 3 &&
+        isLastBet(betHistory, ["a"]) &&
+        isLastBet(_.slice(betHistory, 0, betHistory.length - 1), ["b"]) &&
+        isLastBG(_.slice(betHistory, 0, betHistory.length - 2))
+    ) {
+        return { result: true, finish: true }
+    }
+
+    return { result: false }
+}
+
+function isCase2Second(betHistory, state) {
+    if (betHistory.length === 1 && isLastGS(betHistory)) {
+        return { result: true, diff: -state.pretask.x }
+    }
+
+    if (is_GS_G(betHistory)) {
+        return { result: true, val: state.pretask.ballAQty + state.pretask.x }
+    }
+
+    if (betHistory.length >= 3 &&
+        is_GS_G(_.slice(betHistory, 0, 2))
+    ) {
+        const restBetHistory = _.slice(betHistory, 2);
+        if (restBetHistory.length === 1 && isLastBorBS(restBetHistory)) {
+            return { result: true, diff: state.pretask.x }
+        }
+        if (isAllSkip(restBetHistory)) {
+            return { result: true, diff: state.pretask.x }
+        }
+        if (is_AllS_BorBS(restBetHistory)) {
+            return { result: true, diff: state.pretask.x }
+        }
+        if (is_AllS_BorBS_B(restBetHistory)) {
+            return { result: true, finish: true }
+        }
+    }
+
+    return { result: false }
+}
+
+function findIdxFor_is_G_AllG_GSorS(fullBetHistory) {
+    for (let i = 2; i < fullBetHistory.length; i++) {
+        let betHistory = _.slice(fullBetHistory, 0, i);
+        if (is_G_AllG_GSorS(betHistory)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function isCase3First(betHistory, state) {
+    if (betHistory.length === 1 && isLastG(betHistory)) {
+        return { result: true, diff: -state.pretask.x }
+    }
+
+    if (betHistory.length === 2 && is_G_AllG(betHistory)) {
+        return { result: true, val: state.pretask.ballAQty + state.pretask.x }
+    }
+
+    if (is_G_AllG(betHistory)) {
+        return { result: true, diff: state.pretask.x }
+    }
+
+    if (is_G_AllG_hasB(betHistory)) {
+        return { result: true, diff: state.pretask.x }
+    }
+
+    if (is_G_AllG_hasB_B(betHistory)) {
+        return { result: true, finish: true }
+    }
+
+    if (is_G_AllG_GSorS(betHistory)) {
+        return { result: true, diff: state.pretask.x }
+    }
+
+    const idx = findIdxFor_is_G_AllG_GSorS(betHistory);
+    if (idx !== -1) {
+        const restBetHistory = _.slice(betHistory, idx);
+        if (isAllSkip(restBetHistory)) {
+            return { result: true, diff: state.pretask.x }
+        }
+
+        if (is_OptionalAllS_hasB(restBetHistory)) {
+            return { result: true, diff: state.pretask.x }
+        }
+
+        if (is_OptionalAllS_hasB_B(restBetHistory)) {
+            return { result: true, finish: true }
+        }
+
+    }
+    return { result: false }
 }
 
 function setNextBallAQty(state, val, isMissed) {
     let nextVal = Math.max(0,
         Math.min(state.pretask.totalQty,
-            state.ballAQty[state.trialIndex - 1] + val));
-    if (!isMissed && (nextVal === 0 || nextVal === state.pretask.totalQty)) {
+            state.ballAQty[state.ballAQty.length - 1] + val));
+    if (!isMissed && (nextVal < state.pretask.ballALowerLimit || nextVal > state.pretask.ballAUpperLimit)) {
         return triggerReset(state);
     }
     state.ballAQty.push(nextVal);
 }
 
-function triggerReset(state) {
-    state.resetHistory.push(state.trialIndex);
+function triggerReset(state, status) {
+    state.resetHistory.push({ idx: state.trialIndex, status: !!status });
     state.ballAQty.push(state.pretask.ballAQty);
 }
 
@@ -105,6 +287,7 @@ const initialState = {
     pretask: {},
     ballAQty: [],
     resetHistory: [],
+    resetStatusHistory: [],
     betResultHistory: [],
     betHistory: [],
     betChosenHistory: [],
@@ -179,40 +362,43 @@ const pretaskSlice = createSlice({
             state.betB = false;
             state.betSkip = false;
 
-
             // calculate next value based on the tree
             const lastResetIndex = current(state.resetHistory).length > 0 ?
-                _.last(current(state.resetHistory)) : 0;
+                _.last(current(state.resetHistory)).idx : 0;
             let partialBetHistory = current(state.betHistory).slice(lastResetIndex);
             partialBetHistory = filterOutMissed(partialBetHistory);
 
-            const x = state.pretask.x
             if (current(state.missHistory)[state.trialIndex - 1]) {
                 // if last bet missed, then do nothing
                 // console.log('case missed')
                 setNextBallAQty(state, 0, true)
-            } else if (isAllSkip(partialBetHistory)) {
-                // console.log('case 1')
-                setNextBallAQty(state, x)
-            } else if (isPrevAllSkipLastBlueOrIndiffBlue(partialBetHistory)) {
-                // console.log('case 2')
-                setNextBallAQty(state, -x)
-            } else if (isCase2ThenAllSkip(partialBetHistory)) {
-                // console.log('case 3')
-                setNextBallAQty(state, -x)
-            } else if (isAllBlue(partialBetHistory)) {
-                // console.log('case 4')
-                setNextBallAQty(state, -x)
-            } else if (partialBetHistory.length === 1 && isLastBet(partialBetHistory, ["a", "skip"])) {
-                // console.log('case 5')
-                setNextBallAQty(state, -x)
-            } else if (isCase6(partialBetHistory)) {
-                // console.log('case 6')
-                setNextBallAQty(state, -x)
             } else {
-                // console.log('reset')
+                const checkingFns = [
+                    isCase1FirstHalf,
+                    isCase1SecondHalf,
+                    isCase2First,
+                    isCase2Second,
+                    isCase3First,
+                ]
+
+                for (let checkingFn of checkingFns) {
+                    let { result, diff, val, finish } = checkingFn(partialBetHistory, state);
+                    if (result) {
+                        if (finish) {
+                            debugger
+                            triggerReset(state, true);
+                        } else if (diff) {
+                            setNextBallAQty(state, diff)
+                        } else if (val) {
+                            state.ballAQty.push(val);
+                        }
+                        return;
+                    }
+                }
+
                 triggerReset(state);
             }
+
         },
         resetTraining: (state, action) => {
             let { pretask } = action.payload;
@@ -230,7 +416,7 @@ const pretaskSlice = createSlice({
             state.betA = false;
             state.betB = false;
             state.betSkip = false;
-            
+
             state.ballAQty = [pretask.ballAQty];
         },
         removeData: (state, action) => {

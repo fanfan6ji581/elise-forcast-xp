@@ -19,6 +19,12 @@ const columns = [
     valueFormatter: (p) => `${p.value ? `true` : "-"}`,
     width: 60
   },
+  {
+    field: "resetStatus",
+    headerName: "Reset Status",
+    valueFormatter: (p) => `${p.value != null ? `${p.value}` : "-"}`,
+    width: 120
+  },
   { field: "reaction", headerName: "Reaction ms", width: 95 },
   {
     field: "moneyOutcome",
