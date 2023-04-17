@@ -330,7 +330,7 @@ const pretaskSlice = createSlice({
                 if (betResult === 'b' && bet === 'a') {
                     moneyOutcome = state.pretask.ballALose;
                 }
-                if (betResult === 'b' && bet === 'a') {
+                if (betResult === 'a' && bet === 'b') {
                     moneyOutcome = state.pretask.ballBLose;
                 }
                 if (betResult === 'b' && bet === 'b') {
@@ -385,7 +385,6 @@ const pretaskSlice = createSlice({
                     let { result, diff, val, finish } = checkingFn(partialBetHistory, state);
                     if (result) {
                         if (finish) {
-                            debugger
                             triggerReset(state, true);
                         } else if (diff) {
                             setNextBallAQty(state, diff)
