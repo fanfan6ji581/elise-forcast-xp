@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Visibility as VisibilityIcon, Delete as DeleteIcon, Login as LoginIcon, FileDownload } from '@mui/icons-material';
 import { DataGrid } from '@mui/x-data-grid';
-// import moment from 'moment';
+import moment from 'moment';
 import { generateBalloonData } from '../../util/xp_data'
 import { generateXPZip, generatePretaskZip } from '../../util/generate_zip'
 import { Link, useParams } from 'react-router-dom';
@@ -45,10 +45,7 @@ const Attendants = ({ xp }) => {
     const columns = [
         { field: 'username', headerName: 'Username', width: 250 },
         { field: 'password', headerName: 'Password', width: 200 },
-        // {
-        //     field: 'created', headerName: 'Created', width: 160,
-        //     valueFormatter: params => moment(params?.value).format("YYYY-MM-DD HH:mm:ss")
-        // },
+
         {
             field: 'action', headerName: 'Actions', width: 300,
             sortable: false,
@@ -79,6 +76,10 @@ const Attendants = ({ xp }) => {
                     </>
                 )
             },
+        },
+        {
+            field: 'created', headerName: 'Created', width: 160,
+            valueFormatter: params => moment(params?.value).format("YYYY-MM-DD HH:mm:ss")
         },
     ];
 

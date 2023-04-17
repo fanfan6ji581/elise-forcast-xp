@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Form from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
 import { doc, writeBatch, } from "firebase/firestore";
@@ -42,6 +43,10 @@ const DataSeries = ({ xp }) => {
         { field: 'name', headerName: 'Name', width: 100 },
         { field: 'asset', headerName: 'Asset', width: 5000 },
         { field: 'volume', headerName: 'Volume', width: 4000 },
+        {
+            field: 'created', headerName: 'Created', width: 160,
+            valueFormatter: params => moment(params?.value).format("YYYY-MM-DD HH:mm:ss")
+        },
     ];
 
     const onAddData = async ({ formData }, e) => {
@@ -57,7 +62,8 @@ const DataSeries = ({ xp }) => {
             name: formData.name,
             asset,
             volume,
-            xp_alias: alias
+            xp_alias: alias,
+            created: Date.now(),
         })
 
         await fetchDatas();
