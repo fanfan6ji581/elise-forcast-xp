@@ -24,6 +24,21 @@ const getAttendant = async (id) => {
     return Object.assign({ id: d.id }, d.data())
 };
 
+const getAttendantByLogin = async (alias, username, password) => {
+    const snapshot = await getDocs(query(collection(db, "attendant"),
+        where("xp_alias", "==", alias),
+        where("username", "==", username),
+        where("password", "==", password),
+    ));
+
+    const attendants = snapshot.docs.map(d => (Object.assign({ id: d.id }, d.data())));
+    if (attendants.length === 1) {
+        return attendants[0]
+    } else {
+        return null;
+    }
+};
+
 const getAttendants = async (alias) => {
     const snapshot = await getDocs(query(collection(db, "attendant"), where("xp_alias", "==", alias)));
     const attendants = snapshot.docs.map(d => (Object.assign({ id: d.id }, d.data())));
@@ -34,5 +49,6 @@ export {
     updateAttendant,
     updatePretaskRecord,
     getAttendant,
+    getAttendantByLogin,
     getAttendants,
 }

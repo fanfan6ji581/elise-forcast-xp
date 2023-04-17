@@ -132,12 +132,13 @@ export default function ValueChart({ xpData }) {
             y: {
                 display: false,
                 ticks: {
-                    beginAtZero: true,
+                    // beginAtZero: true,
                     font: {
                         size: 14,
                     },
                 },
-                suggestedMax: 20
+                suggestedMax: _.max(balloonSpeed),
+                suggestedMin: _.min(balloonSpeed),
             },
             x: {
                 ticks: {

@@ -1,13 +1,14 @@
 import Form from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
-import { Grid, Alert, Typography } from "@mui/material";
+import { Grid, Alert, Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { useState } from "react";
-import { getDocs, collection, query, where } from "firebase/firestore";
 import { useParams } from 'react-router-dom';
-import db from "../../database/firebase";
 import { login } from "../../slices/attendantSlice";
+import { getAttendantByLogin, updateAttendant } from "../../database/attendant";
+import { getData } from "../../database/data";
+import { generateBalloonDataFromDataSeries } from "../../util/xp_data";
 
 const uiSchema = {
     "password": {
@@ -29,6 +30,7 @@ const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const [errorMsg, setErrorMsg] = useState('');
+    const [loadingOpen, setLoadingOpen] = useState(false);
 
     const schema = {
         "type": "object",
@@ -53,34 +55,48 @@ const LoginPage = () => {
 
     const onLogin = async ({ formData }, e) => {
         e.preventDefault();
+        setLoadingOpen(true);
         setErrorMsg('');
         const { username, password } = formData;
-
-        const snapshot = await getDocs(query(collection(db, "attendant"),
-            where("xp_alias", "==", alias),
-            where("username", "==", username),
-            where("password", "==", password),
-        ));
-
-        const attendants = snapshot.docs.map(d => (Object.assign({ id: d.id }, d.data())));
-        if (attendants.length === 1) {
-            dispatch(login(attendants[0]));
-            navigate(`/xp/${alias}/instruction`)
-        } else {
+        let attendant = await getAttendantByLogin(alias, username, password);
+        if (!attendant) {
+            setLoadingOpen(false);
             setErrorMsg("Invalid login")
+            return;
         }
+
+        if (!attendant.xpData && attendant.dataId) {
+            // initialize xp data during login
+            const dataSeries = await getData(attendant.dataId);
+            const data = generateBalloonDataFromDataSeries(dataSeries);
+            attendant = Object.assign({}, attendant, data);
+            await updateAttendant(attendant.id, data);
+        }
+
+        dispatch(login(attendant));
+        navigate(`/xp/${alias}/instruction`)
     }
 
     return (
-        <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={8} sm={6} md={4} lg={3}>
-                <br />
-                <br />
-                <Typography variant='h3' align="center">Guest Login</Typography >
-                {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
-                <Form schema={schema} uiSchema={uiSchema} onSubmit={onLogin} validator={validator} />
+        <>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loadingOpen}
+                onClick={() => setLoadingOpen(false)}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={8} sm={6} md={4} lg={3}>
+                    <br />
+                    <br />
+                    <Typography variant='h3' align="center">Guest Login</Typography >
+                    {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+                    <Form schema={schema} uiSchema={uiSchema} onSubmit={onLogin} validator={validator} />
+                </Grid>
             </Grid>
-        </Grid>
+
+        </>
     )
 }
 

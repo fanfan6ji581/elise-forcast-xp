@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import db from "../../database/firebase";
 import { login } from "../../slices/attendantSlice";
 import { useState, useEffect } from "react"
-import { generateBalloonData } from '../../util/xp_data'
+// import { generateBalloonData } from '../../util/xp_data'
 
 const uiSchema = {
     "ui:options": {
@@ -87,18 +87,20 @@ const SignupPage = () => {
             return;
         }
 
-        const data = generateBalloonData(xp)
-        const attendant = Object.assign({}, data, {
-            username,
-            password,
-            gender,
-            age,
-            major,
-            created: Date.now(),
-            xp_alias: xp.alias,
-            xp_id: xp.id,
-            xpConfig: xp,
-        });
+        // const data = generateBalloonData(xp)
+        const attendant = Object.assign({},
+            // data,
+            {
+                username,
+                password,
+                gender,
+                age,
+                major,
+                created: Date.now(),
+                xp_alias: xp.alias,
+                xp_id: xp.id,
+                xpConfig: xp,
+            });
 
         const docRef = await addDoc(collection(db, "attendant"), attendant);
         attendant.id = docRef.id;

@@ -1,7 +1,7 @@
 import db from "./firebase";
 import {
     getDoc, doc, updateDoc, addDoc,
-    getDocs, collection, where, query
+    getDocs, collection, where, query, writeBatch
 } from "firebase/firestore";
 
 const TABLE = "data";
@@ -28,9 +28,21 @@ const getData = async (id) => {
     return Object.assign({ id: d.id }, d.data())
 };
 
+const deleteDataForXp = async (alias) => {
+    // delete attendents
+    const snapshot = await getDocs(query(collection(db, TABLE), where("xp_alias", "==", alias)));
+    const batch = writeBatch(db);
+    snapshot.docs.forEach((document) => {
+        batch.delete(document.ref);
+    });
+    await batch.commit();
+
+}
+
 export {
     addData,
     updateData,
     getAllDataForXP,
     getData,
+    deleteDataForXp,
 }

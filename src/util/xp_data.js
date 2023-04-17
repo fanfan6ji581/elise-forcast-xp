@@ -1,6 +1,53 @@
+import * as _ from "lodash";
+
 function fractionParse(a) {
     const split = a.split('/');
     return split[0] / split[1];
+}
+
+function generateBalloonDataFromDataSeries(dataSeries) {
+
+    const { asset, volume } = dataSeries;
+    const length = asset.length - 100;
+
+    // calculate aberration and shift
+    const balloonValues = _.slice(asset, 99);
+    const balloonSpeed = _.slice(volume, 99);
+    const aberration = Array.from({ length: length + 1 }).fill(0);
+    const shift = Array.from({ length: length + 1 }).fill(0);
+
+    for (let i = 1; i <= balloonValues.length; i++) {
+        if (balloonValues[i] * balloonValues[i - 1] < 0 &&
+            balloonSpeed[i - 1] === 0 &&
+            aberration[i - 1] === 0) {
+            aberration[i] = 1
+        }
+        if (balloonValues[i] * balloonValues[i - 1] < 0 &&
+            balloonSpeed[i - 1] !== 0 &&
+            balloonValues[i] * balloonValues[i + 1] > 0) {
+            shift[i] = 1
+        }
+    }
+
+    return {
+        xpData: Object.assign({}, {
+            asset,
+            volume,
+            balloonValues,
+            balloonSpeed,
+            aberration,
+            shift,
+        }),
+        xpRecord: {
+            // data recordings
+            trialIndex: -1,
+            reactionHistory: Array.from({ length }).fill(null),
+            choiceHistory: Array.from({ length }).fill(0),
+            outcomeHistory: Array.from({ length }).fill(0),
+            missHistory: Array.from({ length }).fill(false),
+        },
+        pickedOutcomeIndexes: [],
+    };
 }
 
 function generateBalloonData(xp) {
@@ -197,4 +244,9 @@ const calcuateCorrectness = (attendant) => {
     }
 }
 
-export { generateBalloonData, extractXpData, calcuateCorrectness };
+export {
+    generateBalloonDataFromDataSeries,
+    generateBalloonData,
+    extractXpData,
+    calcuateCorrectness,
+};

@@ -86,6 +86,7 @@ const gameSlice = createSlice({
             // random generated xpData
             const { xpData } = generateBalloonData(xpConfig);
             state.xpData = xpData;
+            state.xpData.balloonSpeed = state.xpData.balloonSpeed.map(v => v / 100);
             // state.xpConfig = xpConfig;
 
             // reset

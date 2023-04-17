@@ -11,7 +11,7 @@ import {
 import { Visibility as VisibilityIcon, Delete as DeleteIcon, Login as LoginIcon, FileDownload } from '@mui/icons-material';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
-import { generateBalloonData } from '../../util/xp_data'
+// import { generateBalloonData } from '../../util/xp_data'
 import { generateXPZip, generatePretaskZip } from '../../util/generate_zip'
 import { Link, useParams } from 'react-router-dom';
 import AttendantsInfo from './AttendantsInfo';
@@ -117,16 +117,18 @@ const Attendants = ({ xp }) => {
         });
 
         for (let i = 0; i < formData.count; i++) {
-            const data = generateBalloonData(xp);
+            // const data = generateBalloonData(xp);
 
-            const attendant = Object.assign({}, data, {
-                username: `guest${zeroPad(maxGuestIndex + i + 1, 2)}`,
-                password: Math.random().toString(36).slice(-6),
-                created: Date.now(),
-                xp_alias: xp.alias,
-                xp_id: xp.id,
-                xpConfig: xp,
-            });
+            const attendant = Object.assign({},
+                // data,
+                {
+                    username: `guest${zeroPad(maxGuestIndex + i + 1, 2)}`,
+                    password: Math.random().toString(36).slice(-6),
+                    created: Date.now(),
+                    xp_alias: xp.alias,
+                    xp_id: xp.id,
+                    xpConfig: xp,
+                });
             const ref = doc(collection(db, "attendant"));
             batch.set(ref, attendant);
         }

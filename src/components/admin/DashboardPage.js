@@ -9,6 +9,7 @@ import Form from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { deleteDataForXp } from '../../database/data';
 
 const DashboardPage = () => {
     const [xps, setXps] = useState([]);
@@ -29,7 +30,7 @@ const DashboardPage = () => {
                     if (!window.confirm(`Are you sure to delete "${xp.alias}"?`)) {
                         return;
                     }
-                    // delete attdents
+                    // delete attendents
                     const snapshot = await getDocs(query(collection(db, "attendant"), where("xp_alias", "==", xp.alias)));
                     const batch = writeBatch(db);
                     snapshot.docs.forEach((document) => {
@@ -44,6 +45,9 @@ const DashboardPage = () => {
                     const xpDocRef = doc(db, "xp", xp.id)
                     await deleteDoc(xpDocRef);
                     setXps(xps.filter(x => x.id !== xp.id))
+
+                    // delete data series
+                    await deleteDataForXp(xp.alias);
 
                 }
                 const onLock = async (e) => {
@@ -135,7 +139,7 @@ const DashboardPage = () => {
             outcomeShowTime: 2000,
             afkTimeout: 4000,
             afkTimeoutCost: 1,
-            numberOfTrials: 400,
+            numberOfTrials: 200,
             percentageEarning: 50,
             trainingSessionSeconds: 120,
             historySessionSeconds: 120,

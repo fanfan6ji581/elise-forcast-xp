@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import TrainingTimer from './TrainingTimer';
 import { loginAttendant } from "../../../slices/attendantSlice";
 import { xpConfigS } from "../../../slices/gameSlice";
@@ -46,8 +47,8 @@ const TrialHistoryPage = () => {
     }
 
     const onFinish = async () => {
-        console.log('onFinish')
-        // navigate(`/xp/${alias}/quiz`)
+        // console.log('onFinish')
+        navigate(`/xp/${alias}/count-down`)
     }
 
     useEffect(() => {
@@ -62,7 +63,10 @@ const TrialHistoryPage = () => {
     useEffect(() => {
     }, [xpConfig])
 
-    const { balloonValues, balloonSpeed } = loginAttendantS.xpData;
+    const { asset, volume } = loginAttendantS.xpData;
+    const balloonValues = _.slice(asset, 0, 100);
+    const balloonSpeed = _.slice(volume, 0, 100);
+
 
     let labels = Array.from({ length: balloonValues.length }, (_, i) => i + 1);
     const data = {
@@ -149,11 +153,11 @@ const TrialHistoryPage = () => {
                 //     enabled: true,
                 //     mode: 'x',
                 // },
-                pan: {
-                    enabled: true,
-                    mode: 'x',
-                    threshold: 200
-                },
+                // pan: {
+                //     enabled: true,
+                //     mode: 'x',
+                //     threshold: 200
+                // },
             }
         },
     };
@@ -172,7 +176,8 @@ const TrialHistoryPage = () => {
                         size: 14,
                     },
                 },
-                suggestedMax: 20
+                suggestedMax: _.max(balloonSpeed),
+                suggestedMin: _.min(balloonSpeed),
             },
             x: {
                 ticks: {
@@ -221,13 +226,13 @@ const TrialHistoryPage = () => {
                         <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} ref={chart2Ref} />
                     </Box>
 
-                    <Button variant='outlined' onClick={reset}>Reset zoom</Button>
-
+                    {false &&
+                        <Button variant='outlined' onClick={reset}>Reset zoom</Button>
+                    }
                     {xpConfig.historySessionSeconds &&
                         <TrainingTimer trainingSessionSeconds={xpConfig.historySessionSeconds} onFinish={onFinish} text={"Time left"} />
                     }
                 </Grid>
-
             </Grid>
         </Container>
     )

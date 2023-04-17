@@ -1,7 +1,7 @@
 import { getDocs, collection, query, where } from "firebase/firestore";
 import db from "../../database/firebase";
 import { useEffect, useState } from "react";
-import { Container, Grid, Typography, Alert, TextField, Box, Tab } from "@mui/material";
+import { Container, Grid, Typography, Alert, Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Link, useParams } from 'react-router-dom';
 import AttendantDataTable from "./AttendantDataTable";
@@ -74,28 +74,11 @@ const Attendent = () => {
                                 </TabPanel>
 
                                 <TabPanel value="2">
-                                    <AttendantDataTable attendant={attendant} />
-                                    <br />
-                                    <TextField variant="standard" fullWidth sx={{ my: 2 }}
-                                        label="Number of abberations"
-                                        defaultValue={`${attendant.xpData._numAbberations} / ${xp.numberOfTrials} = ${attendant.xpData._numAbberations / xp.numberOfTrials}`}
-                                        InputProps={{ readOnly: true }} />
-                                    <TextField variant="standard" fullWidth sx={{ my: 2 }}
-                                        label="Times entered Dangerzone"
-                                        defaultValue={`${attendant.xpData._numDangerzone} / ${xp.numberOfTrials} = ${attendant.xpData._numDangerzone / xp.numberOfTrials}`}
-                                        InputProps={{ readOnly: true }} />
-                                    <TextField variant="standard" fullWidth sx={{ my: 2 }}
-                                        label="Trial n Dangerzone reset"
-                                        defaultValue={JSON.stringify(attendant.xpData._dangerZoneSpeedReset)}
-                                        InputProps={{ readOnly: true }} />
-                                    <TextField variant="standard" fullWidth sx={{ my: 2 }}
-                                        label="Trial n Dangerzone reset % chance"
-                                        defaultValue={JSON.stringify(attendant.xpData.chances)}
-                                        InputProps={{ readOnly: true }} />
-                                    <TextField variant="standard" fullWidth sx={{ my: 2 }}
-                                        label="Trial n Dangerzone reset expected"
-                                        defaultValue={JSON.stringify(attendant.xpData._dangerZoneResetCalc)}
-                                        InputProps={{ readOnly: true }} />
+                                    {attendant.xpData &&
+                                        <AttendantDataTable attendant={attendant} />}
+                                    {!attendant.xpData &&
+                                        <Typography variant='h6'>No XP Data yet, please assign a data series, then wait attend to login to view this page</Typography>
+                                    }
                                 </TabPanel>
                                 <TabPanel value="3">
                                     <AttendantInfo attendant={attendant} />
