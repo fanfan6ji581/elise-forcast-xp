@@ -13,6 +13,7 @@ import { getPretask } from "../../database/pretask"
 import BalloonXPConfig from './BalloonXPConfig';
 import PretaskConfig from './PretaskConfig';
 import Attendants from './Attendants';
+import DataSeries from './DataSeries';
 import { Link } from 'react-router-dom';
 
 const Experiment = () => {
@@ -126,6 +127,7 @@ const Experiment = () => {
                                         <Tab label="Pretask Config" value="1" />
                                         <Tab label="XP Config" value="2" />
                                         <Tab label="Attendants" value="3" />
+                                        <Tab label="Data Series" value="4" />
                                     </TabList>
                                 </Box>
                                 <TabPanel value="1">
@@ -136,6 +138,9 @@ const Experiment = () => {
                                 </TabPanel>
                                 <TabPanel value="3">
                                     <Attendants xp={xp} />
+                                </TabPanel>
+                                <TabPanel value="4">
+                                    <DataSeries xp={xp} />
                                 </TabPanel>
                             </TabContext>
                         </Box>

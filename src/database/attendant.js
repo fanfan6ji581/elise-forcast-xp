@@ -1,6 +1,7 @@
 import db from "./firebase";
 import {
-    getDoc, doc, updateDoc
+    getDoc, doc, updateDoc,
+    getDocs, collection, query, where,
 } from "firebase/firestore";
 
 const TABLE = "attendant";
@@ -23,8 +24,15 @@ const getAttendant = async (id) => {
     return Object.assign({ id: d.id }, d.data())
 };
 
+const getAttendants = async (alias) => {
+    const snapshot = await getDocs(query(collection(db, "attendant"), where("xp_alias", "==", alias)));
+    const attendants = snapshot.docs.map(d => (Object.assign({ id: d.id }, d.data())));
+    return attendants;
+};
+
 export {
     updateAttendant,
     updatePretaskRecord,
     getAttendant,
+    getAttendants,
 }

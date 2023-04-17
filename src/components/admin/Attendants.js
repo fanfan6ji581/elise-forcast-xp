@@ -1,19 +1,22 @@
 import Form from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
-import { getDocs, doc, writeBatch, collection, query, where } from "firebase/firestore";
+import { doc, writeBatch, collection } from "firebase/firestore";
 import db from "../../database/firebase";
 import { useEffect, useState } from "react";
 import {
     Grid, Typography, IconButton, Button, Tooltip, Divider,
-    Dialog, DialogActions, DialogContent, Backdrop, CircularProgress
+    Dialog, DialogActions, DialogContent, Backdrop, CircularProgress,
+    Select, MenuItem, FormControl, InputLabel,
 } from "@mui/material";
 import { Visibility as VisibilityIcon, Delete as DeleteIcon, Login as LoginIcon, FileDownload } from '@mui/icons-material';
 import { DataGrid } from '@mui/x-data-grid';
-import moment from 'moment';
+// import moment from 'moment';
 import { generateBalloonData } from '../../util/xp_data'
 import { generateXPZip, generatePretaskZip } from '../../util/generate_zip'
 import { Link, useParams } from 'react-router-dom';
 import AttendantsInfo from './AttendantsInfo';
+import { getAttendants, updateAttendant } from '../../database/attendant';
+import { getAllDataForXP } from '../../database/data';
 
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
@@ -34,23 +37,39 @@ const schema = {
 const Attendants = ({ xp }) => {
     const { alias } = useParams();
     const [attendants, setAttendants] = useState([]);
+    const [datas, setDatas] = useState([]);
     const [selectionModel, setSelectionModel] = useState([]);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [loadingOpen, setLoadingOpen] = useState(true);
 
     const columns = [
-        { field: 'username', headerName: 'Username', width: 150 },
-        { field: 'password', headerName: 'Password', width: 150 },
+        { field: 'username', headerName: 'Username', width: 250 },
+        { field: 'password', headerName: 'Password', width: 200 },
+        // {
+        //     field: 'created', headerName: 'Created', width: 160,
+        //     valueFormatter: params => moment(params?.value).format("YYYY-MM-DD HH:mm:ss")
+        // },
         {
-            field: 'created', headerName: 'Created', width: 200,
-            valueFormatter: params => moment(params?.value).format("YYYY-MM-DD HH:mm:ss")
-        },
-        {
-            field: 'action', headerName: 'Actions', width: 200,
+            field: 'action', headerName: 'Actions', width: 300,
             sortable: false,
             renderCell: (params) => {
                 return (
                     <>
+                        <FormControl variant="standard" fullWidth>
+                            <InputLabel>Data Series</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                defaultValue=""
+                                value={params.row.dataId}
+                                label="Data Series"
+                                onChange={(event) => handleDataSeriesAssign(params.row.id, event.target.value, params.row)}
+                            >
+                                {datas.map((data, idx) =>
+                                    <MenuItem key={idx} value={data.id}>{data.name}</MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
+
                         <Tooltip title="View">
                             <IconButton component={Link} to={`/admin/xp/${params.row.xp_alias}/attendant/${params.row.username}`}><VisibilityIcon /></IconButton>
                         </Tooltip>
@@ -63,11 +82,24 @@ const Attendants = ({ xp }) => {
         },
     ];
 
+    const handleDataSeriesAssign = async (attendantId, dataId, attendant) => {
+        await updateAttendant(attendantId, {
+            dataId
+        })
+        await fetchAttendants();
+        // attendant.dataId = dataId;
+        // setAttendants(attendants);
+    }
+
     const fetchAttendants = async () => {
-        const snapshot = await getDocs(query(collection(db, "attendant"), where("xp_alias", "==", alias)));
-        const attendants = snapshot.docs.map(d => (Object.assign({ id: d.id }, d.data())));
+        setLoadingOpen(true);
+        const attendants = await getAttendants(alias);
         setAttendants(attendants);
         setLoadingOpen(false);
+    };
+
+    const fetchDatas = async () => {
+        setDatas(await getAllDataForXP(alias));
     };
 
     const onCreateAttendants = async ({ formData }, e) => {
@@ -130,6 +162,7 @@ const Attendants = ({ xp }) => {
 
     useEffect(() => {
         fetchAttendants();
+        fetchDatas();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
