@@ -28,18 +28,35 @@ ChartJS.register(
 export default function ValueChart({ xpData }) {
     const showMoneyOutcomeS = useSelector(showMoneyOutcome);
     const trialIndexS = useSelector(trialIndex);
-    const { balloonValues, balloonSpeed } = xpData;
+    const { balloonValues, balloonSpeed, asset, volume } = xpData;
 
-    let labels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 2) }, (_, i) => i + 1);
+    let originalLabels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 2) }, (_, i) => i);
+    let labels = _.clone(originalLabels);
     let lengthLimit = 50;
-    // if (showMoneyOutcomeS) {
-    //     lengthLimit++;
-    // }
+    let originalLabelLength = labels.length
+
+    // add history
+    if (originalLabelLength < lengthLimit) {
+        labels = _.concat(Array.from({ length: lengthLimit - originalLabelLength },
+            (_, i) => '' //100 + labels.length - lengthLimit + i
+        ), labels)
+    }
+
     if (labels.length > lengthLimit) {
         labels = labels.slice(-lengthLimit);
     }
 
-    const dataValues1 = balloonValues && _.slice(balloonValues, labels[0] - 1, labels.length + labels[0] - 1);
+    if (originalLabels.length > lengthLimit) {
+        originalLabels = originalLabels.slice(-lengthLimit);
+    }
+
+    let dataValues1 = balloonValues && _.slice(balloonValues, originalLabels[0],
+        Math.min(originalLabelLength, lengthLimit) + originalLabels[0]);
+    if (originalLabelLength < lengthLimit) {
+        const historyValue1 = _.slice(asset, originalLabelLength + 100 - 1 - lengthLimit, 99);
+        dataValues1 = _.concat(historyValue1, dataValues1);
+    }
+
     if (!showMoneyOutcomeS && dataValues1) {
         dataValues1.pop();
     }
@@ -55,7 +72,13 @@ export default function ValueChart({ xpData }) {
         ],
     };
 
-    const dataValues2 = balloonSpeed && _.slice(balloonSpeed, labels[0] - 1, labels.length + labels[0] - 1);
+    let dataValues2 = balloonSpeed && _.slice(balloonSpeed, originalLabels[0],
+        Math.min(originalLabelLength, lengthLimit) + originalLabels[0]);
+    if (originalLabelLength < lengthLimit) {
+        const historyValue2 = _.slice(volume, originalLabelLength + 100 - 1 - lengthLimit, 99);
+        dataValues2 = _.concat(historyValue2, dataValues2);
+    }
+
     if (!showMoneyOutcomeS && dataValues2) {
         dataValues2.pop();
     }

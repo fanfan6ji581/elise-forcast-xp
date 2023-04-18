@@ -3,9 +3,9 @@ import validator from "@rjsf/validator-ajv8";
 import { Grid, Alert, Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import { login } from "../../slices/attendantSlice";
+import { login, logout } from "../../slices/attendantSlice";
 import { getAttendantByLogin, updateAttendant } from "../../database/attendant";
 import { getData } from "../../database/data";
 import { generateBalloonDataFromDataSeries } from "../../util/xp_data";
@@ -74,8 +74,19 @@ const LoginPage = () => {
         }
 
         dispatch(login(attendant));
+        await timeout(500); //for 1 sec delay
+
         navigate(`/xp/${alias}/instruction`)
     }
+
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay));
+    }
+
+    useEffect(() => {
+        dispatch(logout());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>
