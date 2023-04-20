@@ -60,6 +60,10 @@ export default function ValueChart({ xpData }) {
     if (!showMoneyOutcomeS && dataValues1) {
         dataValues1.pop();
     }
+
+
+    labels = labels.map(l => l === 0 ? '' : l)
+
     const data = {
         labels: labels,
         datasets: [
