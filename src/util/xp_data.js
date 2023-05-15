@@ -144,6 +144,8 @@ function generateBalloonData(xp) {
             chances,
             balloonValues,
             balloonSpeed,
+            asset: balloonValues,
+            volume: balloonSpeed,
             aberration,
             shift,
         }),

@@ -82,11 +82,13 @@ const gameSlice = createSlice({
         },
         onLoginTraining: (state, action) => {
             const { xpConfig } = action.payload
-            // const xpConfig = state.xpConfig
             // random generated xpData
-            const { xpData } = generateBalloonData(xpConfig);
+            const { xpData } = generateBalloonData(Object.assign({}, xpConfig,
+                { numberOfTrials: xpConfig.numberOfTrials + 100 }));
+
             state.xpData = xpData;
             state.xpData.balloonSpeed = state.xpData.balloonSpeed.map(v => v / 100);
+            state.xpData.volume = state.xpData.volume.map(v => v / 100);
             // state.xpConfig = xpConfig;
 
             // reset

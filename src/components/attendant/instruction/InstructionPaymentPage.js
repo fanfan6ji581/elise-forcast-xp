@@ -21,6 +21,7 @@ const Instruction3Page = () => {
                     The computer records your outcome on each trial and randomly selects {xpConfig.percentageEarning}% of the trials
                     at the end of the experiment.
                     Your net accumulated outcomes in these trials define your earnings (i.e., the money you will receive from us).
+                    If your final earning is negative, you will only get a $5 show up fee from us.
                 </Typography>
 
                 <Typography variant="h6" sx={{ my: 5 }}>
@@ -30,7 +31,7 @@ const Instruction3Page = () => {
                 </Typography>
 
                 <Typography variant="h6" sx={{ my: 5 }}>
-                    You can earn up to $110 if you play well, but this requires a lot of focus and efforts throughout the task.
+                    You can earn up to $100 if you play well, but this requires a lot of focus and efforts throughout the task.
                     To start with, please double-check that you understand the rules of the game:
                     if anything of the above is unclear, please seek clarification!
                 </Typography>
