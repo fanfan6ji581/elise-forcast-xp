@@ -8,6 +8,7 @@ const initialState = {
     showMoneyOutcome: false,
     showAfterClickDelay: false,
     xpConfig: {},
+    historyIndex: 0,
 
     // internal data
     xpData: {},
@@ -132,15 +133,19 @@ const gameSlice = createSlice({
         },
         setXpConfig: (state, action) => {
             state.xpConfig = action.payload
+        },
+        setHistoryIndex: (state, action) => {
+            state.historyIndex = action.payload
         }
     },
 });
 
 export const { recordChoice, setProgressStartTime,
     setTimerProgress, nextTrial, onLogin, onLoginTraining,
-    setShowMoneyOutcome, reset, setXpConfig } = gameSlice.actions;
+    setShowMoneyOutcome, reset, setXpConfig, setHistoryIndex } = gameSlice.actions;
 
 export const trialIndex = (state) => state.game.trialIndex;
+export const historyIndex = (state) => state.game.historyIndex;
 export const showAfterClickDelay = (state) => state.game.showAfterClickDelay;
 export const timerProgress = (state) => state.game.timerProgress;
 export const showMoneyOutcome = (state) => state.game.showMoneyOutcome;

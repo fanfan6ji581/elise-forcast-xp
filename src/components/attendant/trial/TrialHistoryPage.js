@@ -2,9 +2,9 @@ import * as _ from "lodash";
 import TrainingTimer from './TrainingTimer';
 import { loginAttendant } from "../../../slices/attendantSlice";
 import { xpConfigS } from "../../../slices/gameSlice";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import { doc, updateDoc } from "firebase/firestore";
 // import db from "../../../database/firebase";
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
@@ -20,6 +20,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import zoomPlugin from 'chartjs-plugin-zoom';
+import { historyIndex, setHistoryIndex } from "../../../slices/gameSlice";
 
 ChartJS.register(
     CategoryScale,
@@ -33,23 +34,27 @@ ChartJS.register(
 );
 
 const TrialHistoryPage = () => {
+    const dispatch = useDispatch();
+    const historyIndexS = useSelector(historyIndex);
     const { alias } = useParams();
     const navigate = useNavigate();
     const loginAttendantS = useSelector(loginAttendant);
     const xpConfig = useSelector(xpConfigS);
     const chart1Ref = useRef(null);
     const chart2Ref = useRef(null);
+    let data1 = {};
+    let data2 = {};
 
     const onKeyDown = (e) => {
-        if (e.key === ' ') {
-            navigate(`/xp/${alias}/instruction-ready`);
+        if (e.key === 'Enter') {
+            navigate(`/xp/${alias}/strategy`);
         }
     }
 
-    const onFinish = async () => {
-        // console.log('onFinish')
-        navigate(`/xp/${alias}/strategy`)
-    }
+    // const onFinish = async () => {
+    //     // console.log('onFinish')
+    //     navigate(`/xp/${alias}/strategy`)
+    // }
 
     useEffect(() => {
         document.addEventListener("keydown", onKeyDown, false);
@@ -64,12 +69,11 @@ const TrialHistoryPage = () => {
     }, [xpConfig])
 
     const { asset, volume } = loginAttendantS.xpData;
-    const balloonValues = _.slice(asset, 0, 100);
-    const balloonSpeed = _.slice(volume, 0, 100);
+    let balloonValues = _.slice(asset, 0 + historyIndexS, 50 + historyIndexS);
+    let balloonSpeed = _.slice(volume, 0 + historyIndexS, 50 + historyIndexS);
 
-
-    let labels = Array.from({ length: balloonValues.length }, (_, i) => i + 1);
-    const data = {
+    let labels = Array.from({ length: balloonValues.length }, (_, i) => i + historyIndexS + 1);
+    data1 = {
         labels: labels,
         datasets: [
             {
@@ -81,7 +85,7 @@ const TrialHistoryPage = () => {
         ],
     };
 
-    const data2 = {
+    data2 = {
         labels: labels,
         datasets: [
             {
@@ -105,7 +109,7 @@ const TrialHistoryPage = () => {
                 },
                 ticks: {
                     beginAtZero: true,
-                    major: true,
+                    // major: true,
                     callback: function (value, index, values) {
                         if (value === 2) {
                             return 'High';
@@ -117,13 +121,13 @@ const TrialHistoryPage = () => {
                     font: {
                         size: 16,
                     },
+                    min: 2,
+                    max: 2,
                 },
-                suggestedMax: 2,
-                suggestedMin: -2
             },
             x: {
                 ticks: {
-                    autoSkip: true,
+                    autoSkip: false,
                     font: {
                         size: 12,
                     },
@@ -142,23 +146,26 @@ const TrialHistoryPage = () => {
                     }
                 }
             },
-            zoom: {
-                // zoom: {
-                //     wheel: {
-                //         enabled: true
-                //     },
-                //     // drag: {
-                //     //     enabled: true
-                //     // },
-                //     enabled: true,
-                //     mode: 'x',
-                // },
-                // pan: {
-                //     enabled: true,
-                //     mode: 'x',
-                //     threshold: 200
-                // },
-            }
+            // zoom: {
+            //     zoom: {
+            //         wheel: {
+            //             enabled: true
+            //         },
+            //         pinch: {
+            //             enabled: true // Enable zooming using pinch gestures
+            //         },
+            //         drag: {
+            //             enabled: true
+            //         },
+            //         enabled: false,
+            //         mode: 'x',
+            //     },
+            //     // pan: {
+            //     //     enabled: true,
+            //     //     mode: 'x',
+            //     //     threshold: 10,
+            //     // },
+            // }
         },
     };
 
@@ -176,15 +183,17 @@ const TrialHistoryPage = () => {
                         size: 14,
                     },
                 },
-                suggestedMax: _.max(balloonSpeed),
-                suggestedMin: _.min(balloonSpeed),
+                suggestedMax: _.max(_.slice(volume, 0, 100)),
+                suggestedMin: _.min(_.slice(volume, 0, 100)),
             },
             x: {
                 ticks: {
-                    autoSkip: true,
+                    autoSkip: false,
                     font: {
                         size: 12,
                     },
+                    maxTicksLimit: 50,
+                    minTicksLimit: 50,
                 },
             }
         },
@@ -203,11 +212,28 @@ const TrialHistoryPage = () => {
         }
     };
 
+    // const reset = () => {
+    //     chart1Ref.current.resetZoom();
+    //     chart2Ref.current.resetZoom();
+    // }
 
-    const reset = () => {
-        chart1Ref.current.resetZoom();
-        chart2Ref.current.resetZoom();
+    const show1st50 = () => {
+        dispatch(setHistoryIndex(0));
     }
+
+    const show2nd50 = () => {
+        dispatch(setHistoryIndex(50));
+    }
+
+    const onFinish = async () => {
+        // console.log('onFinish')
+        navigate(`/xp/${alias}/strategy`)
+    }
+
+    const timer = useMemo(() => {
+        return <TrainingTimer trainingSessionSeconds={xpConfig.historySessionSeconds} onFinish={onFinish} text={"Time left"} />
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [xpConfig]);
 
     return (
         <Container maxWidth="lg">
@@ -220,17 +246,23 @@ const TrialHistoryPage = () => {
 
                 <Grid item xs={12}>
                     <Box>
-                        <Line data={data} options={options} ref={chart1Ref} />
+                        <Line data={data1} options={options} ref={chart1Ref} />
                     </Box>
                     <Box sx={{ mt: 12 }}>
                         <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} ref={chart2Ref} />
                     </Box>
 
-                    {false &&
-                        <Button variant='outlined' onClick={reset}>Reset zoom</Button>
-                    }
+                    <Grid container alignItems="center" justifyContent="center" sx={{ mt: 5 }}>
+                        <Grid item>
+                            <Button variant='outlined' onClick={show1st50} sx={{ width: 180 }} disabled={historyIndexS === 0}>Trial #1 - #50</Button>
+                        </Grid>
+                        <Grid item>
+                            <Button variant='outlined' onClick={show2nd50} sx={{ width: 180, ml: 1 }} disabled={historyIndexS === 50}>Trial #51 - #100</Button>
+                        </Grid>
+                    </Grid>
+
                     {xpConfig.historySessionSeconds &&
-                        <TrainingTimer trainingSessionSeconds={xpConfig.historySessionSeconds} onFinish={onFinish} text={"Time left"} />
+                        timer
                     }
                 </Grid>
             </Grid>

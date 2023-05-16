@@ -5,6 +5,7 @@ import {
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useNavigate, useParams } from "react-router-dom"
 import { loginAttendant } from "../../slices/attendantSlice";
+import { xpConfigS } from "../../slices/gameSlice";
 import { useSelector } from "react-redux";
 import { Fragment, useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -15,6 +16,7 @@ const QuizPage = () => {
     const { alias } = useParams();
     const navigate = useNavigate();
     const loginAttendantS = useSelector(loginAttendant);
+    const xpConfig = useSelector(xpConfigS);
     const [mcq1, setMcq1] = useState(0);
     const [mcq2, setMcq2] = useState(0);
     const [mcq3, setMcq3] = useState(0);
@@ -55,7 +57,7 @@ const QuizPage = () => {
         mcq8: 'correct answer',
         mcq9: 'correct answer',
         mcq10: `You can earn a significant amount of money in this experiment (up to $100 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $5.`,
-        mcq11: `The computer randomly selects 40% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $5.`,
+        mcq11: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $5.`,
     }
 
     const fetchAttdendantAnswer = async () => {
