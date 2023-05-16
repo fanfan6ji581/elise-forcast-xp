@@ -1,22 +1,35 @@
 import { useSelector } from "react-redux";
 import { loginAttendant } from "../../slices/attendantSlice";
-import { xpConfigS } from "../../slices/gameSlice";
 import { Container, Grid, Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import db from "../../database/firebase";
+import { useParams, } from "react-router-dom"
+import { getXp } from "../../database/xp";
 
 const shuffle = (array) => {
     array.sort(() => Math.random() - 0.5);
 }
 
 export default function PaymentPage() {
+    const { alias } = useParams();
     const loginAttendantS = useSelector(loginAttendant);
-    const xpConfig = useSelector(xpConfigS);
     const [earning, setEarning] = useState("...");
     const [loadingOpen, setLoadingOpen] = useState(true);
+    const [xp, setXp] = useState({});
 
-    const calculateFinalOutcomes = async () => {
+    const fetchXP = async () => {
+        const xp = await getXp(alias);
+        setXp(xp);
+        await calculateFinalOutcomes(xp);
+    }
+
+    useEffect(() => {
+        fetchXP();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const calculateFinalOutcomes = async (xp) => {
         const attendantRef = doc(db, "attendant", loginAttendantS.id);
         const docSnap = await getDoc(attendantRef);
         if (!docSnap.exists()) {
@@ -24,37 +37,38 @@ export default function PaymentPage() {
         }
 
         const attendant = docSnap.data();
-        let { xpRecord, pickedOutcomeIndexes,  } = attendant;
+        let { xpRecord, pickedOutcomeIndexes, finalEarning } = attendant;
         const { outcomeHistory, missHistory } = xpRecord;
 
-        // check if pickedOutcomeIndexes is calculated already
-        const isCalculated = pickedOutcomeIndexes && pickedOutcomeIndexes.length !== 0;
-        if (!isCalculated) {
-            const shuffledIndex = outcomeHistory.map((_, idx) => (idx));
-            shuffle(shuffledIndex);
-            const length = Math.round(xpConfig.numberOfTrials * xpConfig.percentageEarning / 100);
-            const pickedIndex = shuffledIndex.slice(0, length);
-            pickedOutcomeIndexes = pickedIndex.sort((a, b) => a - b);
-            await updateDoc(attendantRef, { pickedOutcomeIndexes });
+        if (finalEarning) {
+            setEarning(finalEarning);
+            setLoadingOpen(false);
+            return;
         }
 
+        // check if pickedOutcomeIndexes is calculated already
+        const shuffledIndex = outcomeHistory.map((_, idx) => (idx)).filter(i => outcomeHistory[i] !== null);
+        shuffle(shuffledIndex);
+        const length = Math.round(shuffledIndex.length * (xp.percentageEarning || 40) / 100);
+        const pickedIndex = shuffledIndex.slice(0, length);
+        pickedOutcomeIndexes = pickedIndex.sort((a, b) => a - b);
+
         // when miss too much, ignore result
-        if (missHistory.filter(x => x).length >= xpConfig.missLimit) {
-            setEarning(0);
+        if (missHistory.filter(x => x).length >= xp.missLimit) {
+            setEarning(5);
+            await updateDoc(attendantRef, { missTooMuch: true, finalEarning: 5, pickedOutcomeIndexes });
             setLoadingOpen(false);
             return;
         }
 
         const sumEarning = pickedOutcomeIndexes.reduce((a, b) => a + outcomeHistory[b], 0);
         const earning = Math.max(5, Math.min(100, sumEarning));
+        await updateDoc(attendantRef, { finalEarning: earning, pickedOutcomeIndexes });
         setEarning(earning);
         setLoadingOpen(false);
     }
 
-    useEffect(() => {
-        calculateFinalOutcomes();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+
 
     return (
         <Container maxWidth="md">
@@ -66,7 +80,7 @@ export default function PaymentPage() {
                     </Typography>
 
                     <Typography variant="body1" sx={{ my: 5 }}>
-                        The game is over. The computer just randomly selected {xpConfig.percentageEarning}%
+                        The game is over. The computer just randomly selected {xp.percentageEarning}%
                         of the trials you played and computed your net accumulated outcomes at these trials.
                     </Typography>
 

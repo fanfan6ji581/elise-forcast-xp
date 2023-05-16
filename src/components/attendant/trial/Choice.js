@@ -2,6 +2,7 @@ import { Button, Grid, } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
     showMoneyOutcome, recordChoice, setShowMoneyOutcome, showAfterClickDelay,
+    choiceHistory
 } from "../../../slices/gameSlice";
 import { useEffect, useRef, useState } from 'react';
 
@@ -9,6 +10,7 @@ export default function Choice({ xpData, xpConfig }) {
     const dispatch = useDispatch();
     const showMoneyOutcomeS = useSelector(showMoneyOutcome);
     const showAfterClickDelayS = useSelector(showAfterClickDelay);
+    const choiceHistoryS = useSelector(choiceHistory);
     const loadingInterval = useRef(null);
     const { choiceDelay } = xpConfig;
     const [choice, setChoice] = useState('')
@@ -25,13 +27,15 @@ export default function Choice({ xpData, xpConfig }) {
             }, choiceDelay)
         }
 
-        // if (!showAfterClickDelayS && !showMoneyOutcomeS) {
-        //     setChoice('');
-        // }
+        // missed
+        const filterd = choiceHistoryS.filter(i => i != null);
+        if (filterd[filterd.length - 1] === '') {
+            setChoice('');
+        }
 
         return () => clearInterval(loadingInterval.current);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showAfterClickDelayS, showMoneyOutcomeS])
+    }, [showAfterClickDelayS, showMoneyOutcomeS, choiceHistoryS])
 
 
     return (

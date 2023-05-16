@@ -13,7 +13,7 @@ const Attendent = () => {
     const [xp, setXp] = useState(null);
     const [errorMsg, setErrorMsg] = useState('');
     const { alias, username } = useParams()
-    const [tab, setTab] = useState('1');
+    const [tab, setTab] = useState('2');
 
     const onChangeTab = (e, newValue) => {
         setTab(newValue);

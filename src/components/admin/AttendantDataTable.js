@@ -67,6 +67,8 @@ const AttendentDataTable = ({ attendant, xp }) => {
 
   return (
     <>
+      <p>Final earning: ${attendant.finalEarning}</p>
+      <p>Miss reach limit: {attendant.missTooMuch ? 'Yes' : ''}</p>
       <DataGrid
         autoHeight
         rows={rows}
