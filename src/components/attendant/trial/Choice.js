@@ -15,7 +15,6 @@ export default function Choice({ xpData, xpConfig }) {
 
     const clickedAction = (choice) => {
         setChoice(choice);
-        console.log(choice);
         dispatch(recordChoice({ choice, missed: false }));
     }
 

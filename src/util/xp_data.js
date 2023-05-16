@@ -42,7 +42,7 @@ function generateBalloonDataFromDataSeries(dataSeries) {
             // data recordings
             trialIndex: -1,
             reactionHistory: Array.from({ length }).fill(null),
-            choiceHistory: Array.from({ length }).fill(0),
+            choiceHistory: Array.from({ length }).fill(null),
             outcomeHistory: Array.from({ length }).fill(0),
             missHistory: Array.from({ length }).fill(false),
         },
@@ -153,7 +153,7 @@ function generateBalloonData(xp) {
             // data recordings
             trialIndex: -1,
             reactionHistory: Array.from({ length: xp.numberOfTrials }).fill(null),
-            choiceHistory: Array.from({ length: xp.numberOfTrials }).fill(0),
+            choiceHistory: Array.from({ length: xp.numberOfTrials }).fill(null),
             outcomeHistory: Array.from({ length: xp.numberOfTrials }).fill(0),
             missHistory: Array.from({ length: xp.numberOfTrials }).fill(false),
         },

@@ -71,26 +71,26 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
 
   useEffect(() => {
     // store user click into database
-    if (
-      choiceHistoryS[trialIndexS] ||
-      outcomeHistoryS[trialIndexS] ||
-      missHistoryS[trialIndexS] ||
-      reactionHistoryS[trialIndexS]
-    ) {
-      if (!isTrainingMode) {
-        storeToDB();
-      }
+    // if (
+    //   choiceHistoryS[trialIndexS] ||
+    //   outcomeHistoryS[trialIndexS] ||
+    //   missHistoryS[trialIndexS] ||
+    //   reactionHistoryS[trialIndexS]
+    // ) {
+    if (!isTrainingMode) {
+      storeToDB();
+    }
 
-      if (missHistoryS &&
-        missHistoryS.filter(x => x).length >= xpConfig.missLimit) {
-        if (isTrainingMode) {
-          // dont do anything for training
-          // navigate(`/xp/${alias}/quiz`);
-        } else {
-          navigate(`/xp/${alias}/payment`);
-        }
+    if (missHistoryS &&
+      missHistoryS.filter(x => x).length >= xpConfig.missLimit) {
+      if (isTrainingMode) {
+        // dont do anything for training
+        // navigate(`/xp/${alias}/quiz`);
+      } else {
+        navigate(`/xp/${alias}/payment`);
       }
     }
+    // }
 
     if (trialIndexS >= xpConfig.numberOfTrials) {
       onFinish();

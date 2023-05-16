@@ -75,7 +75,7 @@ const Attendent = () => {
 
                                 <TabPanel value="2">
                                     {attendant.xpData &&
-                                        <AttendantDataTable attendant={attendant} />}
+                                        <AttendantDataTable attendant={attendant} xp={xp} />}
                                     {!attendant.xpData &&
                                         <Typography variant='h6'>No XP Data yet, please assign a data series, then wait attend to login to view this page</Typography>
                                     }

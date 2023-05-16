@@ -51,8 +51,8 @@ const columns = [
 ];
 
 // not in used
-const AttendentDataTable = ({ attendant }) => {
-  const rows = extractXpData(attendant);
+const AttendentDataTable = ({ attendant, xp }) => {
+  const rows = extractXpData(attendant, xp);
   const csvOptions = {
     fileName: `${attendant.xp_alias}-${attendant.username}`,
   };
