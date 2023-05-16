@@ -37,7 +37,8 @@ import PretaskPaymentPage from './components/attendant/pretask/PretaskPaymentPag
 import PretaskInstruction1Page from './components/attendant/instruction/PretaskInstruction1Page';
 import StartPretaskPage from './components/attendant/pretask/StartPretaskPage';
 
-const theme = createTheme();
+const theme = createTheme({
+});
 
 function App() {
     return (
