@@ -210,7 +210,7 @@ const Attendants = ({ xp }) => {
 
             <Dialog maxWidth="lg" fullWidth={true} open={dialogOpen} onClose={() => setDialogOpen(false)}>
                 <DialogContent>
-                    <AttendantsInfo attendants={attendants} />
+                    <AttendantsInfo attendants={attendants} xp={xp}/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setDialogOpen(false)}>Close</Button>

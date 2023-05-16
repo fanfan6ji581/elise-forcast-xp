@@ -44,9 +44,13 @@ const columns = [
   { field: 'mcq6', headerName: 'mcq6', width: 50 },
   { field: 'mcq7', headerName: 'mcq7', width: 50 },
   { field: 'mcq8', headerName: 'mcq8', width: 50 },
+  { field: 'mcq9', headerName: 'mcq9', width: 50 },
+  { field: 'mcq10', headerName: 'mcq10', width: 60 },
+  { field: 'mcq11', headerName: 'mcq11', width: 60 },
   { field: 'strategy', headerName: 'strategy', width: 60 },
 ];
 
+// not in used
 const AttendentDataTable = ({ attendant }) => {
   const rows = extractXpData(attendant);
   const csvOptions = {

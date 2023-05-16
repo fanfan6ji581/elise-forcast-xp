@@ -48,7 +48,7 @@ const TrialHistoryPage = () => {
 
     const onFinish = async () => {
         // console.log('onFinish')
-        navigate(`/xp/${alias}/count-down`)
+        navigate(`/xp/${alias}/strategy`)
     }
 
     useEffect(() => {

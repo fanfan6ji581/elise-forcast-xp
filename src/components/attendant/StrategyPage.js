@@ -44,7 +44,7 @@ const StrategyPage = () => {
       const attendantRef = doc(db, "attendant", loginAttendantS.id);
       await updateDoc(attendantRef, { strategy });
     }
-    navigate(`/xp/${alias}/trial-history`);
+    navigate(`/xp/${alias}/count-down`);
   };
 
   useEffect(() => {

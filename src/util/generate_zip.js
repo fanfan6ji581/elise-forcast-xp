@@ -9,7 +9,7 @@ async function generateXPZip(attendants, xpConfig) {
     const parser = new Parser();
 
     attendants.forEach((attendant, i) => {
-        const attendantData = extractXpData(attendant);
+        const attendantData = extractXpData(attendant, xpConfig);
         if (attendantData.length) {
             zip.file(`${xpConfig.alias}/${attendant.username}.csv`, parser.parse(attendantData));
         }

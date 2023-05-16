@@ -25,6 +25,9 @@ import InstructionPaymentPage from "./components/attendant/instruction/Instructi
 import InstructionReadyPage from "./components/attendant/instruction/InstructionReadyPage";
 import SkipTrainingPage from "./components/attendant/instruction/SkipTrainingPage";
 import QuizPage from "./components/attendant/QuizPage";
+import Quiz1Page from "./components/attendant/Quiz1Page";
+import Quiz2Page from "./components/attendant/Quiz2Page";
+import Quiz3Page from "./components/attendant/Quiz3Page";
 import StrategyPage from "./components/attendant/StrategyPage";
 import SignupPage from './components/attendant/SignupPage';
 import StartGamePage from './components/attendant/StartGamePage';
@@ -57,6 +60,9 @@ function App() {
                                 <Route path="xp/:alias/instruction-ready" element={<InstructionReadyPage />} />
                                 <Route path="xp/:alias/skip-training" element={<SkipTrainingPage />} />
                                 <Route path="xp/:alias/quiz" element={<QuizPage />} />
+                                <Route path="xp/:alias/quiz1" element={<Quiz1Page />} />
+                                <Route path="xp/:alias/quiz2" element={<Quiz2Page />} />
+                                <Route path="xp/:alias/quiz3" element={<Quiz3Page />} />
                                 <Route path="xp/:alias/strategy" element={<StrategyPage />} />
                                 <Route path="xp/:alias/count-down" element={<CountDownPage />} />
                                 <Route path="xp/:alias/start-game" element={<StartGamePage />} />
