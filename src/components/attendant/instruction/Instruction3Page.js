@@ -142,7 +142,7 @@ const Instruction1Page = () => {
                 this is the first trial in <Typography display="inline" sx={{ color: 'error.main' }} fontSize={20}>the dangerous zone</Typography>.
               </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                You can see the shift occurs at Trial 10: the value shifts to +2, and the volume indicator reverts to its baseline value, which means that it is no longer in the dangerous zone.
+                You can see the shift occurs at Trial 10: the value shifts to High, and the volume indicator reverts to its baseline value, which means that it is no longer in the dangerous zone.
               </Typography>
             </Grid>
           </Grid>
@@ -159,7 +159,7 @@ const Instruction1Page = () => {
               </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
                 For example here, at Trial 18, the value has switched but the volume indicator is at its baseline value.
-                This is an aberration and the value immediately switches back to its previous value (here, -2) at Trial 19.
+                This is an aberration and the value immediately switches back to its previous value (here, Low) at Trial 19.
               </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
                 In contrast, at Trial 12 a regime shift occurs (after 2 trials in the dangerous zone: Trials 10-11).
