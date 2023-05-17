@@ -6,7 +6,6 @@ import {
   Button,
   Backdrop,
   CircularProgress,
-  FormControlLabel,
   Radio,
 } from "@mui/material";
 import { loginAttendant } from "../../slices/attendantSlice";
@@ -32,7 +31,7 @@ const StrategyPage = () => {
     }
     const attendant = docSnap.data();
     setAttendant(attendant);
-    setStrategy(attendant.strategy);
+    setStrategy(attendant.strategy2);
     setLoadingOpen(false);
   };
 
@@ -40,11 +39,11 @@ const StrategyPage = () => {
     e.preventDefault();
     setLoadingOpen(true);
     // if not being set before
-    if (!attendant.strategy) {
+    if (!attendant.strategy2) {
       const attendantRef = doc(db, "attendant", loginAttendantS.id);
-      await updateDoc(attendantRef, { strategy });
+      await updateDoc(attendantRef, { strategy2: strategy });
     }
-    navigate(`/xp/${alias}/count-down`);
+    navigate(`/xp/${alias}/payment`);
   };
 
   useEffect(() => {
@@ -53,45 +52,54 @@ const StrategyPage = () => {
   }, []);
 
   return (
-    <Container maxWidth="md">
-      <Typography variant="h4" align="center" sx={{ my: 3 }}>
-        Have you devised a strategy on how to play the game, and if you have,
-        how confident are you that it's gonna work?
-      </Typography>
+    <Container maxWidth="lg">
+      <Grid container justifyContent="center">
+        <Grid item xs={9} sx={{ my: 5 }}>
+          <Typography variant="h4" align="center">
+            Did you follow your original strategy designed in the beginning, and if you did, how well did it work?
+          </Typography>
+        </Grid>
+      </Grid>
 
       <Grid container>
-        <Grid item xs={6}>
-          <Typography variant="h5" align="center" sx={{ my: 5 }}>
-            <b>I don't have a strategy</b>
-          </Typography>
-          <Box textAlign="center">
-            <FormControlLabel
-              control={
-                <Radio
-                  value="1"
-                  disabled={attendant && attendant.strategy > 0}
-                  checked={strategy === 1}
-                  onChange={() => setStrategy(1)}
-                />
-              }
-            />
-          </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="h5" align="center" sx={{ my: 5 }}>
-            <b>I do have a strategy</b>
-          </Typography>
+        <Grid item xs={12}>
           <Grid container justifyContent="space-between" spacing={2}>
             <Grid item xs>
               <Box textAlign="center">
                 <Radio
                   value="2"
+                  checked={strategy === 1}
+                  disabled={attendant && attendant.strategy2 > 0}
+                  onChange={() => setStrategy(1)}
+                />
+                <Typography variant="body1">
+                  I didn't use a strategy
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs>
+              <Box textAlign="center">
+                <Radio
+                  value="2"
                   checked={strategy === 2}
-                  disabled={attendant && attendant.strategy > 0}
+                  disabled={attendant && attendant.strategy2 > 0}
                   onChange={() => setStrategy(2)}
                 />
                 <Typography variant="body1">
-                  I'm not quite sure about it
+                  I generally followed my original strategy and it worked well
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs>
+              <Box textAlign="center">
+                <Radio
+                  value="2"
+                  checked={strategy === 3}
+                  disabled={attendant && attendant.strategy2 > 0}
+                  onChange={() => setStrategy(3)}
+                />
+                <Typography variant="body1">
+                  I generally followed my original strategy and it didn't work so well
                 </Typography>
               </Box>
             </Grid>
@@ -99,12 +107,12 @@ const StrategyPage = () => {
               <Box textAlign="center">
                 <Radio
                   value="3"
-                  checked={strategy === 3}
-                  disabled={attendant && attendant.strategy > 0}
-                  onChange={() => setStrategy(3)}
+                  checked={strategy === 4}
+                  disabled={attendant && attendant.strategy2 > 0}
+                  onChange={() => setStrategy(4)}
                 />
                 <Typography variant="body1">
-                  I feel fairly confident about it
+                  I significantly changed my strategy during the task and it worked well
                 </Typography>
               </Box>
             </Grid>
@@ -112,12 +120,12 @@ const StrategyPage = () => {
               <Box textAlign="center">
                 <Radio
                   value="4"
-                  checked={strategy === 4}
-                  disabled={attendant && attendant.strategy > 0}
-                  onChange={() => setStrategy(4)}
+                  checked={strategy === 5}
+                  disabled={attendant && attendant.strateg2 > 0}
+                  onChange={() => setStrategy(5)}
                 />
                 <Typography variant="body1">
-                  I'm really think it's right
+                  I significantly changed my strategy during the task and it didn't work so well
                 </Typography>
               </Box>
             </Grid>
@@ -132,7 +140,7 @@ const StrategyPage = () => {
           size="large"
           onClick={onSubmit}
         >
-          Start
+          Submit
         </Button>
       </Box>
 

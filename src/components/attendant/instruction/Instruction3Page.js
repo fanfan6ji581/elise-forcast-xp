@@ -45,7 +45,7 @@ const Instruction1Page = () => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                Some of the switches are "<b>regime shifts</b>": they usually last for several days, as shown in the picture. Others are <b>"aberrations"</b>: the value switches back immediately (see for example, trial 18).
+                There are two types of switches. Some of the switches are "<b>regime shifts</b>": they usually last for several days, as shown in the picture. Others are <b>"aberrations"</b>: the value switches back immediately (see for example, trial 18).
               </Typography>
             </Grid>
 
@@ -75,12 +75,12 @@ const Instruction1Page = () => {
               <Box sx={{ mt: 3, border: 1, p: 2, boxShadow: 3 }}>
                 <Typography variant="h5" >
                   We are showing you this because your job is to <b>forecast</b> in real time on each of {xpConfig.numberOfTrials} trials
-                  whether a regime shift is going to occur over the next day, and <b>there is a pattern linking the volume indicator to the regime shifts.</b>
+                  whether a switch is going to occur over the next day, and <b>there is a pattern linking the volume indicator to the regime shifts.</b>
 
                   <br />
                   <br />
                   What that means is that if you manage to identify what the pattern is, you may be able to track the value
-                  of the volume indicator to forecast the shifts (more on this below 😊):
+                  of the volume regime shift and to improve your performance. (more on this below 😊)
                 </Typography>
               </Box>
             </Grid>
@@ -96,14 +96,13 @@ const Instruction1Page = () => {
               <ul>
                 <li>
                   <Typography variant="h6" sx={{ my: 3 }}>
-                    If you forecast no shift and turn out to be right, you win $1,
-                    but if you're wrong (that is, a shift happens), you lose $3.
+                    If you forecast no switch and turn out to be right, you win $1,
+                    but if you're wrong (that is, a switch happens), you lose $3.
                   </Typography>
                 </li>
                 <li>
                   <Typography variant="h6" sx={{ my: 3 }}>
-                    If you manage to correctly forecast a shift, you win $3,
-                    but if you wrongly detect a shift (that is, no shift occurs), you lose $1.
+                    If you forecast a switch and turn out to be right, you win $3, but if you're wrong (that is, no switch happens), you lose $1.
                   </Typography>
                 </li>
                 <li>
@@ -140,10 +139,10 @@ const Instruction1Page = () => {
             <Grid item xs={6}>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
                 In this example, you can see that the volume variable departs from its baseline value at Trial 6:
-                this is the first trial in the dangerous zone.
+                this is the first trial in <Typography display="inline" sx={{ color: 'error.main' }} fontSize={20}>the dangerous zone</Typography>.
               </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                You can see the shift occurs at Trial 10: the value shifts to +2, and the volume indicator reverts to its baseline value.
+                You can see the shift occurs at Trial 10: the value shifts to +2, and the volume indicator reverts to its baseline value, which means that it is no longer in the dangerous zone.
               </Typography>
             </Grid>
           </Grid>
@@ -160,7 +159,7 @@ const Instruction1Page = () => {
               </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
                 For example here, at Trial 18, the value has switched but the volume indicator is at its baseline value.
-                This is an aberration and the value immediately switches back to its current value (here, -2) at Trial 19.
+                This is an aberration and the value immediately switches back to its previous value (here, -2) at Trial 19.
               </Typography>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
                 In contrast, at Trial 12 a regime shift occurs (after 2 trials in the dangerous zone: Trials 10-11).
@@ -173,7 +172,7 @@ const Instruction1Page = () => {
             <Typography variant="h6">
               The probability of a regime shift while in the dangerous zone is constant.
               The probability of an aberration while outside the dangerous zone is constant too.
-              What this means is that the two probabilities are fixed and they do not change during the task depending on how you play.
+              This means that the two probabilities are fixed and they do not change during the task depending on how you play.
             </Typography>
           </Alert>
 

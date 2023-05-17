@@ -46,7 +46,7 @@ const TrialHistoryPage = () => {
     let data2 = {};
 
     const onKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' || e.key === ' ') {
             navigate(`/xp/${alias}/strategy`);
         }
     }
@@ -69,8 +69,8 @@ const TrialHistoryPage = () => {
     }, [xpConfig])
 
     const { asset, volume } = loginAttendantS.xpData;
-    let balloonValues = _.slice(asset, 0 + historyIndexS, 50 + historyIndexS);
-    let balloonSpeed = _.slice(volume, 0 + historyIndexS, 50 + historyIndexS);
+    let balloonValues = _.slice(asset, 0 + historyIndexS, historyIndexS !== 49 ? 50 : 51 + historyIndexS);
+    let balloonSpeed = _.slice(volume, 0 + historyIndexS, historyIndexS !== 49 ? 50 : 51  + historyIndexS);
 
     let labels = Array.from({ length: balloonValues.length }, (_, i) => i + historyIndexS + 1);
     data1 = {
@@ -222,7 +222,7 @@ const TrialHistoryPage = () => {
     }
 
     const show2nd50 = () => {
-        dispatch(setHistoryIndex(50));
+        dispatch(setHistoryIndex(49));
     }
 
     const onFinish = async () => {
@@ -257,7 +257,7 @@ const TrialHistoryPage = () => {
                             <Button variant='outlined' onClick={show1st50} sx={{ width: 180 }} disabled={historyIndexS === 0}>Trial #1 - #50</Button>
                         </Grid>
                         <Grid item>
-                            <Button variant='outlined' onClick={show2nd50} sx={{ width: 180, ml: 1 }} disabled={historyIndexS === 50}>Trial #51 - #100</Button>
+                            <Button variant='outlined' onClick={show2nd50} sx={{ width: 180, ml: 1 }} disabled={historyIndexS === 49}>Trial #50 - #100</Button>
                         </Grid>
                     </Grid>
 

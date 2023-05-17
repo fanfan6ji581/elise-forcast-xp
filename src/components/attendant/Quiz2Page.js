@@ -162,7 +162,7 @@ const QuizPage = () => {
 
             <form onSubmit={onSubmit}>
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    1. If I do not reply within the imparted time, I proceed to the next trial without any penalty.
+                    1. If I do not reply within the allowed time, I proceed to the next trial without any penalty.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
                     {

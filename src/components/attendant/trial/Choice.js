@@ -52,14 +52,14 @@ export default function Choice({ xpData, xpConfig }) {
                         style={choice === 'shift' && (showAfterClickDelayS || showMoneyOutcomeS) ?
                             { pointerEvents: "none" } : {}}
                     >
-                        Shift
+                        Switch
                     </Button>
                     <Button size="large" variant="contained" sx={{ mx: 5, width: 160 }} onClick={() => clickedAction("no shift")}
                         disabled={choice !== 'no shift' && (showAfterClickDelayS || showMoneyOutcomeS)}
                         style={choice === 'no shift' && (showAfterClickDelayS || showMoneyOutcomeS) ?
                             { pointerEvents: "none" } : {}}
                     >
-                        No Shift
+                        No Switch
                     </Button>
                     <Button size="large" variant="contained" sx={{ mx: 5, width: 160 }} onClick={() => clickedAction("skip")}
                         disabled={choice !== 'skip' && (showAfterClickDelayS || showMoneyOutcomeS)}

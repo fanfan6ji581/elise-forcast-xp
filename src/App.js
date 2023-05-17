@@ -29,6 +29,7 @@ import Quiz1Page from "./components/attendant/Quiz1Page";
 import Quiz2Page from "./components/attendant/Quiz2Page";
 import Quiz3Page from "./components/attendant/Quiz3Page";
 import StrategyPage from "./components/attendant/StrategyPage";
+import StrategyPage2 from "./components/attendant/StrategyPage2";
 import SignupPage from './components/attendant/SignupPage';
 import StartGamePage from './components/attendant/StartGamePage';
 import PretaskPage from './components/attendant/pretask/PretaskPage';
@@ -65,6 +66,7 @@ function App() {
                                 <Route path="xp/:alias/quiz2" element={<Quiz2Page />} />
                                 <Route path="xp/:alias/quiz3" element={<Quiz3Page />} />
                                 <Route path="xp/:alias/strategy" element={<StrategyPage />} />
+                                <Route path="xp/:alias/strategy2" element={<StrategyPage2 />} />
                                 <Route path="xp/:alias/count-down" element={<CountDownPage />} />
                                 <Route path="xp/:alias/start-game" element={<StartGamePage />} />
                                 <Route path="xp/:alias/trial-history" element={<TrialHistoryPage />} />

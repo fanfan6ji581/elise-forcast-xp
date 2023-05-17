@@ -93,7 +93,7 @@ const PretaskInstruction1Page = () => {
               </Grid>
 
               <Typography variant="h6" sx={{ my: 5 }}>
-                Please make sure you reply within the imparted time ({pretask.afkTimeout / 1000} sec), as if
+                Please make sure you reply within the allowed time ({pretask.afkTimeout / 1000} sec), as if
                 you don't, you will lose ${-pretask.missLose}, and after {pretask.missLimit} missed trials, the task automatically stops and you
                 don't get any earnings.
               </Typography>

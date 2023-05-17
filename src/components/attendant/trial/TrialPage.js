@@ -22,7 +22,7 @@ const TrialPage = () => {
     }
 
     const onFinish = () => {
-        navigate(`/xp/${alias}/payment`)
+        navigate(`/xp/${alias}/strategy2`)
     }
 
     useEffect(() => {

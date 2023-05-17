@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { useSelector } from "react-redux";
 import { loginAttendant } from "../../slices/attendantSlice";
 import { Container, Grid, Typography, Backdrop, CircularProgress } from "@mui/material";
@@ -6,10 +7,6 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import db from "../../database/firebase";
 import { useParams, } from "react-router-dom"
 import { getXp } from "../../database/xp";
-
-const shuffle = (array) => {
-    array.sort(() => Math.random() - 0.5);
-}
 
 export default function PaymentPage() {
     const { alias } = useParams();
@@ -47,22 +44,22 @@ export default function PaymentPage() {
         }
 
         // check if pickedOutcomeIndexes is calculated already
-        const shuffledIndex = outcomeHistory.map((_, idx) => (idx)).filter(i => outcomeHistory[i] !== null);
-        shuffle(shuffledIndex);
+        let shuffledIndex = outcomeHistory.map((_, idx) => (idx)).filter(i => outcomeHistory[i] !== null);
+        shuffledIndex = _.shuffle(shuffledIndex);
         const length = Math.round(shuffledIndex.length * (xp.percentageEarning || 40) / 100);
         const pickedIndex = shuffledIndex.slice(0, length);
         pickedOutcomeIndexes = pickedIndex.sort((a, b) => a - b);
 
         // when miss too much, ignore result
         if (missHistory.filter(x => x).length >= xp.missLimit) {
-            setEarning(5);
-            await updateDoc(attendantRef, { missTooMuch: true, finalEarning: 5, pickedOutcomeIndexes });
+            setEarning(0);
+            await updateDoc(attendantRef, { missTooMuch: true, finalEarning: 0, pickedOutcomeIndexes });
             setLoadingOpen(false);
             return;
         }
 
         const sumEarning = pickedOutcomeIndexes.reduce((a, b) => a + outcomeHistory[b], 0);
-        const earning = Math.max(5, Math.min(100, sumEarning));
+        const earning = Math.min(100, sumEarning);
         await updateDoc(attendantRef, { finalEarning: earning, pickedOutcomeIndexes });
         setEarning(earning);
         setLoadingOpen(false);

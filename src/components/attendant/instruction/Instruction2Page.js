@@ -41,7 +41,7 @@ const Instruction1Page = () => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h6" sx={{ my: 5, ml: 5 }}>
-                Some of the switches are "<b>regime shifts</b>": they usually last for several days, as shown in the picture. Others are <b>"aberrations"</b>: the value switches back immediately (see for example, trial 18).
+                There are two types of switches. Some of the switches are "<b>regime shifts</b>": they usually last for several days, as shown in the picture. Others are <b>"aberrations"</b>: the value switches back immediately (see for example, trial 18).
               </Typography>
             </Grid>
 
@@ -71,12 +71,12 @@ const Instruction1Page = () => {
               <Box sx={{ mt: 3, border: 1, p: 2, boxShadow: 3 }}>
                 <Typography variant="h5" >
                   We are showing you this because your job is to <b>forecast</b> in real time on each of {xpConfig.numberOfTrials} trials
-                  whether a regime shift is going to occur over the next day, and <b>there is a pattern linking the volume indicator to the regime shifts.</b>
+                  whether a switch is going to occur over the next day, and <b>there is a pattern linking the volume indicator to the regime shifts.</b>
 
                   <br />
                   <br />
                   What that means is that if you manage to identify what the pattern is, you may be able to track the value
-                  of the volume indicator to forecast the shifts:
+                  of the volume indicator to forecast the regime shift and to improve your performance.
                 </Typography>
               </Box>
             </Grid>
@@ -92,14 +92,13 @@ const Instruction1Page = () => {
               <ul>
                 <li>
                   <Typography variant="h6" sx={{ my: 3 }}>
-                    If you forecast no shift and turn out to be right, you win $1,
-                    but if you're wrong (that is, a shift happens), you lose $3.
+                    If you forecast no switch and turn out to be right, you win $1,
+                    but if you're wrong (that is, a switch happens), you lose $3.
                   </Typography>
                 </li>
                 <li>
                   <Typography variant="h6" sx={{ my: 3 }}>
-                    If you manage to correctly forecast a shift, you win $3,
-                    but if you wrongly detect a shift (that is, no shift occurs), you lose $1.
+                    If you forecast a switch and turn out to be right, you win $3, but if you're wrong (that is, no switch happens), you lose $1.
                   </Typography>
                 </li>
                 <li>

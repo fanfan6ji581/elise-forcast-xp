@@ -213,6 +213,7 @@ function extractXpData(attendant, xpConfig) {
             }, mcqs,
             {
                 strategy: attendant.strategy,
+                strategy2: attendant.strategy2,
             }
         ))
     }

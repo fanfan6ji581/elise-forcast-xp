@@ -47,7 +47,8 @@ const columns = [
   { field: 'mcq9', headerName: 'mcq9', width: 50 },
   { field: 'mcq10', headerName: 'mcq10', width: 60 },
   { field: 'mcq11', headerName: 'mcq11', width: 60 },
-  { field: 'strategy', headerName: 'strategy', width: 60 },
+  { field: 'strategy', headerName: 'strategy', width: 80 },
+  { field: 'strategy2', headerName: 'strategy2', width: 80 },
 ];
 
 // not in used
