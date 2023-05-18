@@ -36,7 +36,7 @@ const Instruction1Page = () => {
                 following instructions very carefully and ask any clarifying questions to the experimenter.
               </Typography>
               <Typography variant="h6" sx={{ my: 5 }}>
-                In the game, there is a financial asset that randomly switches between 2 states, say <b>high</b> and <b>low</b>
+                In the game, there is a financial asset that randomly switches between 2 states, say <b>high</b> and <b>low</b>.
               </Typography>
             </Grid>
 

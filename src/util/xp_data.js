@@ -22,9 +22,12 @@ function generateBalloonDataFromDataSeries(dataSeries) {
             aberration[i - 1] === 0) {
             aberration[i] = 1
         }
-        if (balloonValues[i] * balloonValues[i - 1] < 0 &&
-            balloonSpeed[i - 1] !== 0 &&
-            balloonValues[i] * balloonValues[i + 1] > 0) {
+        // if (balloonValues[i] * balloonValues[i - 1] < 0 &&
+        //     balloonSpeed[i - 1] !== 0 &&
+        //     balloonValues[i] * balloonValues[i + 1] > 0) {
+        //     shift[i] = 1
+        // }
+        if (balloonValues[i] * balloonValues[i - 1] < 0) {
             shift[i] = 1
         }
     }
@@ -132,9 +135,12 @@ function generateBalloonData(xp) {
             aberration[i - 1] === 0) {
             aberration[i] = 1
         }
-        if (balloonValues[i] * balloonValues[i - 1] < 0 &&
-            balloonSpeed[i - 1] !== 0 &&
-            balloonValues[i] * balloonValues[i + 1] > 0) {
+        // if (balloonValues[i] * balloonValues[i - 1] < 0 &&
+        //     balloonSpeed[i - 1] !== 0 &&
+        //     balloonValues[i] * balloonValues[i + 1] > 0) {
+        //     shift[i] = 1
+        // }
+        if (balloonValues[i] * balloonValues[i - 1] < 0) {
             shift[i] = 1
         }
     }

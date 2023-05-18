@@ -51,11 +51,6 @@ const TrialHistoryPage = () => {
         }
     }
 
-    // const onFinish = async () => {
-    //     // console.log('onFinish')
-    //     navigate(`/xp/${alias}/strategy`)
-    // }
-
     useEffect(() => {
         document.addEventListener("keydown", onKeyDown, false);
 
@@ -70,9 +65,9 @@ const TrialHistoryPage = () => {
 
     const { asset, volume } = loginAttendantS.xpData;
     let balloonValues = _.slice(asset, 0 + historyIndexS, historyIndexS !== 49 ? 50 : 51 + historyIndexS);
-    let balloonSpeed = _.slice(volume, 0 + historyIndexS, historyIndexS !== 49 ? 50 : 51  + historyIndexS);
+    let balloonSpeed = _.slice(volume, 0 + historyIndexS, historyIndexS !== 49 ? 50 : 51 + historyIndexS);
 
-    let labels = Array.from({ length: balloonValues.length }, (_, i) => i + historyIndexS + 1);
+    let labels = Array.from({ length: balloonValues.length }, (_, i) => `${i + historyIndexS + 1}`);
     data1 = {
         labels: labels,
         datasets: [
@@ -132,8 +127,12 @@ const TrialHistoryPage = () => {
                         size: 12,
                     },
                 },
+                type: 'category',
+                offset: true,
+                maxBarThickness: 100,
             }
         },
+        responsive: true,
         plugins: {
             datalabels: {
                 display: false,
@@ -146,25 +145,37 @@ const TrialHistoryPage = () => {
                     }
                 }
             },
+            // interaction: {
+            //     mode: 'index',
+            //     intersect: false,
+            //     axis: 'x',
+            //     pan: {
+            //         enabled: true,
+            //         mode: 'x',
+            //     },
+            //     zoom: {
+            //         enabled: false,
+            //     },
+            // },
             // zoom: {
             //     zoom: {
             //         wheel: {
-            //             enabled: true
+            //             // enabled: true
             //         },
-            //         pinch: {
-            //             enabled: true // Enable zooming using pinch gestures
-            //         },
-            //         drag: {
-            //             enabled: true
-            //         },
+            //         // pinch: {
+            //         //     enabled: true // Enable zooming using pinch gestures
+            //         // },
+            //         // drag: {
+            //         //     enabled: true
+            //         // },
             //         enabled: false,
             //         mode: 'x',
             //     },
-            //     // pan: {
-            //     //     enabled: true,
-            //     //     mode: 'x',
-            //     //     threshold: 10,
-            //     // },
+            //     pan: {
+            //         enabled: true,
+            //         mode: 'x',
+            //         threshold: 20,
+            //     },
             // }
         },
     };
