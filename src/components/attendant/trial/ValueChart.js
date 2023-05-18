@@ -141,6 +141,8 @@ export default function ValueChart({ xpData }) {
             },
             legend: {
                 display: true,
+                onClick: () => {
+                },
                 labels: {
                     font: {
                         size: 16
@@ -182,6 +184,8 @@ export default function ValueChart({ xpData }) {
             },
             legend: {
                 display: true,
+                onClick: () => {
+                },
                 labels: {
                     font: {
                         size: 16

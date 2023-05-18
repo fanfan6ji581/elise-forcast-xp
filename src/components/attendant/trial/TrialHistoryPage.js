@@ -4,10 +4,8 @@ import { loginAttendant } from "../../../slices/attendantSlice";
 import { xpConfigS } from "../../../slices/gameSlice";
 import { useEffect, useRef, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-// import { doc, updateDoc } from "firebase/firestore";
-// import db from "../../../database/firebase";
-import { Box, Container, Grid, Typography, Button } from "@mui/material";
+import { useSelector, } from "react-redux";
+import { Box, Container, Grid, Typography, Stack } from "@mui/material";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -20,7 +18,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import zoomPlugin from 'chartjs-plugin-zoom';
-import { historyIndex, setHistoryIndex } from "../../../slices/gameSlice";
 
 ChartJS.register(
     CategoryScale,
@@ -34,8 +31,6 @@ ChartJS.register(
 );
 
 const TrialHistoryPage = () => {
-    const dispatch = useDispatch();
-    const historyIndexS = useSelector(historyIndex);
     const { alias } = useParams();
     const navigate = useNavigate();
     const loginAttendantS = useSelector(loginAttendant);
@@ -64,10 +59,10 @@ const TrialHistoryPage = () => {
     }, [xpConfig])
 
     const { asset, volume } = loginAttendantS.xpData;
-    let balloonValues = _.slice(asset, 0 + historyIndexS, historyIndexS !== 49 ? 50 : 51 + historyIndexS);
-    let balloonSpeed = _.slice(volume, 0 + historyIndexS, historyIndexS !== 49 ? 50 : 51 + historyIndexS);
+    let balloonValues = _.slice(asset, 0, 100);
+    let balloonSpeed = _.slice(volume, 0, 100);
 
-    let labels = Array.from({ length: balloonValues.length }, (_, i) => `${i + historyIndexS + 1}`);
+    let labels = Array.from({ length: balloonValues.length }, (_, i) => i + 1);
     data1 = {
         labels: labels,
         datasets: [
@@ -93,7 +88,7 @@ const TrialHistoryPage = () => {
     };
 
     const options = {
-        aspectRatio: 4,
+        aspectRatio: 8.5,
         animation: {
             duration: 0
         },
@@ -103,19 +98,7 @@ const TrialHistoryPage = () => {
                     display: false
                 },
                 ticks: {
-                    beginAtZero: true,
-                    // major: true,
-                    callback: function (value, index, values) {
-                        if (value === 2) {
-                            return 'High';
-                        } else if (value === -2) {
-                            return 'Low';
-                        }
-                        return '';
-                    },
-                    font: {
-                        size: 16,
-                    },
+                    display: false,
                     min: 2,
                     max: 2,
                 },
@@ -126,10 +109,9 @@ const TrialHistoryPage = () => {
                     font: {
                         size: 12,
                     },
+                    maxRotation: 0,
+                    minRotation: 0,
                 },
-                type: 'category',
-                offset: true,
-                maxBarThickness: 100,
             }
         },
         responsive: true,
@@ -138,50 +120,13 @@ const TrialHistoryPage = () => {
                 display: false,
             },
             legend: {
-                display: true,
-                labels: {
-                    font: {
-                        size: 16
-                    }
-                }
+                display: false,
             },
-            // interaction: {
-            //     mode: 'index',
-            //     intersect: false,
-            //     axis: 'x',
-            //     pan: {
-            //         enabled: true,
-            //         mode: 'x',
-            //     },
-            //     zoom: {
-            //         enabled: false,
-            //     },
-            // },
-            // zoom: {
-            //     zoom: {
-            //         wheel: {
-            //             // enabled: true
-            //         },
-            //         // pinch: {
-            //         //     enabled: true // Enable zooming using pinch gestures
-            //         // },
-            //         // drag: {
-            //         //     enabled: true
-            //         // },
-            //         enabled: false,
-            //         mode: 'x',
-            //     },
-            //     pan: {
-            //         enabled: true,
-            //         mode: 'x',
-            //         threshold: 20,
-            //     },
-            // }
         },
     };
 
     const options2 = {
-        aspectRatio: 4,
+        aspectRatio: 8.5,
         animation: {
             duration: 0
         },
@@ -203,8 +148,8 @@ const TrialHistoryPage = () => {
                     font: {
                         size: 12,
                     },
-                    maxTicksLimit: 50,
-                    minTicksLimit: 50,
+                    maxRotation: 0,
+                    minRotation: 0,
                 },
             }
         },
@@ -213,31 +158,13 @@ const TrialHistoryPage = () => {
                 display: false,
             },
             legend: {
-                display: true,
-                labels: {
-                    font: {
-                        size: 16
-                    }
-                }
-            }
+                display: false,
+            },
         }
     };
 
-    // const reset = () => {
-    //     chart1Ref.current.resetZoom();
-    //     chart2Ref.current.resetZoom();
-    // }
-
-    const show1st50 = () => {
-        dispatch(setHistoryIndex(0));
-    }
-
-    const show2nd50 = () => {
-        dispatch(setHistoryIndex(49));
-    }
 
     const onFinish = async () => {
-        // console.log('onFinish')
         navigate(`/xp/${alias}/strategy`)
     }
 
@@ -256,21 +183,55 @@ const TrialHistoryPage = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Box>
-                        <Line data={data1} options={options} ref={chart1Ref} />
-                    </Box>
-                    <Box sx={{ mt: 12 }}>
-                        <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} ref={chart2Ref} />
+                    <Box sx={{ position: "relative" }}>
+                        <Typography align="center" sx={{ position: "absolute", left: -38, top: 35 }}>
+                            High
+                        </Typography>
+                        <Typography align="center" sx={{ position: "absolute", left: -38, top: 245 }}>
+                            Low
+                        </Typography>
+
+                        <Box sx={{ overflowX: "scroll" }}>
+                            <Box sx={{ position: "absolute", width: '100%', left: 0 }}>
+                                <Stack direction="row" alignItems="center" justifyContent="center">
+                                    <Box sx={{
+                                        width: 40,
+                                        height: 18,
+                                        backgroundColor: 'rgb(14,133,255)',
+                                        borderColor: 'rgba(99,104,255,0.2)',
+                                        boxShadow: 2,
+                                        mr: 1,
+                                    }}></Box>
+                                    <Typography>Asset history</Typography>
+                                </Stack>
+                            </Box>
+                            <Box sx={{ width: 2300, mt: 5 }}>
+                                <Line data={data1} options={options} ref={chart1Ref} style={{ width: 2300 }} />
+                            </Box>
+
+                            <Box sx={{ mt: 5 }} />
+                            <Box sx={{ position: "absolute", width: '100%', left: 0 }}>
+                                <Stack direction="row" alignItems="center" justifyContent="center">
+                                    <Box sx={{
+                                        width: 40,
+                                        height: 18,
+                                        backgroundColor: 'rgb(141,168,181)',
+                                        borderColor: 'rgba(99,104,255,0.2)',
+                                        boxShadow: 2,
+                                        mr: 1,
+                                    }}></Box>
+                                    <Typography>Volume history</Typography>
+                                </Stack>
+                            </Box>
+                            <Box sx={{ width: 2300, mt: 9, mb: 2 }}>
+                                <Line data={data2} options={options2} ref={chart2Ref} style={{ width: 2300 }} />
+                            </Box>
+                        </Box>
                     </Box>
 
-                    <Grid container alignItems="center" justifyContent="center" sx={{ mt: 5 }}>
-                        <Grid item>
-                            <Button variant='outlined' onClick={show1st50} sx={{ width: 180 }} disabled={historyIndexS === 0}>Trial #1 - #50</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button variant='outlined' onClick={show2nd50} sx={{ width: 180, ml: 1 }} disabled={historyIndexS === 49}>Trial #50 - #100</Button>
-                        </Grid>
-                    </Grid>
+                    <Typography variant="h6" align="center" sx={{ my: 3 }}>
+                        Use mouse move left and right to view full history
+                    </Typography>
 
                     {xpConfig.historySessionSeconds &&
                         timer
