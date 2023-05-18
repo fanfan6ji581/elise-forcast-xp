@@ -230,7 +230,7 @@ const TrialHistoryPage = () => {
                     </Box>
 
                     <Typography variant="h6" align="center" sx={{ my: 3 }}>
-                        Use mouse move left and right to view full history
+                        Scroll left and right to view full history
                     </Typography>
 
                     {xpConfig.historySessionSeconds &&
