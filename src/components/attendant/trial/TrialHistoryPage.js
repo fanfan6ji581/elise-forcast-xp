@@ -41,9 +41,9 @@ const TrialHistoryPage = () => {
     let data2 = {};
 
     const onKeyDown = (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            navigate(`/xp/${alias}/strategy`);
-        }
+        // if (e.key === 'Enter' || e.key === ' ') {
+        //     navigate(`/xp/${alias}/strategy`);
+        // }
     }
 
     useEffect(() => {
@@ -177,8 +177,11 @@ const TrialHistoryPage = () => {
         <Container maxWidth="lg">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant="h4" align="center" sx={{ my: 5 }}>
+                    <Typography variant="h4" align="center" sx={{ mt: 5 }}>
                         Trial History
+                    </Typography>
+                    <Typography variant="h6" align="center" sx={{ mt: 1, mb: 5 }}>
+                        You can scroll from left to right to see the total 100 trials. Please make sure you observe all trials carefully!
                     </Typography>
                 </Grid>
 
@@ -187,7 +190,7 @@ const TrialHistoryPage = () => {
                         <Typography align="center" sx={{ position: "absolute", left: -38, top: 35 }}>
                             High
                         </Typography>
-                        <Typography align="center" sx={{ position: "absolute", left: -38, top: 245 }}>
+                        <Typography align="center" sx={{ position: "absolute", left: -38, top: 265 }}>
                             Low
                         </Typography>
 
@@ -228,10 +231,6 @@ const TrialHistoryPage = () => {
                             </Box>
                         </Box>
                     </Box>
-
-                    <Typography variant="h6" align="center" sx={{ my: 3 }}>
-                        Scroll left and right to view full history
-                    </Typography>
 
                     {xpConfig.historySessionSeconds &&
                         timer

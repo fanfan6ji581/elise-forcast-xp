@@ -54,9 +54,9 @@ const StrategyPage = () => {
   return (
     <Container maxWidth="lg">
       <Grid container justifyContent="center">
-        <Grid item xs={9} sx={{ my: 5 }}>
+        <Grid item xs={6} sx={{ my: 5 }}>
           <Typography variant="h4" align="center">
-            Did you follow your original strategy designed in the beginning, and if you did, how well did it work?
+            Did you follow your original strategy, and if you did, how well did it work?
           </Typography>
         </Grid>
       </Grid>
