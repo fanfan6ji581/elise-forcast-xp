@@ -85,6 +85,11 @@ const schema = {
             "title": "Should show choice buttons on top of the charts",
             default: false
         },
+        clickToShowVolumeChart: {
+            "type": "boolean",
+            "title": "Need to click asset chart to show volume chart",
+            default: false
+        }
     }
 };
 

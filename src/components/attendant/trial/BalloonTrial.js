@@ -124,7 +124,7 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
               </Grid>
             }
             <Grid item xs={12}>
-              <ValueChart xpData={xpData} />
+              <ValueChart xpData={xpData} xpConfig={xpConfig} />
             </Grid>
             {xpConfig && !xpConfig.showChoiceButtonOnTop &&
               <Grid item xs={12}>

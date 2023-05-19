@@ -14,6 +14,7 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { trialIndex, showMoneyOutcome } from "../../../slices/gameSlice";
 import questionMarkImg from "../../../assets/question-mark.png";
+import { useEffect, useState } from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -25,15 +26,21 @@ ChartJS.register(
     Legend
 );
 
-export default function ValueChart({ xpData }) {
+export default function ValueChart({ xpData, xpConfig }) {
     const showMoneyOutcomeS = useSelector(showMoneyOutcome);
     const trialIndexS = useSelector(trialIndex);
     const { balloonValues, balloonSpeed, asset, volume } = xpData;
+    const [showVolumeChart, setShowVolumeChart] = useState(!xpConfig?.clickToShowAssetChart)
 
     let originalLabels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 2) }, (_, i) => i);
     let labels = _.clone(originalLabels);
     let lengthLimit = 50;
     let originalLabelLength = labels.length
+
+    useEffect(() => {
+        setShowVolumeChart(!xpConfig?.clickToShowAssetChart);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [trialIndexS])
 
     // add history
     if (originalLabelLength < lengthLimit) {
@@ -194,6 +201,11 @@ export default function ValueChart({ xpData }) {
             }
         }
     };
+
+    const onClickAssetChart = () => {
+        setShowVolumeChart(true)
+    }
+
     return (
         <Box style={{
             position: "relative"
@@ -207,10 +219,10 @@ export default function ValueChart({ xpData }) {
                 }} />
             }
 
-            <Box>
+            <Box onClick={onClickAssetChart}>
                 <Line data={data} options={options} />
             </Box>
-            <Box sx={{ mt: 12 }}>
+            <Box sx={{ mt: 12, opacity: showVolumeChart ? '1' : '0' }} >
                 <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
             </Box>
         </Box>

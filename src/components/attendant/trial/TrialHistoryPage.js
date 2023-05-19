@@ -41,9 +41,9 @@ const TrialHistoryPage = () => {
     let data2 = {};
 
     const onKeyDown = (e) => {
-        // if (e.key === 'Enter' || e.key === ' ') {
-        //     navigate(`/xp/${alias}/strategy`);
-        // }
+        if (e.ctrlKey && e.key === 'm') {
+            navigate(`/xp/${alias}/strategy`);
+        }
     }
 
     useEffect(() => {

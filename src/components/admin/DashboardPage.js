@@ -144,6 +144,7 @@ const DashboardPage = () => {
             trainingSessionSeconds: 180,
             historySessionSeconds: 120,
             showChoiceButtonOnTop: false,
+            clickToShowVolumeChart: false,
             enablePlaying: false,
             treatment: 1,
         };
