@@ -118,12 +118,19 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
             </Grid>
           </Grid>
           <Grid container alignItems="center">
+            {xpConfig && xpConfig.showChoiceButtonOnTop &&
+              <Grid item xs={12}>
+                <Choice xpData={xpData} xpConfig={xpConfig} />
+              </Grid>
+            }
             <Grid item xs={12}>
               <ValueChart xpData={xpData} />
             </Grid>
-            <Grid item xs={12}>
-              <Choice xpData={xpData} xpConfig={xpConfig} />
-            </Grid>
+            {xpConfig && !xpConfig.showChoiceButtonOnTop &&
+              <Grid item xs={12}>
+                <Choice xpData={xpData} xpConfig={xpConfig} />
+              </Grid>
+            }
           </Grid>
         </Grid>
       </Grid>

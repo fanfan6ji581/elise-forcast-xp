@@ -80,6 +80,11 @@ const schema = {
             "type": "integer",
             "title": "Seconds of how long the display history page last (default is 120 seconds, 2 min)",
         },
+        "showChoiceButtonOnTop": {
+            "type": "boolean",
+            "title": "Should show choice buttons on top of the charts",
+            default: false
+        },
     }
 };
 

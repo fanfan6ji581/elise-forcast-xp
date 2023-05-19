@@ -143,6 +143,7 @@ const DashboardPage = () => {
             percentageEarning: 40,
             trainingSessionSeconds: 180,
             historySessionSeconds: 120,
+            showChoiceButtonOnTop: false,
             enablePlaying: false,
             treatment: 1,
         };
