@@ -16,6 +16,10 @@ const columns = [
   { field: "reaction", headerName: "Reaction ms", width: 95 },
   { field: "choice", headerName: "choice", width: 120 },
   {
+    field: "clickToShowChart", headerName: "clicked asset chart", width: 150,
+    valueFormatter: (p) => `${p.value != null ? `${p.value}` : "-"}`,
+  },
+  {
     field: "outcome",
     headerName: "Outcome$",
     valueFormatter: (p) => `${p.value != null ? `$${p.value}` : "-"}`,

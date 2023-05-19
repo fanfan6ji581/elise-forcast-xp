@@ -12,6 +12,7 @@ import {
   reset,
   xpConfigS,
   xpDataS,
+  clickToShowChartHistory,
 } from "../../../slices/gameSlice";
 import { login } from "../../../slices/attendantSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +31,7 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
   const outcomeHistoryS = useSelector(outcomeHistory);
   const missHistoryS = useSelector(missHistory);
   const reactionHistoryS = useSelector(reactionHistory);
+  const clickToShowChartHistoryS = useSelector(clickToShowChartHistory);
   const xpData = useSelector(xpDataS);
   const xpConfig = useSelector(xpConfigS);
 
@@ -45,6 +47,7 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
       outcomeHistory: outcomeHistoryS,
       missHistory: missHistoryS,
       reactionHistory: reactionHistoryS,
+      clickToShowChartHistory: clickToShowChartHistoryS,
     };
     await updateDoc(attendantRef, { xpRecord });
     // store into local storage as well
@@ -98,6 +101,7 @@ const BalloonTrial = ({ isTrainingMode, onFinish }) => {
     outcomeHistoryS,
     missHistoryS,
     reactionHistoryS,
+    clickToShowChartHistoryS,
     xpConfig,
   ]);
 

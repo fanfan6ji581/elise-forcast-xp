@@ -11,10 +11,10 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import { trialIndex, showMoneyOutcome } from "../../../slices/gameSlice";
+import { trialIndex, showMoneyOutcome, showVolumeChart, doShowVolumeChart } from "../../../slices/gameSlice";
 import questionMarkImg from "../../../assets/question-mark.png";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 ChartJS.register(
     CategoryScale,
@@ -27,10 +27,11 @@ ChartJS.register(
 );
 
 export default function ValueChart({ xpData, xpConfig }) {
+    const dispatch = useDispatch();
     const showMoneyOutcomeS = useSelector(showMoneyOutcome);
     const trialIndexS = useSelector(trialIndex);
     const { balloonValues, balloonSpeed, asset, volume } = xpData;
-    const [showVolumeChart, setShowVolumeChart] = useState(!xpConfig?.clickToShowVolumeChart)
+    const showVolumeChartS = useSelector(showVolumeChart);
 
     let originalLabels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 2) }, (_, i) => i);
     let labels = _.clone(originalLabels);
@@ -38,9 +39,9 @@ export default function ValueChart({ xpData, xpConfig }) {
     let originalLabelLength = labels.length
 
     useEffect(() => {
-        setShowVolumeChart(!xpConfig?.clickToShowVolumeChart);
+        // dispatch(doShowVolumeChart);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [trialIndexS])
+    }, [showVolumeChartS])
 
     // add history
     if (originalLabelLength < lengthLimit) {
@@ -203,7 +204,7 @@ export default function ValueChart({ xpData, xpConfig }) {
     };
 
     const onClickAssetChart = () => {
-        setShowVolumeChart(true)
+        dispatch(doShowVolumeChart());
     }
 
     return (
@@ -222,7 +223,7 @@ export default function ValueChart({ xpData, xpConfig }) {
             <Box>
                 <Line data={data} options={options} />
             </Box>
-            <Box sx={{ mt: 12, opacity: showVolumeChart ? '1' : '0' }} onClick={onClickAssetChart}>
+            <Box sx={{ mt: 12, opacity: showVolumeChartS ? '1' : '0' }} onClick={onClickAssetChart}>
                 <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
             </Box>
         </Box>

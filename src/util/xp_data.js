@@ -45,6 +45,7 @@ function generateBalloonDataFromDataSeries(dataSeries) {
             // data recordings
             trialIndex: -1,
             reactionHistory: Array.from({ length }).fill(null),
+            clickToShowChartHistory: Array.from({ length }).fill(null),
             choiceHistory: Array.from({ length }).fill(null),
             outcomeHistory: Array.from({ length }).fill(null),
             missHistory: Array.from({ length }).fill(false),
@@ -159,6 +160,7 @@ function generateBalloonData(xp) {
             // data recordings
             trialIndex: -1,
             reactionHistory: Array.from({ length: xp.numberOfTrials }).fill(null),
+            clickToShowChartHistory: Array.from({ length: xp.numberOfTrials }).fill(null),
             choiceHistory: Array.from({ length: xp.numberOfTrials }).fill(null),
             outcomeHistory: Array.from({ length: xp.numberOfTrials }).fill(null),
             missHistory: Array.from({ length: xp.numberOfTrials }).fill(false),
@@ -184,6 +186,7 @@ function extractXpData(attendant, xpConfig) {
         reactionHistory,
         choiceHistory,
         outcomeHistory,
+        clickToShowChartHistory,
     } = xpRecord;
 
     let sum = 0;
@@ -210,6 +213,7 @@ function extractXpData(attendant, xpConfig) {
                 outcome: outcomeHistory[i],
                 pickedOutcome: pickedOutcomeIndexes.includes(i) ? outcomeHistory[i] : null,
                 accumulateOutcome: accumulateOutcomeHistory[i],
+                clickToShowChart: clickToShowChartHistory[i],
             },
             {
                 username: attendant.username,
