@@ -219,10 +219,10 @@ export default function ValueChart({ xpData, xpConfig }) {
                 }} />
             }
 
-            <Box onClick={onClickAssetChart}>
+            <Box>
                 <Line data={data} options={options} />
             </Box>
-            <Box sx={{ mt: 12, opacity: showVolumeChart ? '1' : '0' }} >
+            <Box sx={{ mt: 12, opacity: showVolumeChart ? '1' : '0' }} onClick={onClickAssetChart}>
                 <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
             </Box>
         </Box>
