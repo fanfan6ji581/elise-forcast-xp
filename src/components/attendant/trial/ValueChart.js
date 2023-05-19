@@ -30,7 +30,7 @@ export default function ValueChart({ xpData, xpConfig }) {
     const showMoneyOutcomeS = useSelector(showMoneyOutcome);
     const trialIndexS = useSelector(trialIndex);
     const { balloonValues, balloonSpeed, asset, volume } = xpData;
-    const [showVolumeChart, setShowVolumeChart] = useState(!xpConfig?.clickToShowAssetChart)
+    const [showVolumeChart, setShowVolumeChart] = useState(!xpConfig?.clickToShowVolumeChart)
 
     let originalLabels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 2) }, (_, i) => i);
     let labels = _.clone(originalLabels);
@@ -38,7 +38,8 @@ export default function ValueChart({ xpData, xpConfig }) {
     let originalLabelLength = labels.length
 
     useEffect(() => {
-        setShowVolumeChart(!xpConfig?.clickToShowAssetChart);
+        debugger
+        setShowVolumeChart(!xpConfig?.clickToShowVolumeChart);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trialIndexS])
 

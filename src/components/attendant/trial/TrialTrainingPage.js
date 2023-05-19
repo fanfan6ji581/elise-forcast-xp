@@ -19,6 +19,9 @@ const BalloonTrialTrainingPage = () => {
         if (e.key === ' ') {
             navigate(`/xp/${alias}/instruction-ready`);
         }
+        if (e.ctrlKey && e.key === 'm') {
+            navigate(`/xp/${alias}/quiz`);
+        }
     }
 
     const onFinish = async () => {
