@@ -38,7 +38,6 @@ export default function ValueChart({ xpData, xpConfig }) {
     let originalLabelLength = labels.length
 
     useEffect(() => {
-        debugger
         setShowVolumeChart(!xpConfig?.clickToShowVolumeChart);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trialIndexS])
