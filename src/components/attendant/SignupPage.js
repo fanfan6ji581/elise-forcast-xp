@@ -4,9 +4,11 @@ import validator from "@rjsf/validator-ajv8";
 import { Container, Grid, Alert, Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
-import { getDocs, collection, query, where, addDoc } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import { useParams } from 'react-router-dom';
 import db from "../../database/firebase";
+
+import { getAttendantByUsername, createAttendant, getAttendants } from '../../database/attendant';
 import { getAllDataForXP } from '../../database/data';
 import { generateBalloonDataFromDataSeries } from "../../util/xp_data";
 
@@ -79,15 +81,10 @@ const SignupPage = () => {
         setErrorMsg('');
         const { username, password, gender, age, major } = formData;
 
-        // check if username is being used
-        const snapshot = await getDocs(query(collection(db, "attendant"),
-            where("xp_alias", "==", alias),
-            where("username", "==", username),
-        ));
-
-        const attendants = snapshot.docs.map(d => (Object.assign({ id: d.id }, d.data())));
-        if (attendants.length > 0) {
+        const existingAttendant = await getAttendantByUsername(alias, username);
+        if (existingAttendant) {
             setErrorMsg("This email has been registered already")
+            setLoadingOpen(false);
             return;
         }
 
@@ -106,20 +103,25 @@ const SignupPage = () => {
                 xpConfig: xp,
             });
 
+        const allAttendants = await getAttendants(alias);
+
         // bind data series
         const allDataSeries = await getAllDataForXP(alias);
-        if (allDataSeries && allDataSeries.length > 0) {
-            const dataSeries = _.shuffle(allDataSeries)[0];
+        const usedDataSeriesIds = allAttendants.map(attendant => attendant.dataId)
+        const unAssignedDataSeries = _.filter(allDataSeries, (dataSeries) => {
+            return !_.includes(usedDataSeriesIds, dataSeries.id);
+          });
+
+        if (unAssignedDataSeries && unAssignedDataSeries.length > 0) {
+            const dataSeries = _.shuffle(unAssignedDataSeries)[0];
             attendant.dataId = dataSeries.id;
             attendant = Object.assign({}, attendant,
                 generateBalloonDataFromDataSeries(dataSeries));
         }
 
 
-        const docRef = await addDoc(collection(db, "attendant"), attendant);
-        attendant.id = docRef.id;
+        attendant = await createAttendant(attendant);
         dispatch(login(attendant));
-        // navigate(`/xp/${alias}/pretask/instruction1`)
         navigate(`/xp/${alias}/instruction`)
     }
 
