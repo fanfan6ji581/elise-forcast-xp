@@ -213,7 +213,7 @@ function extractXpData(attendant, xpConfig) {
                 outcome: outcomeHistory[i],
                 pickedOutcome: pickedOutcomeIndexes.includes(i) ? outcomeHistory[i] : null,
                 accumulateOutcome: accumulateOutcomeHistory[i],
-                clickToShowChart: clickToShowChartHistory[i] ? 1 : 0,
+                clickToShowChart: clickToShowChartHistory[i] === null ? '' : clickToShowChartHistory[i] ? 1 : 0,
             },
             {
                 username: attendant.username,

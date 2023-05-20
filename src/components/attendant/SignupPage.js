@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import Form from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
 import { Container, Grid, Alert, Typography, Backdrop, CircularProgress } from "@mui/material";
@@ -6,6 +7,9 @@ import { useNavigate } from "react-router-dom"
 import { getDocs, collection, query, where, addDoc } from "firebase/firestore";
 import { useParams } from 'react-router-dom';
 import db from "../../database/firebase";
+import { getAllDataForXP } from '../../database/data';
+import { generateBalloonDataFromDataSeries } from "../../util/xp_data";
+
 import { login } from "../../slices/attendantSlice";
 import { useState, useEffect } from "react"
 // import { generateBalloonData } from '../../util/xp_data'
@@ -88,7 +92,7 @@ const SignupPage = () => {
         }
 
         // const data = generateBalloonData(xp)
-        const attendant = Object.assign({},
+        let attendant = Object.assign({},
             // data,
             {
                 username,
@@ -102,10 +106,21 @@ const SignupPage = () => {
                 xpConfig: xp,
             });
 
+        // bind data series
+        const allDataSeries = await getAllDataForXP(alias);
+        if (allDataSeries && allDataSeries.length > 0) {
+            const dataSeries = _.shuffle(allDataSeries)[0];
+            attendant.dataId = dataSeries.id;
+            attendant = Object.assign({}, attendant,
+                generateBalloonDataFromDataSeries(dataSeries));
+        }
+
+
         const docRef = await addDoc(collection(db, "attendant"), attendant);
         attendant.id = docRef.id;
         dispatch(login(attendant));
-        navigate(`/xp/${alias}/pretask/instruction1`)
+        // navigate(`/xp/${alias}/pretask/instruction1`)
+        navigate(`/xp/${alias}/instruction`)
     }
 
     const fetchXP = async () => {
