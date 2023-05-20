@@ -94,11 +94,11 @@ const Instruction1Page = () => {
                     If you choose to skip, you get $0 (i.e., you don't earn any money but cannot lose either.)
                   </Typography>
                 </li>
-                <li>
+                {/* <li>
                   <Typography variant="h6" sx={{ my: 3 }}>
                     Take some time to make sure you understand these payoff rules!
                   </Typography>
-                </li>
+                </li> */}
               </ul>
             </Grid>
           </Grid>
