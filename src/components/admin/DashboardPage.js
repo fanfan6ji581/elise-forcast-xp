@@ -143,8 +143,8 @@ const DashboardPage = () => {
             percentageEarning: 40,
             trainingSessionSeconds: 180,
             historySessionSeconds: 120,
-            showChoiceButtonOnTop: false,
-            clickToShowVolumeChart: false,
+            showChoiceButtonOnTop: true,
+            clickToShowVolumeChart: true,
             enablePlaying: false,
             treatment: 1,
         };

@@ -44,7 +44,7 @@ const Instruction3Page = () => {
 
 
                 <Box textAlign="center" sx={{ my: 10 }}>
-                    <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/instruction`} sx={{ mx: 2 }}>Prev</Button>
+                    <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/instruction-how-to-play`} sx={{ mx: 2 }}>Prev</Button>
                     <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/instruction-ready`} sx={{ mx: 2 }}>Next</Button>
                 </Box>
             </Grid>

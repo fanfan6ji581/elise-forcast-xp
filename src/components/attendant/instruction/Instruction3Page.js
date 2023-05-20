@@ -12,11 +12,10 @@ import { Link, useParams } from "react-router-dom";
 import { xpConfigS } from "../../../slices/gameSlice";
 import { useSelector } from "react-redux";
 import image1 from "../../../assets/image1.png";
-import image2 from "../../../assets/image2.png";
-import image3 from "../../../assets/image3.png";
 import image4 from "../../../assets/image4.png";
 import image6 from "../../../assets/image6.png";
 import image7 from "../../../assets/image7.png";
+import image8 from "../../../assets/image8.png";
 
 const Instruction1Page = () => {
   const { alias } = useParams();
@@ -53,20 +52,14 @@ const Instruction1Page = () => {
           <Divider />
 
           <Grid container alignItems="center" sx={{ my: 10 }}>
-            <Grid item xs={6} sx={{ textAlign: "center" }}>
-              <Box component="img" alt="" src={image3} sx={{ width: '100%' }} />
+            <Grid item xs={8} sx={{ textAlign: "center" }}>
+              <Box component="img" alt="" src={image8} sx={{ width: '100%', boxShadow: 3 }} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Typography variant="h6" sx={{ ml: 5 }}>
                 At the beginning of the game, you'll see what's happened with the asset in the last 100 days.
               </Typography>
-            </Grid>
-
-            <Grid item xs={6} sx={{ textAlign: "center" }}>
-              <Box component="img" alt="" src={image2} sx={{ width: '100%' }} />
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h6" sx={{ ml: 5 }}>
+              <Typography variant="h6" sx={{ mt: 10, ml: 5 }}>
                 You will also be shown the history for a volume indicator over the same period.<br />
               </Typography>
             </Grid>
@@ -181,7 +174,7 @@ const Instruction1Page = () => {
               component={Link}
               variant="contained"
               size="large"
-              to={`/xp/${alias}/instruction-payment`}
+              to={`/xp/${alias}/instruction-how-to-play`}
             >
               Next
             </Button>
