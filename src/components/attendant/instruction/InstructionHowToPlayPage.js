@@ -28,7 +28,9 @@ const InstructionHowToPlayPage = () => {
             </Box>
 
             <Typography variant="h6" sx={{ my: 5 }}>
-                Note the volume chart is not apparent on screen by default. To make it appear (if you find it useful), you just have to click anywhere on the location of the chart and the chart will instantaneously appear on screen:
+                Note the volume chart is not apparent on screen by default. 
+                To make it appear (if you find it useful), 
+                you just have to click anywhere on the blank space below the asset chart, and the volume chart will instantaneously appear on screen:
             </Typography>
 
             <Box sx={{ textAlign: "center", my: 2 }}>
