@@ -27,9 +27,13 @@ const InstructionHowToPlayPage = () => {
                 <Box component="img" alt="" src={image9} sx={{ width: '80%', boxShadow: 3 }} />
             </Box>
 
+            <Typography variant="h6" sx={{ my: 2 }}>
+                You can see the asset history in the chart and need to make a forecast for the current trial with the red question mark.
+            </Typography>
+
             <Typography variant="h6" sx={{ my: 5 }}>
-                Note the volume chart is not apparent on screen by default. 
-                To make it appear (if you find it useful), 
+                Note the volume chart is not apparent on screen by default.
+                To make it appear (if you find it helpful),
                 you just have to click anywhere on the blank space below the asset chart, and the volume chart will instantaneously appear on screen:
             </Typography>
 

@@ -1,12 +1,11 @@
 import * as _ from "lodash";
 
-function fractionParse(a) {
-    const split = a.split('/');
-    return split[0] / split[1];
-}
+// function fractionParse(a) {
+//     const split = a.split('/');
+//     return split[0] / split[1];
+// }
 
 function generateBalloonDataFromDataSeries(dataSeries) {
-
     const { asset, volume } = dataSeries;
     const length = asset.length - 100;
 
@@ -22,11 +21,6 @@ function generateBalloonDataFromDataSeries(dataSeries) {
             aberration[i - 1] === 0) {
             aberration[i] = 1
         }
-        // if (balloonValues[i] * balloonValues[i - 1] < 0 &&
-        //     balloonSpeed[i - 1] !== 0 &&
-        //     balloonValues[i] * balloonValues[i + 1] > 0) {
-        //     shift[i] = 1
-        // }
         if (balloonValues[i] * balloonValues[i - 1] < 0) {
             shift[i] = 1
         }
@@ -55,104 +49,34 @@ function generateBalloonDataFromDataSeries(dataSeries) {
 }
 
 function generateBalloonData(xp) {
-    const state = {
-        _numAbberations: 0,
-        _numDangerzone: 0,
-        _dangerZoneSpeedReset: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        _dangerZoneResetCalc: ["0.00", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    };
-
-    const dangerZoneChance = 100 * fractionParse(xp.dangerZoneChance)
-    const aberrationChance = 100 * fractionParse(xp.aberrationChance)
-    const lambda = fractionParse(xp.lambda)
-
-    let cumSum = 1;
-    for (let i = 1; i < 10; i++) {
-        let probShift = (1 - Math.exp(-i * lambda))
-        const expected = probShift * cumSum
-        cumSum -= expected
-        state._dangerZoneResetCalc[i] = expected.toFixed(2)
-    }
-
-    const speedIncrement = xp.delta
-    let balloonValues = [];
-    let balloonSpeed = [];
-    let lastBalloonValue = 2;
-    let lastBalloonSpeed = 0;
-    let depthIntoDangerZone = 1;
-    while (balloonValues.length <= xp.numberOfTrials) {
-        let num = 100 * Math.random();
-        if (lastBalloonSpeed === 0) {
-            // dangerzone chance
-            if (num <= dangerZoneChance) {
-                lastBalloonSpeed += speedIncrement;
-                balloonSpeed.push(lastBalloonSpeed)
-                balloonValues.push(lastBalloonValue);
-                state._numDangerzone++;
-                continue;
-            }
-
-            // aberration chance
-            else if (num <= aberrationChance + dangerZoneChance) {
-                balloonValues.push(lastBalloonValue * -1)
-                balloonValues.push(lastBalloonValue)
-                balloonSpeed.push(lastBalloonSpeed)
-                balloonSpeed.push(lastBalloonSpeed)
-                state._numAbberations++;
-                continue;
-            }
-            else {
-                balloonValues.push(lastBalloonValue)
-                balloonSpeed.push(lastBalloonSpeed)
-            }
-        } else {   // in danger zone
-            let probShift = 100 * (1 - Math.exp(-depthIntoDangerZone * lambda))
-            if (num <= probShift) {
-                state._dangerZoneSpeedReset[depthIntoDangerZone]++
-                depthIntoDangerZone = 1
-                lastBalloonValue *= -1
-                balloonValues.push(lastBalloonValue)
-                lastBalloonSpeed = 0
-                balloonSpeed.push(lastBalloonSpeed)
-            } else {
-                depthIntoDangerZone += 1
-                lastBalloonSpeed += speedIncrement;
-                balloonValues.push(lastBalloonValue)
-                balloonSpeed.push(lastBalloonSpeed)
-            }
-        }
-    }
-
-    const sum = state._dangerZoneSpeedReset.reduce((prev, next) => prev + next);
-    const chances = state._dangerZoneSpeedReset.map(item => (item / sum).toFixed(2));
+    // hard code for training session
+    const asset = [2, 2, 2, -2, 2, 2, 2, -2, -2, -2, -2, -2, -2, -2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -2, 2, -2, -2, -2, 2, 2, 2, 2, 2, -2, 2, 2, 2, 2, 2, -2, -2, -2, -2, -2, -2, -2, -2, 2, -2, 2, 2, -2, -2, -2, -2, -2, -2, -2, 2, 2, 2, 2, 2, 2, 2, 2, -2, -2, -2, 2, 2, 2, 2, -2, -2, -2, 2, 2, 2, 2, 2, 2, 2, -2, -2, -2, 2, 2, 2, 2, 2, 2, 2, -2, -2, -2, -2, -2, -2, -2, 2, 2, 2, -2, -2, 2, -2, -2, -2, 2, 2, 2, -2, -2, -2, -2, 2, 2, 2, 2, -2, 2, -2, -2, -2, -2, -2, 2, 2, 2, -2, -2, 2, 2, -2, -2, 2, -2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2, 2, -2, -2, -2, -2, -2, -2, -2, -2, 2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 2, 2, 2, 2, 2, -2, -2, -2, -2, 2, 2, 2, 2, 2, 2, 2, -2, -2, -2, 2, 2, 2, 2, 2, 2, 2, -2, -2, -2, -2, 2, -2, 2, 2, 2, 2, 2, 2, -2, -2, 2, -2, -2, -2, -2, -2, -2, -2, 2, 2, 2, 2, 2, -2, -2, -2, 2, -2, -2, -2, -2, 2, 2, 2, -2, -2, 2, 2, 2, 2, 2, 2, 2, 2, -2, 2, -2, -2, -2, -2, -2, -2, -2, -2, 2, 2, -2, 2, 2, 2, 2, 2, -2, -2, -2, 2, -2, 2, 2, 2, 2, 2, 2, 2, -2, -2, -2, -2, -2, 2, -2, -2, -2, -2, -2];
+    const volume = [0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 2, 3, 4, 5, 0, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 1, 0, 0, 1, 2, 3, 4, 5, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2];
+    const length = asset.length - 100;
 
     // calculate aberration and shift
-    const aberration = Array.from({ length: xp.numberOfTrials + 1 }).fill(0);
-    const shift = Array.from({ length: xp.numberOfTrials + 1 }).fill(0);
+    const balloonValues = _.slice(asset, 99);
+    const balloonSpeed = _.slice(volume, 99);
+    const aberration = Array.from({ length: length + 1 }).fill(0);
+    const shift = Array.from({ length: length + 1 }).fill(0);
 
-    for (let i = 1; i <= xp.numberOfTrials; i++) {
+    for (let i = 1; i <= balloonValues.length; i++) {
         if (balloonValues[i] * balloonValues[i - 1] < 0 &&
             balloonSpeed[i - 1] === 0 &&
             aberration[i - 1] === 0) {
             aberration[i] = 1
         }
-        // if (balloonValues[i] * balloonValues[i - 1] < 0 &&
-        //     balloonSpeed[i - 1] !== 0 &&
-        //     balloonValues[i] * balloonValues[i + 1] > 0) {
-        //     shift[i] = 1
-        // }
         if (balloonValues[i] * balloonValues[i - 1] < 0) {
             shift[i] = 1
         }
     }
 
     return {
-        xpData: Object.assign({}, state, {
-            chances,
+        xpData: Object.assign({}, {
             balloonValues,
             balloonSpeed,
-            asset: balloonValues,
-            volume: balloonSpeed,
+            asset,
+            volume,
             aberration,
             shift,
         }),

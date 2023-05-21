@@ -72,8 +72,7 @@ const Instruction1Page = () => {
 
                   <br />
                   <br />
-                  What that means is that if you manage to identify what the pattern is, you may be able to track the value
-                  of the volume regime shift and to improve your performance. (more on this below 😊)
+                  If you manage to identify what the pattern is, you may track the value of the volume indicator to forecast the regime shift and to differentiate regime shifts from aberrations, which can greatly improve your performance.
                 </Typography>
               </Box>
             </Grid>
