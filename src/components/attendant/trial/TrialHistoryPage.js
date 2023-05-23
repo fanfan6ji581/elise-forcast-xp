@@ -180,8 +180,17 @@ const TrialHistoryPage = () => {
                     <Typography variant="h4" align="center" sx={{ mt: 5 }}>
                         Trial History
                     </Typography>
-                    <Typography variant="h6" align="center" sx={{ mt: 1, mb: 5 }}>
-                        You can scroll from left to right to see the total 100 trials. Please make sure you observe all trials carefully!
+                    <Typography variant="h6" align="center" sx={{ mt: 1, }}>
+                        You can scroll from left to right to see the total 100 trials.
+                        {xpConfig?.treatment === 3 && <>
+                            <br />
+                            <Typography variant="span">
+                                We're showing you the history so you can learn the probability of a switch within the dangerous zone as well as the probability of an aberration.
+                            </Typography>
+                        </>}
+                    </Typography>
+                    <Typography variant="h6" align="center" sx={{ mb: 5 }}>
+                        You have 5 minutes to observe the history before the game starts. You can press CTRL+M to skip this page if you have finished the observation and want to start the game earlier. Once you start, you can not come back to this page.
                     </Typography>
                 </Grid>
 

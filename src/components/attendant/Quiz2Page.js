@@ -384,7 +384,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    7. I can use the volume indicator to help forecast the regime shifts and to differentiate regime shifts from aberrations.
+                    7. I can use the volume indicator to help forecast the regime shifts by differentiating them from aberrations.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
                     {
