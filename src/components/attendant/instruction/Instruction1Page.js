@@ -57,6 +57,7 @@ const Instruction1Page = () => {
               </Typography>
               <Typography variant="h6" sx={{ mt: 10, ml: 5 }}>
                 You will also be shown the history for a volume indicator over the same period.<br />
+                This kind of indicator is commonly present on trading screens.
               </Typography>
             </Grid>
 
