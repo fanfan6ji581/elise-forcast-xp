@@ -33,6 +33,12 @@ const columns = [
   },
   {
     field: "accumulateOutcome",
+    headerName: "Picked Accum$",
+    valueFormatter: (p) => `${p.value != null ? `$${p.value}` : "-"}`,
+    width: 120,
+  },
+  {
+    field: "fullAccumulateOutcomeHistory",
     headerName: "Accumulate$",
     valueFormatter: (p) => `${p.value != null ? `$${p.value}` : "-"}`,
     width: 100,
@@ -73,7 +79,10 @@ const AttendentDataTable = ({ attendant, xp }) => {
 
   return (
     <>
-      <p>Final earning: ${attendant.finalEarning}</p>
+      <p>Final picked earning: ${attendant.finalEarning}</p>
+      {attendant.xpRecord.outcomeHistory &&
+        <p>Accumulate earning: ${attendant.xpRecord.outcomeHistory.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</p>
+      }
       <p>Miss reach limit: {attendant.missTooMuch ? 'Yes' : ''}</p>
       <DataGrid
         autoHeight

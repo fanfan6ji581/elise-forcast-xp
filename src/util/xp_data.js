@@ -122,6 +122,12 @@ function extractXpData(attendant, xpConfig) {
         return null;
     });
 
+    let fullSum = 0;
+    const fullAccumulateOutcomeHistory = outcomeHistory.map((v) => {
+        fullSum = fullSum + v
+        return fullSum;
+    });
+
     const mcqs = calcuateCorrectness(attendant, xpConfig);
 
     for (let i = 0; i < balloonValues.length; i++) {
@@ -137,6 +143,7 @@ function extractXpData(attendant, xpConfig) {
                 outcome: outcomeHistory[i],
                 pickedOutcome: pickedOutcomeIndexes.includes(i) ? outcomeHistory[i] : null,
                 accumulateOutcome: accumulateOutcomeHistory[i],
+                fullAccumulateOutcomeHistory: fullAccumulateOutcomeHistory[i],
                 clickToShowChart: clickToShowChartHistory[i] === null ? '' : clickToShowChartHistory[i] ? 1 : 0,
             },
             {
