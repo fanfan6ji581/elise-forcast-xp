@@ -14,7 +14,9 @@ const BeforeTrainingStart = () => {
                     </Typography>
 
                     <Typography variant="h6" sx={{ my: 5 }}>
-                        For the main game, you will have 5 minutes to observe the history in the last 100 days before playing the game. But this training session is only provided for you to practice how to play the game, so you don't have extra time to observe the history but need to start playing immediately. Don't worry, your earnings in this training session do not count in your final earnings.
+                        For the main game, you will have 5 minutes to observe the history in the last 100 days before playing the game.
+                        For this training session, you don't have extra time to observe the history but need to start playing immediately.
+                        Don't worry, your performance in this training session do not count in your final earnings.
                     </Typography>
 
                     <Typography variant="h6"  sx={{ my: 5 }}>
