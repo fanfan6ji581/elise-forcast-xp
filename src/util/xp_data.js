@@ -175,6 +175,7 @@ const calcuateCorrectness = (attendant, xpConfig) => {
                 mcq9: 1,
                 mcq10: 2,
                 mcq11: 1,
+                mcq12: 1,
             }
             return {
                 mcq1: attendant.quizAnswers.mcq1 === solution.mcq1 ? 1 : 0,
@@ -188,6 +189,7 @@ const calcuateCorrectness = (attendant, xpConfig) => {
                 mcq9: attendant.quizAnswers.mcq9 === solution.mcq9 ? 1 : 0,
                 mcq10: attendant.quizAnswers.mcq10 === solution.mcq10 ? 1 : 0,
                 mcq11: attendant.quizAnswers.mcq11 === solution.mcq11 ? 1 : 0,
+                mcq12: attendant.quizAnswers.mcq12 === solution.mcq12 ? 1 : 0,
             };
         case 2:
             solution = {
@@ -200,6 +202,7 @@ const calcuateCorrectness = (attendant, xpConfig) => {
                 mcq7: 1,
                 mcq8: 2,
                 mcq9: 1,
+                mcq10: 1,
             }
             return {
                 mcq1: attendant.quizAnswers.mcq1 === solution.mcq1 ? 1 : 0,
@@ -211,6 +214,7 @@ const calcuateCorrectness = (attendant, xpConfig) => {
                 mcq7: attendant.quizAnswers.mcq7 === solution.mcq7 ? 1 : 0,
                 mcq8: attendant.quizAnswers.mcq8 === solution.mcq8 ? 1 : 0,
                 mcq9: attendant.quizAnswers.mcq9 === solution.mcq9 ? 1 : 0,
+                mcq10: attendant.quizAnswers.mcq10 === solution.mcq10 ? 1 : 0,
             };
         case 1:
         default:
@@ -223,6 +227,7 @@ const calcuateCorrectness = (attendant, xpConfig) => {
                 mcq6: 1,
                 mcq7: 2,
                 mcq8: 1,
+                mcq9: 1,
             }
 
             return {
@@ -234,6 +239,7 @@ const calcuateCorrectness = (attendant, xpConfig) => {
                 mcq6: attendant.quizAnswers.mcq6 === solution.mcq6 ? 1 : 0,
                 mcq7: attendant.quizAnswers.mcq7 === solution.mcq7 ? 1 : 0,
                 mcq8: attendant.quizAnswers.mcq8 === solution.mcq8 ? 1 : 0,
+                mcq9: attendant.quizAnswers.mcq9 === solution.mcq9 ? 1 : 0,
             }
     }
 

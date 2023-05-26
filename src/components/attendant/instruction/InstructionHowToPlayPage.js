@@ -42,7 +42,7 @@ const InstructionHowToPlayPage = () => {
             </Box>
 
             <Typography variant="h6" sx={{ my: 5 }}>
-                Once you’ve made your mind, click on the button on top that corresponds to your decision. Your outcome at the trial is displayed on screen shortly after you’ve clicked (you’ll have the opportunity to do a short training session next so you can see how it looks ☺
+                Once you’ve made your mind, click on the button on top that corresponds to your decision. Your outcome at the trial is displayed on screen shortly after you’ve clicked (you’ll have the opportunity to do a short training session next so you can see 😄)
             </Typography>
 
             <Box textAlign="center" sx={{ my: 10 }}>

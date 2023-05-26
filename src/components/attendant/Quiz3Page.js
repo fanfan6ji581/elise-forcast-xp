@@ -28,6 +28,7 @@ const QuizPage = () => {
     const [mcq9, setMcq9] = useState(0);
     const [mcq10, setMcq10] = useState(0);
     const [mcq11, setMcq11] = useState(0);
+    const [mcq12, setMcq12] = useState(0);
     const [correction, setCorrection] = useState({});
     const [disableForm, setDisableForm] = useState(false);
     const [loadingOpen, setLoadingOpen] = useState(true);
@@ -44,6 +45,7 @@ const QuizPage = () => {
         mcq9: 1,
         mcq10: 2,
         mcq11: 1,
+        mcq12: 1,
     }
 
     const solutionText = {
@@ -58,6 +60,7 @@ const QuizPage = () => {
         mcq9: 'correct answer',
         mcq10: `You can earn a significant amount of money in this experiment (up to $100 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $5.`,
         mcq11: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $5.`,
+        mcq12: 'correct answer',
     }
 
     const fetchAttdendantAnswer = async () => {
@@ -80,6 +83,7 @@ const QuizPage = () => {
             setMcq9(attendant.quizAnswers.mcq9);
             setMcq10(attendant.quizAnswers.mcq10);
             setMcq11(attendant.quizAnswers.mcq11);
+            setMcq12(attendant.quizAnswers.mcq12);
             validateForm(attendant.quizAnswers)
         }
     }
@@ -128,11 +132,13 @@ const QuizPage = () => {
                 return window.alert("Please fill question #10");
             case mcq11 === 0:
                 return window.alert("Please fill question #11");
+            case mcq12 === 0:
+                return window.alert("Please fill question #12");
             default:
                 break;
         }
 
-        const quizAnswers = { mcq1, mcq2, mcq3, mcq4, mcq5, mcq6, mcq7, mcq8, mcq9, mcq10, mcq11 };
+        const quizAnswers = { mcq1, mcq2, mcq3, mcq4, mcq5, mcq6, mcq7, mcq8, mcq9, mcq10, mcq11, mcq12 };
         const attendantRef = doc(db, "attendant", loginAttendantS.id);
         await updateDoc(attendantRef, { quizAnswers });
 
@@ -547,7 +553,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    11. I should focus on doing my best my best on every single trial as any trial may be selected by
+                    11. I should focus on doing my best on every single trial as any trial may be selected by
                     the computer at the end of the experiment.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
@@ -574,6 +580,43 @@ const QuizPage = () => {
                                         disableForm &&
                                         correction.mcq11 &&
                                         mcq11 === idx + 1 &&
+                                        <Grid item>
+                                            <ErrorOutlineIcon color="error" />
+                                        </Grid>
+                                    }
+                                </Grid>
+                            </Fragment>
+                        )
+                    }
+                </RadioGroup>
+
+                <Typography variant="h5" sx={{ mt: 3 }}>
+                    12. At anytime during the game, I can click anywhere on the blank space below the asset chart, and the volume chart will instantaneously appear on screen.
+                </Typography>
+                <RadioGroup sx={{ mx: 3 }} >
+                    {
+                        ["True", "False"].map((v, idx) =>
+                            <Fragment key={idx}>
+                                <Grid container alignItems="center">
+                                    <Grid item xs={2}>
+                                        <FormControlLabel
+                                            control={<Radio disabled={disableForm}
+                                                value={idx + 1}
+                                                checked={mcq12 === idx + 1}
+                                                onChange={() => setMcq12(idx + 1)} />}
+                                            label={v} />
+                                    </Grid>
+                                    {
+                                        disableForm &&
+                                        solution.mcq12 === idx + 1 &&
+                                        <Grid item xs={10}>
+                                            <Alert severity="success">{solutionText.mcq12}</Alert>
+                                        </Grid>
+                                    }
+                                    {
+                                        disableForm &&
+                                        correction.mcq12 &&
+                                        mcq12 === idx + 1 &&
                                         <Grid item>
                                             <ErrorOutlineIcon color="error" />
                                         </Grid>

@@ -27,7 +27,7 @@ const Instruction1Page = () => {
           <Grid container alignItems="center" sx={{ my: 5 }}>
             <Grid item xs={12}>
               <Typography variant="h6" sx={{ my: 5 }}>
-                If you play well you can earn a lot of money in this game (up to $100), so please read the
+                If you play well you can earn a lot of money in this game (up to $100 AUD), so please read the
                 following instructions very carefully and ask any clarifying questions to the experimenter.
               </Typography>
               <Typography variant="h6" sx={{ my: 5 }}>
@@ -56,9 +56,11 @@ const Instruction1Page = () => {
               <Typography variant="h6" sx={{ ml: 5 }}>
                 At the beginning of the game, you'll see what's happened with the asset in the last 100 days.
               </Typography>
-              <Typography variant="h6" sx={{ mt: 10, ml: 5 }}>
-                You will also be shown the history for a volume indicator over the same period.<br />
-                This kind of indicator is commonly present on trading screens.
+              <Typography variant="h6" sx={{ mt: 5, ml: 5 }}>
+                To mimic real world markets, you will also be shown the history for a volume indicator over the same period.
+              </Typography>
+              <Typography variant="h6" sx={{ mt: 5, ml: 5 }}>
+                This kind of indicator is commonly present on trading screens, and makes the game more realistic.
               </Typography>
             </Grid>
 
@@ -100,11 +102,11 @@ const Instruction1Page = () => {
                     If you choose to skip, you get $0 (i.e., you don't earn any money but cannot lose either.)
                   </Typography>
                 </li>
-                {/* <li>
+                <li>
                   <Typography variant="h6" sx={{ my: 3 }}>
-                    Take some time to make sure you understand these payoff rules!
+                    Please remember this payoff rule. You can also write it down.
                   </Typography>
-                </li> */}
+                </li>
               </ul>
             </Grid>
           </Grid>

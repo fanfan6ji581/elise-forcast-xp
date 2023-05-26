@@ -32,15 +32,15 @@ const Instruction4Page = () => {
 
     return (
         <Container maxWidth="md">
-            <Grid container textAlign="center">
+            <Grid container>
                 <Grid item xs={12}>
 
                     <Typography variant="h4" align="center" sx={{ my: 5 }}>
                         Ready to Play?
                     </Typography>
 
-                    <Typography variant="h6" align="center" sx={{ my: 5 }}>
-                        Remember that if you play well, you have fair chances to win the maximal amount ($100). However, the game is hard, and its pace is quick: you have only {xpConfig.afkTimeout / 1000} seconds to make your decision on each trial. If you do not reply within the allowed time,
+                    <Typography variant="h6" sx={{ my: 5 }}>
+                        Remember that if you play well, you have fair chances to win the maximal amount ($100 AUD). However, the game is hard, and its pace is quick: you have only {xpConfig.afkTimeout / 1000} seconds to make your decision on each trial. If you do not reply within the allowed time,
                         <b style={{ fontSize: 24 }}> you lose ${xpConfig.afkTimeoutCost}</b> and move to the next trial. Have a short training session to learn how to play the game!
                     </Typography>
 
@@ -70,7 +70,7 @@ const Instruction4Page = () => {
                     <Box textAlign="center" >
                         <Button component={Link} variant="outlined" size="large"
                             sx={{ width: 240, padding: 3 }}
-                            to={`/xp/${alias}/instruction-payment`}>prev</Button>
+                            to={`/xp/${alias}/instruction-before-training`}>prev</Button>
                     </Box>
                 </Grid>
             </Grid>
