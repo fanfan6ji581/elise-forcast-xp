@@ -10,17 +10,18 @@ const BeforeTrainingStart = () => {
                 <Grid item xs={12}>
 
                     <Typography variant="h4" align="center" sx={{ my: 5 }}>
-                        Just before the training starts
+                        Just before the training starts Please Note
                     </Typography>
 
                     <Typography variant="h6" sx={{ my: 5 }}>
-                        For the main game, you will have 5 minutes to observe the history in the last 100 days before playing the game.
-                        For this training session, you don't have extra time to observe the history but need to start playing immediately.
-                        Don't worry, your performance in this training session do not count in your final earnings.
+                        The training session you're going to do is just to familiarize yourself with the game interface.
+                        Your choices won't be recorded and hence we won't be showing you the history for the asset in the previous 100 days, as your choices during that training do not matter.
+
                     </Typography>
 
-                    <Typography variant="h6"  sx={{ my: 5 }}>
+                    <Typography variant="h6" sx={{ my: 5 }}>
                         Please recall that you can make the volume chart appear on screen by clicking anywhere on the blank space below the asset chart, and the volume chart will instantaneously appear on screen.
+                        Please try it during that training!
                     </Typography>
 
                     <Box textAlign="center" sx={{ my: 10 }}>
