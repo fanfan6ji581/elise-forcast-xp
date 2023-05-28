@@ -88,7 +88,7 @@ const Attendants = ({ xp }) => {
 
     const handleDataSeriesAssign = async (attendantId, dataId, attendant) => {
         if (attendant.dataId) {
-            if (!window.confirm("Are you sure to change this attendant's data series?")) {
+            if (!window.confirm("Are you sure to change this attendant's data series? it will wipe out attendant responses")) {
                 return;
             }
         }
