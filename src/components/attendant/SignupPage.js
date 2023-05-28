@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+// import * as _ from "lodash";
 import Form from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
 import { Container, Grid, Alert, Typography, Backdrop, CircularProgress } from "@mui/material";
@@ -8,9 +8,12 @@ import { getDocs, collection, query, where } from "firebase/firestore";
 import { useParams } from 'react-router-dom';
 import db from "../../database/firebase";
 
-import { getAttendantByUsername, createAttendant, getAttendants } from '../../database/attendant';
-import { getAllDataForXP } from '../../database/data';
-import { generateBalloonDataFromDataSeries } from "../../util/xp_data";
+import {
+    getAttendantByUsername, createAttendant,
+    //  getAttendants 
+} from '../../database/attendant';
+// import { getAllDataForXP } from '../../database/data';
+// import { generateBalloonDataFromDataSeries } from "../../util/xp_data";
 
 import { login } from "../../slices/attendantSlice";
 import { useState, useEffect } from "react"
@@ -103,26 +106,26 @@ const SignupPage = () => {
                 xpConfig: xp,
             });
 
-        const allAttendants = await getAttendants(alias);
+        // const allAttendants = await getAttendants(alias);
 
-        // bind data series
-        const allDataSeries = await getAllDataForXP(alias);
-        const usedDataSeriesIds = allAttendants.map(attendant => attendant.dataId)
-        const unAssignedDataSeries = _.filter(allDataSeries, (dataSeries) => {
-            return !_.includes(usedDataSeriesIds, dataSeries.id);
-          });
+        // // bind data series
+        // const allDataSeries = await getAllDataForXP(alias);
+        // const usedDataSeriesIds = allAttendants.map(attendant => attendant.dataId)
+        // const unAssignedDataSeries = _.filter(allDataSeries, (dataSeries) => {
+        //     return !_.includes(usedDataSeriesIds, dataSeries.id);
+        //   });
 
-        if (unAssignedDataSeries && unAssignedDataSeries.length > 0) {
-            const dataSeries = _.shuffle(unAssignedDataSeries)[0];
-            attendant.dataId = dataSeries.id;
-            attendant = Object.assign({}, attendant,
-                generateBalloonDataFromDataSeries(dataSeries));
-        }
+        // if (unAssignedDataSeries && unAssignedDataSeries.length > 0) {
+        //     const dataSeries = _.shuffle(unAssignedDataSeries)[0];
+        //     attendant.dataId = dataSeries.id;
+        //     attendant = Object.assign({}, attendant,
+        //         generateBalloonDataFromDataSeries(dataSeries));
+        // }
 
 
         attendant = await createAttendant(attendant);
         dispatch(login(attendant));
-        navigate(`/xp/${alias}/instruction`)
+        navigate(`/xp/${alias}/signup-wait`)
     }
 
     const fetchXP = async () => {

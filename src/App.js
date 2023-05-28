@@ -39,6 +39,7 @@ import PretaskTrainingPage from './components/attendant/pretask/PretaskTrainingP
 import PretaskPaymentPage from './components/attendant/pretask/PretaskPaymentPage';
 import PretaskInstruction1Page from './components/attendant/instruction/PretaskInstruction1Page';
 import StartPretaskPage from './components/attendant/pretask/StartPretaskPage';
+import AfterSignupWaitPage from './components/attendant/AfterSignupWaitPage';
 
 const theme = createTheme({
 });
@@ -53,6 +54,7 @@ function App() {
                             <Route path="/" element={<AttendantLayout />}>
                                 <Route path="xp/:alias/login/:username?/:password?" element={<LoginPage />} />
                                 <Route path="xp/:alias/signup" element={<SignupPage />} />
+                                <Route path="xp/:alias/signup-wait" element={<AfterSignupWaitPage />} />
                                 <Route path="xp/:alias/trial" element={<TrialPage />} />
                                 <Route path="xp/:alias/training" element={<TrialTrainingPage />} />
                                 <Route path="xp/:alias/payment" element={<PaymentPage />} />

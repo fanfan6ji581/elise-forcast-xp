@@ -8,7 +8,7 @@ import AttendantDataTable from "./AttendantDataTable";
 import AttendentPretaskDataTable from "./AttendentPretaskDataTable";
 import AttendantInfo from "./AttendantInfo";
 
-const Attendent = () => {
+const Attendant = () => {
     const [attendant, setAttendent] = useState([]);
     const [xp, setXp] = useState(null);
     const [errorMsg, setErrorMsg] = useState('');
@@ -55,7 +55,7 @@ const Attendent = () => {
             <Container maxWidth="lg">
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography variant='h4'>Attedent <b>{username}</b> for <Link to={`/admin/xp/${alias}`}>Experiment {alias}</Link></Typography >
+                        <Typography variant='h4'>Attednant <b>{username}</b> for <Link to={`/admin/xp/${alias}`}>Experiment {alias}</Link></Typography >
 
                         {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
@@ -92,4 +92,4 @@ const Attendent = () => {
     )
 }
 
-export default Attendent
+export default Attendant

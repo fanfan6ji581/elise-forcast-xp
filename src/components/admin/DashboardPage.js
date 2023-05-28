@@ -146,6 +146,7 @@ const DashboardPage = () => {
             showChoiceButtonOnTop: true,
             clickToShowVolumeChart: true,
             enablePlaying: false,
+            enableSignUpContinue: false,
             treatment: 1,
         };
 

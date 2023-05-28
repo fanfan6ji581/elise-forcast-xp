@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import Form from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
 import { doc, writeBatch, collection } from "firebase/firestore";
@@ -16,7 +17,8 @@ import { generateXPZip, generatePretaskZip } from '../../util/generate_zip'
 import { Link, useParams } from 'react-router-dom';
 import AttendantsInfo from './AttendantsInfo';
 import { getAttendants, updateAttendant } from '../../database/attendant';
-import { getAllDataForXP } from '../../database/data';
+import { getAllDataForXP, getData } from '../../database/data';
+import { generateBalloonDataFromDataSeries } from "../../util/xp_data";
 
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
@@ -41,6 +43,7 @@ const Attendants = ({ xp }) => {
     const [selectionModel, setSelectionModel] = useState([]);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [loadingOpen, setLoadingOpen] = useState(true);
+    const [assigning, setAssigning] = useState(false);
 
     const columns = [
         { field: 'username', headerName: 'Username', width: 250 },
@@ -57,7 +60,7 @@ const Attendants = ({ xp }) => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 defaultValue=""
-                                value={params.row.dataId}
+                                value={params.row.dataId || ''}
                                 label="Data Series"
                                 onChange={(event) => handleDataSeriesAssign(params.row.id, event.target.value, params.row)}
                             >
@@ -84,9 +87,19 @@ const Attendants = ({ xp }) => {
     ];
 
     const handleDataSeriesAssign = async (attendantId, dataId, attendant) => {
-        await updateAttendant(attendantId, {
-            dataId
-        })
+        if (attendant.dataId) {
+            if (!window.confirm("Are you sure to change this attendant's data series?")) {
+                return;
+            }
+        }
+
+        // await updateAttendant(attendantId, {
+        //     dataId
+        // })
+        const dataSeries = await getData(dataId);
+        await updateAttendant(attendantId, Object.assign({
+            dataId: dataSeries.id,
+        }, generateBalloonDataFromDataSeries(dataSeries)));
         await fetchAttendants();
         // attendant.dataId = dataId;
         // setAttendants(attendants);
@@ -163,6 +176,53 @@ const Attendants = ({ xp }) => {
         setLoadingOpen(false);
     }
 
+    const assignDataSeries = async () => {
+        setAssigning(true);
+
+        // refetch all attendants
+        await fetchAttendants();
+        await fetchDatas();
+
+        // find attendants with no assigned data series
+        const noAssignedAttendants = attendants.filter(att => !att.dataId);
+
+        const usedDataSeriesIds = attendants.filter(att => att.dataId).map(att => att.dataId);
+        const unAssignedDataSeries = _.filter(datas, (dataSeries) => {
+            return !_.includes(usedDataSeriesIds, dataSeries.id);
+        });
+
+        if (noAssignedAttendants.length === 0) {
+            alert('No attendants need to be assigned')
+            setAssigning(false);
+            return;
+        }
+
+        for (let i = 0; i < unAssignedDataSeries.length; i++) {
+            if (i > noAssignedAttendants.length - 1) {
+                break;
+            }
+            // assign data
+            const attendant = noAssignedAttendants[i];
+            const dataSeries = unAssignedDataSeries[i];
+            // update this page
+            attendant.dataId = dataSeries.id;
+
+            await updateAttendant(attendant.id, Object.assign({
+                dataId: dataSeries.id,
+            }, generateBalloonDataFromDataSeries(dataSeries)));
+        }
+
+        await fetchAttendants();
+
+        const diff = noAssignedAttendants.length - unAssignedDataSeries.length;
+        if (diff > 0) {
+            alert(`There are still ${diff} attendant don't have data series, please manually resolve it`)
+        } else {
+            alert('Data series assigned successful');
+        }
+        setAssigning(false);
+    }
+
     useEffect(() => {
         fetchAttendants();
         fetchDatas();
@@ -202,6 +262,13 @@ const Attendants = ({ xp }) => {
                     <Form schema={schema} onSubmit={onCreateAttendants} validator={validator} />
 
                     <Divider sx={{ my: 5 }} />
+
+                    <Button variant="outlined" sx={{ my: 1, width: '100%' }} onClick={assignDataSeries} disabled={assigning}>
+                        Assign data series
+                    </Button>
+
+                    <Divider sx={{ my: 5 }} />
+
                     <Button variant="outlined" sx={{ my: 1, width: '100%' }} onClick={() => setDialogOpen(true)}><VisibilityIcon sx={{ mx: 1 }} /> View mcq Responses</Button>
                     <Button variant="outlined" sx={{ my: 1, width: '100%' }} onClick={onDownloadZip}><FileDownload sx={{ mx: 1 }} /> Download Main XP zip</Button>
                     <Button variant="outlined" sx={{ my: 1, width: '100%' }} onClick={onDownloadPretaskZip}><FileDownload sx={{ mx: 1 }} /> Download Pretask zip</Button>
@@ -210,14 +277,12 @@ const Attendants = ({ xp }) => {
 
             <Dialog maxWidth="lg" fullWidth={true} open={dialogOpen} onClose={() => setDialogOpen(false)}>
                 <DialogContent>
-                    <AttendantsInfo attendants={attendants} xp={xp}/>
+                    <AttendantsInfo attendants={attendants} xp={xp} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setDialogOpen(false)}>Close</Button>
                 </DialogActions>
             </Dialog>
-
-
         </>
     )
 }
