@@ -52,13 +52,13 @@ const QuizPage = () => {
         mcq1: 'correct answer',
         mcq2: 'correct answer',
         mcq3: 'correct answer',
-        mcq4: 'Recall these parameters are fixed throughout the experiment',
+        mcq4: 'The probability of the shift is fixed, i.e., it is as high in the very first trial in the dangerous zone as in the other trials in the zone.',
         mcq5: 'correct answer',
         mcq6: 'correct answer',
         mcq7: 'correct answer',
         mcq8: 'correct answer',
         mcq9: 'correct answer',
-        mcq10: `You can earn a significant amount of money in this experiment (up to $100 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $5.`,
+        mcq10: `You can earn a significant amount of money in this experiment (up to $100 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $10.`,
         mcq11: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $5.`,
         mcq12: 'correct answer',
     }
@@ -217,7 +217,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    2. Whenever I see the current volume departing from 0, I know that I am in a dangerous zone
+                    2. Whenever I see the current volume being higher than from 0, I know that I am in a dangerous zone
                     where a regime shift may occur anytime.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
@@ -255,8 +255,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    3. If the current volume is 0, and the asset value switches at this trial. It must be an aberration
-                    and the asset value will switch back at the next trial.
+                    3. If the current volume is 0, and the asset value switches at this trial. It must be an aberration.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
                     {
@@ -293,8 +292,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    4. The probability of a regime shift in the dangerous zone and the probability of an aberration
-                    outside the dangerous zone may increase over time.
+                    4. The probability of a regime shift in the dangerous zone and is increasing over time as the volume gets higher.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
                     {
@@ -516,7 +514,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    10. I can expect to leave the lab with $25 on average.
+                    10. I will definitely leave the lab with no less than $25.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
                     {

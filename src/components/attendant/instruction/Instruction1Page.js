@@ -27,7 +27,7 @@ const Instruction1Page = () => {
           <Grid container alignItems="center" sx={{ my: 5 }}>
             <Grid item xs={12}>
               <Typography variant="h6" sx={{ my: 5 }}>
-                If you play well you can earn a lot of money in this game (up to $100 AUD), so please read the
+                If you play well you can earn a lot of money in this game (up to $150 AUD), so please read the
                 following instructions very carefully and ask any clarifying questions to the experimenter.
               </Typography>
               <Typography variant="h6" sx={{ my: 5 }}>

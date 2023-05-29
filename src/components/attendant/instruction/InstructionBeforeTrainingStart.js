@@ -10,7 +10,7 @@ const BeforeTrainingStart = () => {
                 <Grid item xs={12}>
 
                     <Typography variant="h4" align="center" sx={{ my: 5 }}>
-                        Just before the training starts Please Note
+                        Please Note
                     </Typography>
 
                     <Typography variant="h6" sx={{ my: 5 }}>
