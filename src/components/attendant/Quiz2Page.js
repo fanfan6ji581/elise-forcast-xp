@@ -53,7 +53,7 @@ const QuizPage = () => {
         mcq6: 'correct answer',
         mcq7: `There is a pattern linking the volume indicator to the regime shifts. If you manage to identify what the pattern is, you may be able to forecast the shifts from the value of the volume indicator.`,
         mcq8: `You can earn a significant amount of money in this experiment (up to $100 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $10.`,
-        mcq9: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $5.`,
+        mcq9: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $10.`,
         mcq10: 'correct answer',
     }
 

@@ -50,7 +50,7 @@ const QuizPage = () => {
         mcq5: 'correct answer',
         mcq6: 'correct answer',
         mcq7: `You can earn a significant amount of money in this experiment (up to $150 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $10.`,
-        mcq8: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $5.`,
+        mcq8: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $150. In case of a negative score, you leave the lab with $10.`,
         mcq9: 'correct answer',
     }
 

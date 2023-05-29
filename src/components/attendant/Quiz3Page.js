@@ -59,7 +59,7 @@ const QuizPage = () => {
         mcq8: 'correct answer',
         mcq9: 'correct answer',
         mcq10: `You can earn a significant amount of money in this experiment (up to $100 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $10.`,
-        mcq11: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $5.`,
+        mcq11: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $100. In case of a negative score, you leave the lab with $10.`,
         mcq12: 'correct answer',
     }
 
@@ -310,7 +310,7 @@ const QuizPage = () => {
                                     {
                                         disableForm &&
                                         solution.mcq4 === idx + 1 &&
-                                        <Grid item>
+                                        <Grid item xs={10}>
                                             <Alert severity="success">{solutionText.mcq4}</Alert>
                                         </Grid>
                                     }
