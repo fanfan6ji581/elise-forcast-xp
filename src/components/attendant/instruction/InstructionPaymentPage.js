@@ -27,17 +27,14 @@ const Instruction3Page = () => {
                 <Typography variant="h6" sx={{ my: 2 }}>
                     You have {xpConfig.afkTimeout / 1000} seconds to make your decision on each trial.
                     If you fail to reply within the allowed time, this is a missed and you will lose $1 AUD.
-                </Typography>
-
-                <Typography variant="h6" sx={{ my: 2 }}>
                     After {xpConfig.missLimit} missed trials the game will stop automatically, so please keep up with the pace.😊
                 </Typography>
 
                 <Typography variant="h6" sx={{ my: 2 }}>
-                    You can earn a significant amount of money from the task (up to ${xpConfig.treatment === 1 ? 150 : 100} AUD) 
+                    You can earn a significant amount of money from the task (up to ${xpConfig.treatment === 1 ? 150 : 100} AUD)
                     if you perform well, but payments will also be varying considerably across participants. To be more specific,
-                    if you play optimally, you will be mostly likely to leave the lab with more than ${xpConfig.treatment === 1 ? 130 : 80} AUD, 
-                    and even highly likely to get the max payment of ${xpConfig.treatment === 1 ? 150 : 100} AUD. 
+                    if you play optimally, you will be mostly likely to leave the lab with more than ${xpConfig.treatment === 1 ? 130 : 80} AUD,
+                    and even highly likely to get the max payment of ${xpConfig.treatment === 1 ? 150 : 100} AUD.
                     However, if you do not implement the optimal strategy for the task, your most likely payoff from the task will be $5 AUD.
                 </Typography>
                 <Typography variant="h6" sx={{ my: 2 }}>
