@@ -292,7 +292,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    4. The probability of a regime shift in the dangerous zone and is increasing over time as the volume gets higher.
+                    4. The probability of a regime shift in the dangerous zone is increasing over time as the volume gets higher.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
                     {
