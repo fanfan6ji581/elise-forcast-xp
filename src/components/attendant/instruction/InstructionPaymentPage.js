@@ -31,7 +31,7 @@ const Instruction3Page = () => {
 
                 <Typography variant="h6" sx={{ my: 2 }}>
                     After {xpConfig.missLimit} missed trials
-                    the game will stop automatically, and you will not receive any payment, so please keep up with the pace.😊
+                    the game will stop automatically, so please keep up with the pace.😊
                 </Typography>
 
                 <Typography variant="h6" sx={{ my: 2 }}>
