@@ -54,7 +54,7 @@ const gameSlice = createSlice({
 
             state.outcomeHistory[trialIndex] = money;
             // if (!missed) {
-                state.clickToShowChartHistory[trialIndex] = state.showVolumeChart;
+            state.clickToShowChartHistory[trialIndex] = state.showVolumeChart;
             // } else {
             //     state.clickToShowChartHistory[trialIndex] = null;
             // }
@@ -135,7 +135,7 @@ const gameSlice = createSlice({
                 reactionHistory,
                 clickToShowChartHistory
             } = xpRecord;
-            state.trialIndex = trialIndex;
+            state.trialIndex = trialIndex + 1;
             state.choiceHistory = choiceHistory;
             state.outcomeHistory = outcomeHistory;
             state.missHistory = missHistory;

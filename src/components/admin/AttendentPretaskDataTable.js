@@ -47,6 +47,7 @@ const columns = [
   { field: 'gender', headerName: 'gender', width: 60 },
   { field: 'age', headerName: 'age', width: 60 },
   { field: 'major', headerName: 'major', width: 100 },
+  { field: 'education', headerName: 'education', width: 120 },
 ];
 
 const AttendentPretaskDataTable = ({ attendant }) => {

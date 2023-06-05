@@ -151,6 +151,7 @@ function extractXpData(attendant, xpConfig) {
                 gender: attendant.gender,
                 age: attendant.age,
                 major: attendant.major,
+                education: attendant.education,
             }, mcqs,
             {
                 strategy: attendant.strategy,

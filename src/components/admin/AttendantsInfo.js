@@ -10,6 +10,7 @@ const columns = [
     { field: 'gender', headerName: 'gender', width: 80 },
     { field: 'age', headerName: 'age', width: 80 },
     { field: 'major', headerName: 'major', width: 150 },
+    { field: 'education', headerName: 'education', width: 120 },
     { field: 'mcq1', headerName: 'mcq1', width: 50 },
     { field: 'mcq2', headerName: 'mcq2', width: 50 },
     { field: 'mcq3', headerName: 'mcq3', width: 50 },
@@ -34,6 +35,7 @@ const AttendentsInfo = ({ attendants, xp }) => {
         age: attendant.age,
         gender: attendant.gender,
         major: attendant.major,
+        education: attendant.education,
     }, calcuateCorrectness(attendant, xp), { 
         strategy: attendant.strategy,
         strategy2: attendant.strategy2,

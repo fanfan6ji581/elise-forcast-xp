@@ -46,6 +46,7 @@ const columns = [
   { field: 'gender', headerName: 'gender', width: 60 },
   { field: 'age', headerName: 'age', width: 60 },
   { field: 'major', headerName: 'major', width: 100 },
+  { field: 'education', headerName: 'education', width: 120 },
   { field: 'mcq1', headerName: 'mcq1', width: 50 },
   { field: 'mcq2', headerName: 'mcq2', width: 50 },
   { field: 'mcq3', headerName: 'mcq3', width: 50 },
@@ -83,6 +84,7 @@ const AttendentDataTable = ({ attendant, xp }) => {
       {attendant.xpRecord.outcomeHistory &&
         <p>Accumulate earning: ${attendant.xpRecord.outcomeHistory.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</p>
       }
+      <p>Number of Missed trials: {attendant.xpRecord.missHistory.reduce((accumulator, currentValue) => accumulator + currentValue, 0)}</p>
       <p>Miss reach limit: {attendant.missTooMuch ? 'Yes' : ''}</p>
       <DataGrid
         autoHeight

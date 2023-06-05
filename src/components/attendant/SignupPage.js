@@ -65,14 +65,23 @@ const SignupPage = () => {
             "major": {
                 "type": "string",
                 "title": "Major"
-            }
+            },
+            "education": {
+                "type": "string",
+                "title": "Education",
+                "enum": [
+                    "Undergraduate",
+                    "Postgraduate",
+                ]
+            },
         },
         required: [
             "username",
             "password",
             "gender",
             "age",
-            "major"
+            "major",
+            "education"
         ]
     };
 
@@ -82,7 +91,7 @@ const SignupPage = () => {
         setLoadingOpen(true);
 
         setErrorMsg('');
-        const { username, password, gender, age, major } = formData;
+        const { username, password, gender, age, major, education } = formData;
 
         const existingAttendant = await getAttendantByUsername(alias, username);
         if (existingAttendant) {
@@ -100,6 +109,7 @@ const SignupPage = () => {
                 gender,
                 age,
                 major,
+                education,
                 created: Date.now(),
                 xp_alias: xp.alias,
                 xp_id: xp.id,
