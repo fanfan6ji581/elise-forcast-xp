@@ -60,7 +60,12 @@ const columns = [
   { field: 'mcq11', headerName: 'mcq11', width: 60 },
   { field: 'mcq12', headerName: 'mcq12', width: 60 },
   { field: 'strategy', headerName: 'strategy', width: 80 },
-  { field: 'strategy2', headerName: 'strategy2', width: 80 },
+  // { field: 'strategy2', headerName: 'strategy2', width: 80 },
+  { field: 'earningQuiz1', headerName: 'earningQuiz1', width: 200 },
+  { field: 'earningQuiz2', headerName: 'earningQuiz2', width: 200 },
+  { field: 'earningQuiz3', headerName: 'earningQuiz3', width: 200 },
+  { field: 'earningQuiz4', headerName: 'earningQuiz4', width: 200 },
+  { field: 'earningQuiz5', headerName: 'earningQuiz5', width: 200 },
 ];
 
 // not in used

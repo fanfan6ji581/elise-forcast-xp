@@ -24,7 +24,12 @@ const columns = [
     { field: 'mcq11', headerName: 'mcq11', width: 60 },
     { field: 'mcq12', headerName: 'mcq12', width: 60 },
     { field: 'strategy', headerName: 'strategy', width: 80 },
-    { field: 'strategy2', headerName: 'strategy2', width: 80 },
+    // { field: 'strategy2', headerName: 'strategy2', width: 80 },
+    { field: 'earningQuiz1', headerName: 'earningQuiz1', width: 200 },
+    { field: 'earningQuiz2', headerName: 'earningQuiz2', width: 200 },
+    { field: 'earningQuiz3', headerName: 'earningQuiz3', width: 200 },
+    { field: 'earningQuiz4', headerName: 'earningQuiz4', width: 200 },
+    { field: 'earningQuiz5', headerName: 'earningQuiz5', width: 200 },
 ];
 
 const AttendentsInfo = ({ attendants, xp }) => {
@@ -36,9 +41,15 @@ const AttendentsInfo = ({ attendants, xp }) => {
         gender: attendant.gender,
         major: attendant.major,
         education: attendant.education,
+
     }, calcuateCorrectness(attendant, xp), { 
         strategy: attendant.strategy,
-        strategy2: attendant.strategy2,
+        // strategy2: attendant.strategy2,
+        earningQuiz1: attendant?.earningQuiz?.question1,
+        earningQuiz2: attendant?.earningQuiz?.question2,
+        earningQuiz3: attendant?.earningQuiz?.question3,
+        earningQuiz4: attendant?.earningQuiz?.question4,
+        earningQuiz5: attendant?.earningQuiz?.question5,
      }));
 
     if (xp.treatment === 2) {

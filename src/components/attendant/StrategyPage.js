@@ -53,16 +53,15 @@ const StrategyPage = () => {
   }, []);
 
   return (
-    <Container maxWidth="md">
+    <Container>
       <Typography variant="h4" align="center" sx={{ my: 3 }}>
-        Have you devised a strategy on how to play the game, and if you have,
-        how confident are you that it's gonna work?
+        Have you devised a strategy on how to play the game?
       </Typography>
 
-      <Grid container>
-        <Grid item xs={6}>
+      <Grid container sx={{ display: 'flex', alignItems: 'stretch' }}>
+      <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <Typography variant="h5" align="center" sx={{ my: 5 }}>
-            <b>I don't have a strategy</b>
+            <b>I don't have any idea</b>
           </Typography>
           <Box textAlign="center">
             <FormControlLabel
@@ -77,51 +76,40 @@ const StrategyPage = () => {
             />
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <Typography variant="h5" align="center" sx={{ my: 5 }}>
-            <b>I do have a strategy</b>
+            <b>I have some ideas but my strategy is not clear yet.</b>
           </Typography>
-          <Grid container justifyContent="space-between" spacing={2}>
-            <Grid item xs>
-              <Box textAlign="center">
+          <Box textAlign="center">
+            <FormControlLabel
+              control={
                 <Radio
-                  value="2"
-                  checked={strategy === 2}
+                  value="1"
                   disabled={attendant && attendant.strategy > 0}
+                  checked={strategy === 2}
                   onChange={() => setStrategy(2)}
                 />
-                <Typography variant="body1">
-                  I'm not quite sure about it
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs>
-              <Box textAlign="center">
+              }
+            />
+          </Box>
+        </Grid>
+
+        <Grid item xs={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <Typography variant="h5" align="center" sx={{ my: 5 }}>
+            <b>I do have a clear strategy.</b>
+          </Typography>
+          <Box textAlign="center">
+            <FormControlLabel
+              control={
                 <Radio
-                  value="3"
-                  checked={strategy === 3}
+                  value="1"
                   disabled={attendant && attendant.strategy > 0}
+                  checked={strategy === 3}
                   onChange={() => setStrategy(3)}
                 />
-                <Typography variant="body1">
-                  I feel fairly confident about it
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs>
-              <Box textAlign="center">
-                <Radio
-                  value="4"
-                  checked={strategy === 4}
-                  disabled={attendant && attendant.strategy > 0}
-                  onChange={() => setStrategy(4)}
-                />
-                <Typography variant="body1">
-                  I'm really think it's right
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
+              }
+            />
+          </Box>
         </Grid>
       </Grid>
 

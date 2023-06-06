@@ -25,8 +25,8 @@ const BeforeTrainingStart = () => {
                     </Typography>
 
                     <Box textAlign="center" sx={{ my: 10 }}>
-                        <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/instruction-payment`} sx={{ mx: 2 }}>Prev</Button>
-                        <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/instruction-ready`} sx={{ mx: 2 }}>Next</Button>
+                        <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/instruction-ready`} sx={{ mx: 2 }}>Prev</Button>
+                        <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/training`} sx={{ mx: 2 }}>Next</Button>
                     </Box>
 
                 </Grid>

@@ -47,7 +47,7 @@ const Instruction4Page = () => {
                     <Box textAlign="center" sx={{ my: 10 }}>
                         <Button component={Link} variant="contained" size="large"
                             sx={{ width: 240, padding: 3 }}
-                            to={`/xp/${alias}/training`}>GO TO TRAINING</Button>
+                            to={`/xp/${alias}/instruction-before-training`}>GO TO TRAINING</Button>
                     </Box>
                     {
                         attendant && !attendant.isTrained &&
@@ -70,7 +70,7 @@ const Instruction4Page = () => {
                     <Box textAlign="center" >
                         <Button component={Link} variant="outlined" size="large"
                             sx={{ width: 240, padding: 3 }}
-                            to={`/xp/${alias}/instruction-before-training`}>prev</Button>
+                            to={`/xp/${alias}/instruction-payment`}>prev</Button>
                     </Box>
                 </Grid>
             </Grid>

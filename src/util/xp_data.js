@@ -156,6 +156,11 @@ function extractXpData(attendant, xpConfig) {
             {
                 strategy: attendant.strategy,
                 strategy2: attendant.strategy2,
+                earningQuiz1: attendant?.earningQuiz?.question1,
+                earningQuiz2: attendant?.earningQuiz?.question2,
+                earningQuiz3: attendant?.earningQuiz?.question3,
+                earningQuiz4: attendant?.earningQuiz?.question4,
+                earningQuiz5: attendant?.earningQuiz?.question5,
             }
         ))
     }
