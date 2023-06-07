@@ -111,7 +111,7 @@ const EarningQuestionPage = () => {
       name: "question4",
     },
     {
-      label: "Assuming you did follow a clear strategy (if not, please click NA), does that strategy match the strategy you had in mind when you started the game?",
+      label: "If applicable, please describe how you used the volume chart to make forecasts.",
       options: [
         "NA",
       ],
