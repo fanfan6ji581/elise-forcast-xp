@@ -26,7 +26,7 @@ const Instruction3Page = () => {
 
                 <Typography variant="h6" sx={{ my: 2 }}>
                     You have {xpConfig.afkTimeout / 1000} seconds to make your decision on each trial.
-                    If you fail to reply within the allowed time, this is a missed and you will lose $1 AUD.
+                    If you fail to reply within the allowed time, this is a missed trial and you will lose $1 AUD.
                     After {xpConfig.missLimit} missed trials the game will stop automatically, so please keep up with the pace.😊
                 </Typography>
 
