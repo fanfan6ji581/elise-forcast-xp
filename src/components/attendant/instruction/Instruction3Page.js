@@ -60,6 +60,7 @@ const Instruction1Page = () => {
                 At the beginning of the game, you'll see what's happened with the asset in the last 100 days.
               </Typography>
               <Typography variant="h6" sx={{ mt: 5, ml: 5 }}>
+                You will also be shown the history for a volume indicator over the same period.
                 This kind of indicator is commonly present on trading screens in the real world.
               </Typography>
             </Grid>
