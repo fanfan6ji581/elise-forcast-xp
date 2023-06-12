@@ -28,7 +28,7 @@ const InstructionHowToPlayPage = () => {
             </Box>
 
             <Typography variant="h6" sx={{ my: 2 }}>
-                You can see the asset history in the chart and need to make a forecast for the current trial with the red question mark.
+                You can see the asset history in the chart and need to make a forecast for the current trial.
             </Typography>
 
             <Typography variant="h6" sx={{ my: 5 }}>

@@ -551,8 +551,7 @@ const QuizPage = () => {
                 </RadioGroup>
 
                 <Typography variant="h5" sx={{ mt: 3 }}>
-                    11. I should focus on doing my best on every single trial as any trial may be selected by
-                    the computer at the end of the experiment.
+                    11. I should focus on doing my best on every single trial as any trial may be selected for payment.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
                     {
