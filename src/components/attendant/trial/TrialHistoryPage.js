@@ -190,7 +190,7 @@ const TrialHistoryPage = () => {
                         </>}
                     </Typography>
                     <Typography variant="h6" align="center" sx={{ mb: 5 }}>
-                        You have 5 minutes to observe the history before the game starts. You can press CTRL+M to skip this page if you have finished the observation and want to start the game earlier. Once you start, you can not come back to this page.
+                        You have 5 minutes to observe the history before the game starts.
                     </Typography>
                 </Grid>
 
