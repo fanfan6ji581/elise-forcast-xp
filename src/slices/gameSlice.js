@@ -163,6 +163,7 @@ export const { recordChoice, setProgressStartTime,
 
 export const trialIndex = (state) => state.game.trialIndex;
 export const showVolumeChart = (state) => state.game.showVolumeChart;
+export const showVolumeChartInitialValue = (state) => state.game.showVolumeChartInitialValue;
 export const showAfterClickDelay = (state) => state.game.showAfterClickDelay;
 export const timerProgress = (state) => state.game.timerProgress;
 export const showMoneyOutcome = (state) => state.game.showMoneyOutcome;

@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Box } from "@mui/material";
-import { trialIndex, showMoneyOutcome, showVolumeChart, doShowVolumeChart } from "../../../slices/gameSlice";
+import { trialIndex, showMoneyOutcome, showVolumeChart, showVolumeChartInitialValue, doShowVolumeChart } from "../../../slices/gameSlice";
 import questionMarkImg from "../../../assets/question-mark.png";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -32,6 +32,7 @@ export default function ValueChart({ xpData, xpConfig }) {
     const trialIndexS = useSelector(trialIndex);
     const { balloonValues, balloonSpeed, asset, volume } = xpData;
     const showVolumeChartS = useSelector(showVolumeChart);
+    const showVolumeChartInitialValueS = useSelector(showVolumeChartInitialValue);
 
     let originalLabels = Array.from({ length: trialIndexS + (showMoneyOutcomeS ? 2 : 2) }, (_, i) => i);
     let labels = _.clone(originalLabels);
@@ -223,7 +224,11 @@ export default function ValueChart({ xpData, xpConfig }) {
             <Box>
                 <Line data={data} options={options} />
             </Box>
-            <Box sx={{ mt: 12, opacity: showVolumeChartS ? '1' : '0' }} onClick={onClickAssetChart}>
+            <Box sx={{
+                mt: 12,
+                opacity: showVolumeChartS ? '1' : '0',
+                display: (!showVolumeChartInitialValueS && showMoneyOutcomeS) ? 'none' : 'block',
+            }} onClick={onClickAssetChart}>
                 <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
             </Box>
         </Box>
