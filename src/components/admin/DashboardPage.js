@@ -148,6 +148,7 @@ const DashboardPage = () => {
             enablePlaying: false,
             enableSignUpContinue: false,
             treatment: 1,
+            hideVolumeChartWhenShowOutcome: false,
         };
 
         const resp = await addDoc(collection(db, "xp"), xp);

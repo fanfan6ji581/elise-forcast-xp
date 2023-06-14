@@ -89,7 +89,12 @@ const schema = {
             "type": "boolean",
             "title": "Need to click asset chart to show volume chart",
             default: false
-        }
+        },
+        "hideVolumeChartWhenShowOutcome": {
+            "type": "boolean",
+            "title": "Hide Volume Chart when show outcome",
+            default: false
+        },
     }
 };
 
