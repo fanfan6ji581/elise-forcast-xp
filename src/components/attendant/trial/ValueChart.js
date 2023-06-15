@@ -205,6 +205,9 @@ export default function ValueChart({ xpData, xpConfig }) {
     };
 
     const onClickAssetChart = () => {
+        if (showMoneyOutcomeS) {
+            return;
+        }
         dispatch(doShowVolumeChart());
     }
 
