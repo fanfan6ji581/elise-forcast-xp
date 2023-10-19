@@ -227,13 +227,22 @@ export default function ValueChart({ xpData, xpConfig }) {
             <Box>
                 <Line data={data} options={options} />
             </Box>
-            <Box sx={{
-                mt: 12,
-                opacity: showVolumeChartS ? '1' : '0',
-                display: (xpConfig.hideVolumeChartWhenShowOutcome && !showVolumeChartInitialValueS && showMoneyOutcomeS) ? 'none' : 'block',
-            }} onClick={onClickAssetChart}>
-                <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
-            </Box>
+            {xpConfig.treatment === 1 ?
+                <Box sx={{
+                    mt: 12,
+                }}>
+                    <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
+                </Box>
+
+                :
+                <Box sx={{
+                    mt: 12,
+                    opacity: showVolumeChartS ? '1' : '0',
+                    display: (xpConfig.hideVolumeChartWhenShowOutcome && !showVolumeChartInitialValueS && showMoneyOutcomeS) ? 'none' : 'block',
+                }} onClick={onClickAssetChart}>
+                    <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
+                </Box>
+            }
         </Box>
     );
 }

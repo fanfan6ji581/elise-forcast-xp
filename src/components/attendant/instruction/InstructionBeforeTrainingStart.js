@@ -1,8 +1,11 @@
 import { Container, Box, Typography, Button, Grid, } from "@mui/material";
 import { Link, useParams } from "react-router-dom"
+import { useSelector } from "react-redux";
+import { xpConfigS } from "../../../slices/gameSlice";
 
 const BeforeTrainingStart = () => {
     const { alias } = useParams();
+    const xpConfig = useSelector(xpConfigS);
 
     return (
         <Container maxWidth="md">
@@ -19,10 +22,12 @@ const BeforeTrainingStart = () => {
 
                     </Typography>
 
-                    <Typography variant="h6" sx={{ my: 5 }}>
-                        Please recall that you can make the volume chart appear on screen by clicking anywhere on the blank space below the asset chart, and the volume chart will instantaneously appear on screen.
-                        Please try it during that training!
-                    </Typography>
+                    {xpConfig.treatment !== 1 &&
+                        <Typography variant="h6" sx={{ my: 5 }}>
+                            Please recall that you can make the volume chart appear on screen by clicking anywhere on the blank space below the asset chart, and the volume chart will instantaneously appear on screen.
+                            Please try it during that training!
+                        </Typography>
+                    }
 
                     <Box textAlign="center" sx={{ my: 10 }}>
                         <Button component={Link} variant="contained" size="large" to={`/xp/${alias}/instruction-ready`} sx={{ mx: 2 }}>Prev</Button>

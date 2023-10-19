@@ -25,7 +25,7 @@ const QuizPage = () => {
     const [mcq6, setMcq6] = useState(0);
     const [mcq7, setMcq7] = useState(0);
     const [mcq8, setMcq8] = useState(0);
-    const [mcq9, setMcq9] = useState(0);
+    // const [mcq9, setMcq9] = useState(0);
     const [correction, setCorrection] = useState({});
     const [disableForm, setDisableForm] = useState(false);
     const [loadingOpen, setLoadingOpen] = useState(true);
@@ -39,7 +39,7 @@ const QuizPage = () => {
         mcq6: 1,
         mcq7: 2,
         mcq8: 1,
-        mcq9: 1,
+        // mcq9: 1,
     }
 
     const solutionText = {
@@ -51,7 +51,7 @@ const QuizPage = () => {
         mcq6: 'correct answer',
         mcq7: `You can earn a significant amount of money in this experiment (up to $150 AUD) if you perform well in the task, but if you do not, you will most likely leave the lab with only $10.`,
         mcq8: `The computer randomly selects ${xpConfig.percentageEarning}% of the trials you played and computes your net accumulated outcomes in these trials. You receive that amount, up to $150. In case of a negative score, you leave the lab with $10.`,
-        mcq9: 'correct answer',
+        // mcq9: 'correct answer',
     }
 
     const fetchAttdendantAnswer = async () => {
@@ -71,7 +71,7 @@ const QuizPage = () => {
             setMcq6(attendant.quizAnswers.mcq6);
             setMcq7(attendant.quizAnswers.mcq7);
             setMcq8(attendant.quizAnswers.mcq8);
-            setMcq9(attendant.quizAnswers.mcq9);
+            // setMcq9(attendant.quizAnswers.mcq9);
             validateForm(attendant.quizAnswers)
         }
     }
@@ -114,13 +114,15 @@ const QuizPage = () => {
                 return window.alert("Please fill question #7");
             case mcq8 === 0:
                 return window.alert("Please fill question #8");
-            case mcq9 === 0:
-                return window.alert("Please fill question #9");
+            // case mcq9 === 0:
+            //     return window.alert("Please fill question #9");
             default:
                 break;
         }
 
-        const quizAnswers = { mcq1, mcq2, mcq3, mcq4, mcq5, mcq6, mcq7, mcq8, mcq9 };
+        const quizAnswers = { mcq1, mcq2, mcq3, mcq4, mcq5, mcq6, mcq7, mcq8, 
+            // mcq9 
+        };
         const attendantRef = doc(db, "attendant", loginAttendantS.id);
         await updateDoc(attendantRef, { quizAnswers });
 
@@ -457,7 +459,7 @@ const QuizPage = () => {
                     }
                 </RadioGroup>
 
-                <Typography variant="h5" sx={{ mt: 3 }}>
+                {/* <Typography variant="h5" sx={{ mt: 3 }}>
                     9. At anytime during the game, I can click anywhere on the blank space below the asset chart, and the volume chart will instantaneously appear on screen.
                 </Typography>
                 <RadioGroup sx={{ mx: 3 }} >
@@ -492,7 +494,7 @@ const QuizPage = () => {
                             </Fragment>
                         )
                     }
-                </RadioGroup>
+                </RadioGroup> */}
 
                 <Box textAlign="center" sx={{ py: 3 }}>
                     {!disableForm &&

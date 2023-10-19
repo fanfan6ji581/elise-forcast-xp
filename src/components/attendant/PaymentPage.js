@@ -59,7 +59,8 @@ export default function PaymentPage() {
         }
 
         const sumEarning = pickedOutcomeIndexes.reduce((a, b) => a + outcomeHistory[b], 0);
-        const earning = Math.min(100, sumEarning);
+        const cap = xp.treatment === 1 ? 150 : 100;
+        const earning = Math.min(cap, sumEarning);
         await updateDoc(attendantRef, { finalEarning: earning, pickedOutcomeIndexes });
         setEarning(earning);
         setLoadingOpen(false);
