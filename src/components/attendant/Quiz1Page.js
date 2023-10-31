@@ -120,7 +120,8 @@ const QuizPage = () => {
                 break;
         }
 
-        const quizAnswers = { mcq1, mcq2, mcq3, mcq4, mcq5, mcq6, mcq7, mcq8, 
+        const quizAnswers = {
+            mcq1, mcq2, mcq3, mcq4, mcq5, mcq6, mcq7, mcq8,
             // mcq9 
         };
         const attendantRef = doc(db, "attendant", loginAttendantS.id);
@@ -497,9 +498,9 @@ const QuizPage = () => {
                 </RadioGroup> */}
 
                 <Box textAlign="center" sx={{ py: 3 }}>
+                    <Button component={Link} to={`/xp/${alias}/instruction-ready`} sx={{ mx: 3 }} variant="outlined" size="large">Prev</Button>
                     {!disableForm &&
                         <>
-                            <Button component={Link} to={`/xp/${alias}/instruction`} sx={{ mx: 3 }} variant="outlined" size="large">Back to Instruction</Button>
                             <Button disabled={disableForm} type="submit" variant="contained" size="large">Submit</Button>
                         </>
                     }
