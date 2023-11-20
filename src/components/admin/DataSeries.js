@@ -66,6 +66,11 @@ const DataSeries = ({ xp }) => {
             created: Date.now(),
         })
 
+        // clear
+        formData.name='';
+        formData.asset='';
+        formData.volume='';
+
         await fetchDatas();
     };
 
