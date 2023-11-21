@@ -81,6 +81,7 @@ const DataSeries = ({ xp }) => {
 
     const fetchDatas = async () => {
         setDatas(await getAllDataForXP(alias));
+        setFormData({ name: '', asset: '', volume: '' });
         setLoadingOpen(false);
     };
 
