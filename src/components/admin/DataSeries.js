@@ -38,6 +38,11 @@ const DataSeries = ({ xp }) => {
     const [datas, setDatas] = useState([]);
     const [selectionModel, setSelectionModel] = useState([]);
     const [loadingOpen, setLoadingOpen] = useState(true);
+    const [formData, setFormData] = useState({
+        name: '',
+        asset: '',
+        volume: '',
+    });
 
     const columns = [
         { field: 'name', headerName: 'Name', width: 100 },
@@ -67,10 +72,7 @@ const DataSeries = ({ xp }) => {
         })
 
         // clear
-        formData.name='';
-        formData.asset='';
-        formData.volume='';
-
+        setFormData({ name: '', asset: '', volume: '' });
         await fetchDatas();
     };
 
@@ -129,7 +131,7 @@ const DataSeries = ({ xp }) => {
                 </Grid>
                 <Grid item xs={3}>
                     <Typography>Add Data </Typography>
-                    <Form schema={schema} onSubmit={onAddData} validator={validator} />
+                    <Form schema={schema} onSubmit={onAddData} formData={formData} validator={validator} />
 
                 </Grid>
             </Grid>
