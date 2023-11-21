@@ -72,16 +72,12 @@ const DataSeries = ({ xp }) => {
         })
 
         // clear
-        formData.name = '';
-        formData.asset = '';   
-        formData.volume = '';
         setFormData({ name: '', asset: '', volume: '' });
         await fetchDatas();
     };
 
     const fetchDatas = async () => {
         setDatas(await getAllDataForXP(alias));
-        setFormData({ name: '', asset: '', volume: '' });
         setLoadingOpen(false);
     };
 
@@ -104,6 +100,10 @@ const DataSeries = ({ xp }) => {
         fetchDatas();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData])
 
     return (
         <>
