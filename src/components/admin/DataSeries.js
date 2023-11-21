@@ -72,6 +72,9 @@ const DataSeries = ({ xp }) => {
         })
 
         // clear
+        formData.name = '';
+        formData.asset = '';   
+        formData.volume = '';
         setFormData({ name: '', asset: '', volume: '' });
         await fetchDatas();
     };
