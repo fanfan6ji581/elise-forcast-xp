@@ -227,14 +227,14 @@ export default function ValueChart({ xpData, xpConfig }) {
             <Box>
                 <Line data={data} options={options} />
             </Box>
-            {xpConfig.treatment === 1 ?
+            {/* {xpConfig.treatment === 1 ?
                 <Box sx={{
                     mt: 12,
                 }}>
                     <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
                 </Box>
 
-                :
+                : */}
                 <Box sx={{
                     mt: 12,
                     opacity: showVolumeChartS ? '1' : '0',
@@ -242,7 +242,7 @@ export default function ValueChart({ xpData, xpConfig }) {
                 }} onClick={onClickAssetChart}>
                     <Line style={{ paddingLeft: '25px' }} data={data2} options={options2} />
                 </Box>
-            }
+            {/* } */}
         </Box>
     );
 }
